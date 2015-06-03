@@ -1,0 +1,80 @@
+# Copyright (C) 2015 SkyVerge
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Product SKU Generator 1.2.2\n"
+"Report-Msgid-Bugs-To: "
+"https://github.com/skyverge/woocommerce-product-sku-generator/issues\n"
+"POT-Creation-Date: 2014-09-05 22:43:01+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: build/woocommerce-product-sku-generator.php:145
+#: woocommerce-product-sku-generator.php:147
+msgid "SKU"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:176
+#: woocommerce-product-sku-generator.php:178
+msgid "SKUs"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:211
+#: woocommerce-product-sku-generator.php:213
+msgid "Generate SKUs for:"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:212
+#: woocommerce-product-sku-generator.php:214
+msgid ""
+"Should SKUs be generated for simple/parent products only, variations only, "
+"or both?"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:216
+#: woocommerce-product-sku-generator.php:218
+msgid "Both parent products and variations"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:217
+#: woocommerce-product-sku-generator.php:219
+msgid "Only for simple or parent products"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:218
+#: woocommerce-product-sku-generator.php:220
+msgid "Only for variations of the product"
+msgstr ""
+
+#: build/woocommerce-product-sku-generator.php:223
+#: woocommerce-product-sku-generator.php:225
+msgid ""
+"Choosing \"Only variations\" will allow you to set a parent SKU. The SKU "
+"field is disabled otherwise."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WooCommerce Product SKU Generator"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.skyverge.com/product/woocommerce-product-sku-generator/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Automatically generate SKUs for products using the product slug and "
+"(optionally) variation attributes"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "SkyVerge"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.skyverge.com/"
+msgstr ""
