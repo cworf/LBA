@@ -156,6 +156,22 @@
 <div class="element hugeitmicro-item">
 	<div class="left-block">
 		<div class="main-image-block">
+			<a href="<?php echo plugins_url( '../images/product-catalog-logo.png' , __FILE__ ); ?>" rel="content"><img src="<?php echo plugins_url( '../images/product-catalog-logo.png' , __FILE__ ); ?>"></a>
+		</div>
+	</div>
+	<div class="right-block">
+		<div class="title-block"><h3>WordPress Product Catalog</h3></div>
+		<div class="description-block">
+			<p>Huge-IT Product Catalog is made for demonstration, sale, advertisements for your products. Imagine a stand with a variety of catalogs with a specific product category. To imagine is not difficult, to use is even easier.</p>
+		</div>			  				
+		<div class="button-block">
+			<a href="http://huge-it.com/product-catalog/" target="_blank">View Plugin</a>
+		</div>
+	</div>
+</div>
+<div class="element hugeitmicro-item">
+	<div class="left-block">
+		<div class="main-image-block">
 			<a href="<?php echo plugins_url( '../images/pimage-gallery-icon.png' , __FILE__ ); ?>" rel="content"><img src="<?php echo plugins_url( '../images/image-gallery-icon.png' , __FILE__ ); ?>"></a>
 		</div>
 	</div>
@@ -230,6 +246,22 @@
 		</div>			  				
 		<div class="button-block">
 			<a href="http://huge-it.com/google-map/" target="_blank">View Plugin</a>
+		</div>
+	</div>
+</div>
+<div class="element hugeitmicro-item">
+	<div class="left-block">
+		<div class="main-image-block">
+			<a href="<?php echo plugins_url( '../images/video-player-logo.png' , __FILE__ ); ?>" rel="content"><img src="<?php echo plugins_url( '../images/video-player-logo.png' , __FILE__ ); ?>"></a>
+		</div>
+	</div>
+	<div class="right-block">
+		<div class="title-block"><h3>Wordpress Video Player</h3></div>
+			<p>Inserting video on a page is a perfect way to supplement website with media content and expand the user’s interest in your site. Huge-IT Video Player is extremely necessary video tool for your sites, which provides a wide range of different file formats.</p>
+		<div class="description-block">
+		</div>			  				
+		<div class="button-block">
+			<a href="http://huge-it.com/video-player/" target="_blank">View Plugin</a>
 		</div>
 	</div>
 </div>
