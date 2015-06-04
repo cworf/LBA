@@ -601,15 +601,6 @@ WPBMap::mutateParam('vc_text_separator', $param);
 
 
 
-/* Single image
----------------------------------------------------------- */
-//lightbox option
-$param = WPBMap::getParam('vc_single_image', 'img_link_target');
-$param['value'] = array_merge(array( a13__be("Open in lightbox") => 'lightbox'), $param['value']);
-WPBMap::mutateParam('vc_single_image', $param);
-
-
-
 
 /* Button 2
 ---------------------------------------------------------- */

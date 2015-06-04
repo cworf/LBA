@@ -5,7 +5,7 @@ global $a13_site_config;
 $a13_site_config = false;
 $a13_config_file = A13_DEMO_DATA_DIR.'/site_config';
 if ( file_exists( $a13_config_file ) ){
-	$a13_site_config = unserialize(file_get_contents($a13_config_file));
+	$a13_site_config = unserialize( base64_decode(file_get_contents($a13_config_file) ) );
 }
 
 function a13_demo_data_clear_content($sublevel, &$sublevel_name){

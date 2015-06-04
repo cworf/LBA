@@ -6,7 +6,7 @@ return array(
         'slug'     				=> 'LayerSlider', // The plugin slug (typically the folder name)
         'source'   				=> A13_TPL_PLUGINS.'/layersliderwp.zip', // The plugin source
         'required' 				=> false, // If false, the plugin is only 'recommended' instead of required
-        'version' 				=> '5.3.2', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
+        'version' 				=> '5.4.0', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
         'force_activation' 		=> false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
         'force_deactivation' 	=> false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins
     ),
@@ -26,8 +26,8 @@ return array(
         'slug'     				=> 'js_composer', // The plugin slug (typically the folder name)
         'source'   				=> A13_TPL_PLUGINS.'/js_composer.zip', // The plugin source
         'required' 				=> true, // If false, the plugin is only 'recommended' instead of required
-        'version' 				=> '4.4.4', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
-        'force_activation' 		=> true, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
+        'version' 				=> '4.5.2', // E.g. 1.0.0. If set, the active plugin must be this version or higher, otherwise a notice is presented
+        'force_activation' 		=> false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
         'force_deactivation' 	=> false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins
     ),
 

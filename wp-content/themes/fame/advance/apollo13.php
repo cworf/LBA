@@ -395,7 +395,7 @@ class Apollo13 {
         if($doing_import){
             if($textarea_import){
                 //get import data
-                $import_data = unserialize(stripslashes($_POST[ 'a13_import_options_field' ]));
+                $import_data = unserialize( base64_decode( stripslashes($_POST[ 'a13_import_options_field' ] ) ) );
 
                 //check is it whole import
                 foreach($option_func as $group){
@@ -409,7 +409,7 @@ class Apollo13 {
             else{
                 $set = A13_TPL_ADV_DIR.'/demo_settings/'.$_POST[ 'a13_import_options_select' ];
                 if(file_exists($set)){
-                    $import_data = unserialize(file_get_contents($set));
+                    $import_data = unserialize( base64_decode( file_get_contents($set) ) );
                 }
             }
         }
@@ -501,7 +501,7 @@ class Apollo13 {
 
             $set = A13_TPL_ADV_DIR.'/demo_settings/'.$set;
             if(file_exists($set)){
-                $import_data = unserialize(file_get_contents($set));
+                $import_data = unserialize( base64_decode( file_get_contents($set) ) );
                 $this->theme_options = array_merge( (array)$this->theme_options , (array)$import_data );
 
                 //check if CSS file for this set exists/is up to date

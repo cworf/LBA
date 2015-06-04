@@ -1,6 +1,17 @@
 <a href="http://apollo13.eu/docs/fame/#!/installation_update_update_theme">How to update</a>
 
 
+1.6.5(25.05.2015)
+Fixed:
+-Errors while importing predefined sets
+
+
+Updated:
+-Visual composer to version 4.5.2
+-Layer Slider to version 5.4.0
+
+----------------
+
 1.6.4(24.04.2015)
 Added:
 -compatibility with Wordpress 4.2
@@ -23,7 +34,6 @@ Updated:
 
 ----------------
 
--Support for works nad galleries in VC Post Grid elements
 1.6.2(20.03.2015)
 Added:
 -Support for works nad galleries in VC Post Grid elements

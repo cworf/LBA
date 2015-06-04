@@ -276,7 +276,7 @@ function a13_print_form_controls($option, &$params, $is_meta = false){
 
     elseif ( $option['type'] == 'export_textarea' ) {
 
-        $value = serialize($apollo13->get_options_array());
+        $value = base64_encode(serialize($apollo13->get_options_array()));
         ?>
     <div class="textarea-input input-parent"<?php echo $style; ?>>
         <label for="<?php echo $a13_prefix.$option['id']; ?>"><?php echo $option['name']; ?>&nbsp;</label>
@@ -365,7 +365,7 @@ function a13_print_form_controls($option, &$params, $is_meta = false){
 
 
 		//final value
-		$value = serialize($export);
+		$value = base64_encode(serialize($export));
 		?>
 		<div class="textarea-input input-parent"<?php echo $style; ?>>
 			<label for="<?php echo $a13_prefix.$option['id']; ?>"><?php echo $option['name']; ?>&nbsp;</label>
