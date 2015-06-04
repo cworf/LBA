@@ -1,5 +1,8 @@
 *** WooCommerce Authorize.net AIM Gateway Changelog ***
 
+2015.04.29 - version 3.3.3
+ * Fix - Ensure SIM gateway can be activated
+
 2015.04.21 - version 3.3.2
  * Fix - Escape all instances of add_query_arg and remove_query_arg to avoid a potential XSS attack
  * Tweak - Introduce the `wc_authorize_net_aim_transaction_description` filter

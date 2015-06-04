@@ -5,7 +5,7 @@
  * Description: Accept Credit Cards and eChecks via Authorize.net AIM in your WooCommerce store
  * Author: SkyVerge
  * Author URI: http://www.skyverge.com
- * Version: 3.3.2
+ * Version: 3.3.3
  * Text Domain: woocommerce-gateway-authorize-net-aim
  * Domain Path: /i18n/languages/
  *
@@ -108,7 +108,7 @@ class WC_Authorize_Net_AIM extends SV_WC_Payment_Gateway_Plugin {
 
 
 	/** string version number */
-	const VERSION = '3.3.2';
+	const VERSION = '3.3.3';
 
 	/** @var WC_Authorize_Net_AIM single instance of this plugin */
 	protected static $instance;
@@ -332,8 +332,8 @@ class WC_Authorize_Net_AIM extends SV_WC_Payment_Gateway_Plugin {
 							'plugin_status' => $status,
 							'paged'         => $page,
 							's'             => $s ),
-						'admin.php' ) ),
-					$this->get_file() ),
+						'admin.php' ),
+					$this->get_file() ) ),
 				esc_attr__( 'Activate SIM gateway', self::TEXT_DOMAIN ),
 				__( 'Activate SIM gateway', self::TEXT_DOMAIN )
 			);
