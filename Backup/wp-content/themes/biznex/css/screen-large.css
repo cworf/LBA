@@ -1,0 +1,6 @@
+@media (min-width: 1200px){
+	/* Common styles */
+	.container.compact {
+	    max-width: 970px;
+	}
+}

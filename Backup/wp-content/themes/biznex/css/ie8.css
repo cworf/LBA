@@ -1,0 +1,6 @@
+.services .item .graphic > .hover {
+    display: none;
+}
+.services .item .graphic:hover > .hover {
+    display: block;
+}

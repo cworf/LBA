@@ -1,0 +1,15 @@
+[04-Mar-2013 13:07:49] WordPress database error Lost connection to MySQL server during query for query SELECT option_value FROM wp_options WHERE option_name = 'jetpack_id' LIMIT 1 made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('init'), call_user_func_array, Jetpack::init, Jetpack->plugin_upgrade, get_option
+[04-Mar-2013 13:07:49] WordPress database error MySQL server has gone away for query SELECT option_value FROM wp_options WHERE option_name = 'theme_switched' LIMIT 1 made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('init'), call_user_func_array, check_theme_switched, get_option
+[04-Mar-2013 13:07:50] WordPress database error MySQL server has gone away for query SELECT SQL_CALC_FOUND_ROWS  wp_posts.ID FROM wp_posts  WHERE 1=1  AND wp_posts.post_type = 'post' AND (wp_posts.post_status = 'publish')  ORDER BY wp_posts.post_date DESC LIMIT 0, 10 made by require('wp-blog-header.php'), wp, WP->main, WP->query_posts, WP_Query->query, WP_Query->get_posts
+[15-Jan-2014 14:43:47 America/Denver] PHP Notice:  Undefined index: HTTP_X_REWRITE_URL in /home2/montani7/public_html/404.php on line 3
+[15-Jan-2014 14:43:47 America/Denver] PHP Notice:  Undefined index: is_mobile in /home2/montani7/public_html/404.php on line 36
+[15-Jan-2014 14:43:47 America/Denver] PHP Notice:  Undefined index: HTTP_X_REWRITE_URL in /home2/montani7/public_html/404.php on line 3
+[15-Jan-2014 14:43:47 America/Denver] PHP Notice:  Undefined index: is_mobile in /home2/montani7/public_html/404.php on line 36
+[15-Jan-2014 14:43:48 America/Denver] PHP Notice:  Undefined index: HTTP_X_REWRITE_URL in /home2/montani7/public_html/404.php on line 3
+[15-Jan-2014 14:43:48 America/Denver] PHP Notice:  Undefined index: is_mobile in /home2/montani7/public_html/404.php on line 36
+[05-Feb-2014 18:22:58 America/Denver] PHP Notice:  Undefined index: HTTP_X_REWRITE_URL in /home2/montani7/public_html/404.php on line 3
+[05-Feb-2014 18:22:58 America/Denver] PHP Notice:  Undefined index: is_mobile in /home2/montani7/public_html/404.php on line 36
+[05-Feb-2014 18:22:59 America/Denver] PHP Notice:  Undefined index: HTTP_X_REWRITE_URL in /home2/montani7/public_html/404.php on line 3
+[05-Feb-2014 18:22:59 America/Denver] PHP Notice:  Undefined index: is_mobile in /home2/montani7/public_html/404.php on line 36
+[05-Feb-2014 18:22:59 America/Denver] PHP Notice:  Undefined index: HTTP_X_REWRITE_URL in /home2/montani7/public_html/404.php on line 3
+[05-Feb-2014 18:22:59 America/Denver] PHP Notice:  Undefined index: is_mobile in /home2/montani7/public_html/404.php on line 36

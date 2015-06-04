@@ -1,0 +1,259 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: spider catalog\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-18 13:21+0400\n"
+"PO-Revision-Date: 2013-10-18 13:21+0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: be\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: C:\\wamp\\www\\wordpress\\wp-content\\plugins"
+"\\catalog\n"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/catalog.php:1242
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:380
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:828
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1271
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1700
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2114
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2430
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2739
+msgid "Rating"
+msgstr "рэйтынг"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/catalog.php:1242
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:380
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:933
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1271
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1700
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2114
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2430
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2739
+msgid "You have already rated this product."
+msgstr "Вы ўжо ацанілі гэты прадукт."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:35
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:311
+msgid "Back to Catalog"
+msgstr "Вярнуцца ў каталог"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:80
+msgid "Subcategories"
+msgstr "Гэтая катэгорыя"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:90
+msgid "Image"
+msgstr "малюнак"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:90
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:553
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:554
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:555
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:824
+msgid "Name"
+msgstr "Імя"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:90
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:836
+msgid "Description"
+msgstr "апісанне"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:186
+msgid "Choose Category"
+msgstr "выберыце катэгорыю"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:190
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:212
+msgid "All"
+msgstr "Усе"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:228
+msgid "Search..."
+msgstr "пошук..."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:349
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1002
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1230
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1659
+msgid "Market Price:"
+msgstr "Рынкавая цана:"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:363
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:378
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:911
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:930
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1244
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1268
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1673
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1697
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2087
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2111
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2403
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2427
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2712
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2736
+msgid "Not rated Yet."
+msgstr "Ці не ацэненая."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:370
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:371
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:372
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:373
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:374
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:920
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:921
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:922
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:923
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:924
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1256
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1257
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1258
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1259
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1260
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1685
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1686
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1687
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1688
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1689
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2099
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2100
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2101
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2102
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2103
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2415
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2416
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2417
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2418
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2419
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2724
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2725
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2726
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2727
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2728
+msgid "Rated."
+msgstr "Намінальная."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:465
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:889
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1349
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1777
+msgid "Category:"
+msgstr "Катэгорыя:"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:515
+msgid "Add your review here"
+msgstr "Пакінуць свой ​​водгук тут"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:557
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:558
+msgid "Message"
+msgstr "паведамленне"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:570
+msgid "Please enter the code:"
+msgstr "Калі ласка, увядзіце код:"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:583
+msgid "Send"
+msgstr "адпраўляць"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:583
+msgid "The Name field is required."
+msgstr "У полі Імя не патрабуецца."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:583
+msgid "The Message field is required."
+msgstr "Паведамленне поле з'яўляецца абавязковым."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:583
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:609
+msgid "Sorry, the code you entered was invalid."
+msgstr "На жаль, уведзены вамі код быў прызнаны несапраўдным."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:607
+msgid "The review has been added successfully."
+msgstr "Агляд быў паспяхова дададзены."
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:637
+msgid "Author:"
+msgstr "Аўтар:"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:822
+msgid "Product"
+msgstr "прадукт"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:833
+msgid "Parameters"
+msgstr "араметры"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:839
+msgid "Price"
+msgstr "кошт"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:933
+msgid "Rating:"
+msgstr "адзнака:"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:990
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1403
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1829
+msgid "More"
+msgstr "больш за"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1049
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1461
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1881
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2197
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2514
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2890
+msgid "First"
+msgstr "Першы"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1057
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1469
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1889
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2205
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2522
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2898
+msgid "Prev"
+msgstr "Папярэдняя"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1080
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1492
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1912
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2228
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2545
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2921
+msgid "Next"
+msgstr "наступны"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1087
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1499
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:1919
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2235
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2552
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/front_end_functions.html.php:2928
+msgid "Last"
+msgstr "Апошні"
+
+#: C:\wamp\www\wordpress\wp-content\plugins\catalog/elements/sqlmultilistx.php:3
+msgid "select.genericlist"
+msgstr "select.genericlist"
+
+#~ msgid "Search"
+#~ msgstr "пошук"
+
+#~ msgid "Message:"
+#~ msgstr "паведамленне:"
+
+#~ msgid "Go"
+#~ msgstr "ісці"
+
+#~ msgid "Reset"
+#~ msgstr "Скід"

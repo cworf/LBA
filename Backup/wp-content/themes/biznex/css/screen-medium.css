@@ -1,0 +1,41 @@
+@media (min-width: 992px){
+    /* Header, holds the navigation */
+    .navbar-nav > li > a {
+        font-size: 14px;
+        padding-top: 17px;
+    }
+
+    /* Services */
+    .services {
+        background: url('../img/services-line-big.png') 0 266px no-repeat;
+    }
+    .services .item {
+        width: 220px;
+    }
+    .services .item .bottom {
+        background-image: url('../img/services-bottom-big.png');
+    }
+    .services .item:hover .bottom {
+        background-image: url('../img/services-bottom-big-hover.png');
+    }
+    .services .arrow {
+        margin-left: 44px;
+        margin-right: 44px;
+    }
+
+    /* Main slider */
+    .slider .h1, .slider .h2 {
+        font-size: 50px;
+        line-height: 60px;
+    }
+    .slider .h2 {
+        font-size: 30px;
+        line-height: 40px;
+    }
+    .slider .button {
+        display: inline-block;
+    }
+    .slider .or {
+        margin: -10px -4px 0 -4px;
+    }
+}

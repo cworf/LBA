@@ -1,0 +1,51 @@
+
+Version 1.08 - Update: 01.09.2014
+================================================
+Fixed: Blog style fixes (including responsiveness)
+
+Version 1.07 - Update: 22.08.2014
+================================================
+Added: URL target option for portfolio items
+Updated: If an URL is not set for an item then the URL icon with a # link is not shown anymore
+Fixed: Share buttons on single blog post now are working as intended
+
+Version 1.06 - Update: 21.08.2014
+================================================
+Fixed: Menu fix
+Fixed: Improved compatibility with some SMTP plugins
+Updated: Framework update
+Added: URL option for the processes section
+Added: Video and image gallery options for portfolio
+Added: The title of the project is now shown in the fullscreen frame
+Added: Attribute height for the [biznex_main_slider_section] shortcode
+
+Version 1.05 - Update: 10.07.2014
+================================================
+Added: Smooth scroll for normal page scrolling
+Updated: Contact form is now compatbile with SMTP plugins
+Updated: Contact form encoding changed to UTF-8
+Updated: Framework update
+
+Version 1.04 - Update: 13.06.2014
+================================================
+Fixed: Links for some images in the demo have been fixed
+Fixed: Main slider with only 1 slide fix
+Fixed: Menu item selection fix
+Update: Documentation has been improved
+
+Version 1.03 - Update: 13.05.2014
+================================================
+Fixed: Imported demo fix
+Added: Anchor option for menu items
+
+Version 1.02 - Update: 6.05.2014
+================================================
+Fixed: Menu dropdown fix
+
+Version 1.01 - Update: 5.05.2014
+================================================
+Fixed: Fixed blog stylization
+
+Version 1.00 - Initial Release: 25.04.2014
+================================================
+-

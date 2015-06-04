@@ -1,0 +1,12 @@
+.novelty_widget_banner{
+
+}
+.novelty_widget_banner img{
+	max-width: 100%;
+}
+.novelty_widget_tabs>p:last-child{
+	display: none;
+}
+.novelty_widget_tabs>p>select{
+	margin-bottom: 5px;
+}
