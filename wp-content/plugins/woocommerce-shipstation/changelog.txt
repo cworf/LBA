@@ -1,4 +1,10 @@
 *** ShipStation for WooCommerce ***
+
+2015.05.12 - version 4.0.9
+* Tweak - woocommerce_shipstation_export_order filter.
+* Tweak - Exclude system notes.
+* Tweak - Custom field value filters.
+
 2015.04.03 - version 4.0.8
 * Fix - Don't automatically set to $is_customer_note to true
 

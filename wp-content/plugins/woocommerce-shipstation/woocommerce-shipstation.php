@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce - ShipStation Integration
  * Plugin URI: http://www.woothemes.com/products/shipstation-integration/
- * Version: 4.0.8
+ * Version: 4.0.9
  * Description: Adds ShipStation label printing support to WooCommerce. Requires server DomDocument support.
  * Author: WooThemes
  * Author URI: http://www.woothemes.com/
@@ -37,7 +37,7 @@ if ( ! is_woocommerce_active() ) {
  * Include shipstation class
  */
 function __woocommerce_shipstation_init() {
-	define( 'WC_SHIPSTATION_VERSION', '4.0.8' );
+	define( 'WC_SHIPSTATION_VERSION', '4.0.9' );
 	define( 'WC_SHIPSTATION_FILE', __FILE__ );
 
 	if ( ! defined( 'WC_SHIPSTATION_EXPORT_LIMIT' ) ) {

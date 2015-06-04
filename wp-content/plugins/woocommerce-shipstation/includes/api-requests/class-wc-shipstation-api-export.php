@@ -56,6 +56,10 @@ class WC_Shipstation_API_Export extends WC_Shipstation_API_Request {
 		$orders_xml = $xml->createElement( "Orders" );
 
 		foreach ( $order_ids as $order_id ) {
+			if ( ! apply_filters( 'woocommerce_shipstation_export_order', true, $order_id ) ) {
+				continue;
+			}
+
 			$order     = wc_get_order( $order_id );
 			$order_xml = $xml->createElement( "Order" );
 
@@ -81,11 +85,11 @@ class WC_Shipstation_API_Export extends WC_Shipstation_API_Request {
 
 			// Custom fields 2 and 3 can be mapped to a custom field via the following filters
 			if ( $meta_key = apply_filters( 'woocommerce_shipstation_export_custom_field_2', '' ) ) {
-				$this->xml_append( $order_xml, 'CustomField2', get_post_meta( $order_id, $meta_key, true ) );
+				$this->xml_append( $order_xml, 'CustomField2', apply_filters( 'woocommerce_shipstation_export_custom_field_2_value', get_post_meta( $order_id, $meta_key, true ), $order_id ) );
 			}
 
 			if ( $meta_key = apply_filters( 'woocommerce_shipstation_export_custom_field_3', '' ) ) {
-				$this->xml_append( $order_xml, 'CustomField3', get_post_meta( $order_id, $meta_key, true ) );
+				$this->xml_append( $order_xml, 'CustomField3', apply_filters( 'woocommerce_shipstation_export_custom_field_3_value', get_post_meta( $order_id, $meta_key, true ), $order_id ) );
 			}
 
 			// Customer data
@@ -248,7 +252,9 @@ class WC_Shipstation_API_Export extends WC_Shipstation_API_Request {
 		$order_notes = array();
 
 		foreach ( $notes as $note ) {
-			$order_notes[] = $note->comment_content;
+			if ( $note->comment_author !== __( 'WooCommerce', 'woocommerce' ) ) {
+				$order_notes[] = $note->comment_content;
+			}
 		}
 
 		return $order_notes;
