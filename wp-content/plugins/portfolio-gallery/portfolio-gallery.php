@@ -4,7 +4,7 @@
 Plugin Name: Huge IT Portfolio Gallery
 Plugin URI: http://huge-it.com/portfolio-gallery
 Description: Portfolio Gallery is a great plugin for adding specialized portfolios or gallery to your site. There are various view options for the images to choose from.
-Version: 1.5.1
+Version: 1.5.3
 Author: Huge IT
 Author URI: http://huge-it.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -72,7 +72,6 @@ function add_portfolio_inline_popup_content() {
 }
 ///////////////////////////////////shortcode update/////////////////////////////////////////////
 
-
 add_action('init', 'hugesl_portfolio_do_output_buffer');
 function hugesl_portfolio_do_output_buffer() {
         ob_start();
@@ -82,7 +81,6 @@ add_action('init', 'portfolio_lang_load');
 function portfolio_lang_load()
 {
     load_plugin_textdomain('sp_portfolio', false, basename(dirname(__FILE__)) . '/Languages');
-
 }
 
 function huge_it_portfolio_images_list_shotrcode($atts)
