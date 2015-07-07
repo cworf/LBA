@@ -914,15 +914,20 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 		
 		if ( ! $this->errors->get_error_codes()) {
 
+			$get = $this->data['get'] = $this->input->get(array(
+				'slug' => ''				
+			));	
+
 			$post = $this->data['post'] = $this->input->post(array(
-				'download_images' => 'no',
-				'download_featured_delim' => '',
-				'featured_delim' => '',
-				'download_featured_image' => '',
-				'featured_image' => '',		
+				$get['slug'] . 'download_images' => 'no',
+				$get['slug'] . 'download_featured_delim' => '',
+				$get['slug'] . 'featured_delim' => '',
+				$get['slug'] . 'download_featured_image' => '',
+				$get['slug'] . 'featured_image' => '',		
 				'import_encoding' => 'UTF-8',	
 				'tagno' => 0
-			));		
+			));									
+
 			$wp_uploads = wp_upload_dir();		
 			
 			$this->data['tagno'] = $tagno = min(max(intval($this->input->getpost('tagno', 1)), 1), PMXI_Plugin::$session->count);
@@ -990,10 +995,10 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			
 			PMXI_Plugin::$session->set('encoding', $post['import_encoding']);
 			PMXI_Plugin::$session->save_data();
-			
+						
 			// validate
 			try {
-				$featured_image = ( 'yes' == $post['download_images']) ? $post['download_featured_image'] : $post['featured_image'];
+				$featured_image = ( 'yes' == $post[$get['slug'] . 'download_images']) ? $post[$get['slug'] . 'download_featured_image'] : $post[$get['slug'] . 'featured_image'];
 				if (empty($xml)){
 					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.<br/>If you can\'t do an import without seeing this error, change your session settings on the All Import -> Settings page.', 'wp_all_import_plugin'));
 				} elseif (empty($featured_image)){				
@@ -1368,18 +1373,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 				$this->warnings->add('2', __('<strong>Warning:</strong> your content is blank.', 'wp_all_import_plugin'));
 			}
 			
-			if ( ! $this->errors->get_error_codes()) {
-
-				if ( ! empty($post['name']) and !empty($post['save_template_as']) ) { // save template in database
-					$template->getByName($post['name'])->set(array(
-						'name' => $post['name'],						
-						'is_keep_linebreaks' => $post['is_keep_linebreaks'],
-						'is_leave_html' => $post['is_leave_html'],
-						'fix_characters' => $post['fix_characters'],
-						'options' => $post
-					))->save();
-					PMXI_Plugin::$session->set('saved_template', $template->id);
-				}
+			if ( ! $this->errors->get_error_codes()) {				
 
 				// Attributes fields logic
 				$post = apply_filters('pmxi_save_options', $post);					
@@ -1447,7 +1441,18 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 					// assign some defaults
 					'' !== $post['date'] or $post['date'] = 'now';
 					'' !== $post['date_start'] or $post['date_start'] = 'now';
-					'' !== $post['date_end'] or $post['date_end'] = 'now';										
+					'' !== $post['date_end'] or $post['date_end'] = 'now';		
+
+					if ( ! empty($post['name']) and !empty($post['save_template_as']) ) { // save template in database
+						$template->getByName($post['name'])->set(array(
+							'name' => $post['name'],						
+							'is_keep_linebreaks' => $post['is_keep_linebreaks'],
+							'is_leave_html' => $post['is_leave_html'],
+							'fix_characters' => $post['fix_characters'],
+							'options' => $post
+						))->save();
+						PMXI_Plugin::$session->set('saved_template', $template->id);
+					}								
 
 					if ($this->isWizard) {
 						PMXI_Plugin::$session->set('options', $post);
@@ -2187,9 +2192,12 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 
 			if ( $log_storage ){
 				$log_file = wp_all_import_secure_file( $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . PMXI_Plugin::LOGS_DIRECTORY, $history_log->id ) . DIRECTORY_SEPARATOR . $history_log->id . '.html'; 
-				if ( PMXI_Plugin::$session->action != 'continue' and file_exists($log_file)){
-					wp_all_import_remove_source($log_file, false);	
-				}
+				if ( PMXI_Plugin::$session->action != 'continue'){
+					if (file_exists($log_file)) 
+						wp_all_import_remove_source($log_file, false);	
+
+					//@file_put_contents($log_file, sprintf(__('<p>Source path `%s`</p>', 'wp_all_import_plugin'), $import->path));					
+				}				
 			}			
 			
 			$this->data['ajax_processing'] = ("ajax" == $import->options['import_processing']) ? true : false;
@@ -2404,9 +2412,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			}									
 		}			
 		
-		if ( ( PMXI_Plugin::is_ajax() and empty(PMXI_Plugin::$session->local_paths) ) or ! $ajax_processing or ! empty($import->canceled) ) {			
-						
-			do_action( 'pmxi_after_xml_import', $import->id );									
+		if ( ( PMXI_Plugin::is_ajax() and empty(PMXI_Plugin::$session->local_paths) ) or ! $ajax_processing or ! empty($import->canceled) ) {
 			
 			if ("ajax" != $import->options['import_processing'] and $log_storage ){
 				$log_file = wp_all_import_secure_file( $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . PMXI_Plugin::LOGS_DIRECTORY, $history_log->id ) . DIRECTORY_SEPARATOR . $history_log->id . '.html';
@@ -2445,6 +2451,8 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			$msg = ( ! empty($import->canceled) ) ? addcslashes(__('Canceled', 'wp_all_import_plugin'), "\n\r") : addcslashes(__('Complete', 'wp_all_import_plugin'), "\n\r");	
 
 			if ( $ajax_processing ) ob_start();			
+
+			do_action( 'pmxi_after_xml_import', $import->id );
 
 			$import->options['is_import_specified'] and $logger and call_user_func($logger, 'Done');	
 

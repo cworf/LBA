@@ -468,11 +468,14 @@
 
 		$form.find('.preview, .preview_images, .preview_taxonomies, .preview_prices').click(function () {
 			var $preview_type = $(this).attr('rel');
+			var $options_slug = $(this).parent('div').find('.wp_all_import_section_slug').val();
 
 			if ($preview_type == 'preview_taxonomies') serialize_ctx_mapping();
 
 			var $URL = 'admin.php?page=pmxi-admin-import&action=' + $preview_type + ((typeof import_id != "undefined") ? '&id=' + import_id : '');
 			var $tagURL = 'admin.php?page=pmxi-admin-import&action=tag' + ((typeof import_id != "undefined") ? '&id=' + import_id : '');
+			
+			if ($options_slug != undefined) $URL += '&slug=' + $options_slug;
 			
 			$('.wpallimport-overlay').show();
 			
@@ -1683,6 +1686,10 @@
 		}
 	});
 
+	$('.wpallimport-dependent-options').each(function(){
+		$(this).prev('div.input').find('input[type=text]:last, textarea:last').addClass('wpallimport-top-radius');
+	});
+
 	var fix_tag_position = function(){
 		if ($('.wpallimport-layout').length && $('.tag').length){
 	    	var offset = $('.wpallimport-layout').offset();
@@ -1696,6 +1703,11 @@
 	        }
 	    }
 	}
+
+	$('.wp_all_import_show_path').click(function(){
+		var path = $(this).attr('rel');
+		$(this).parents('em:first').html(path);
+	});
 
 	fix_tag_position();	
 
