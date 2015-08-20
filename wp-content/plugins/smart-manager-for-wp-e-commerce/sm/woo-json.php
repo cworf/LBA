@@ -1,22 +1,37 @@
 <?php 
 
-ob_start();
-
-if (!function_exists('find_wp_load_path')) {
-    function find_wp_load_path() { // function to find the wordpress root directory path
-        $dir = dirname(__FILE__);
-        do {
-            if( file_exists($dir."/wp-load.php") ) {
-                return $dir;
-            }
-        } while( $dir = realpath("$dir/..") );
-        return null;
-    }    
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
 }
 
+ob_start();
 
-if ( ! defined('ABSPATH') ) {
-    include_once (find_wp_load_path()  . '/wp-load.php');
+// Code for checking whether user is valid or not
+$current_user_role = '';
+
+if (!function_exists('wp_get_current_user')) {
+    require_once (ABSPATH . 'wp-includes/pluggable.php'); // Sometimes conflict with SB-Welcome Email Editor
+}
+$current_user = wp_get_current_user(); 
+if ( !($current_user instanceof WP_User) )
+   exit;
+
+if ( !isset( $current_user->roles[0] ) ) {
+    $current_user_role = array_values( $current_user->roles );
+} else {
+    $current_user_role = $current_user->roles;
+}
+
+//Fix for the client
+if ( !empty( $current_user->caps ) ) {
+    $caps = array_keys($current_user->caps);
+    $current_user_role[0] = (!empty($caps)) ? $caps[0] : '';
+}
+
+$sm_privilege_option = (!empty($current_user_role[0])) ? get_option('sm_'.$current_user_role[0].'_dashboard') : '';
+
+if ( !is_user_logged_in() || !is_admin() || ( $current_user_role[0] != 'administrator' && empty($sm_privilege_option) ) ) {
+    exit;
 }
 
 // WOO 2.1 compatibility
@@ -75,7 +90,7 @@ function variation_query_params(){
 
     $variation_name = "variation_name,";
     $parent_name    = "parent_name,";
-    $post_status    = "('publish', 'draft')";
+    $post_status    = "('publish', 'pending', 'draft')";
     $post_type      = "('product', 'product_variation')";
     $parent_sort_id = " ,if({$wpdb->prefix}posts.post_parent = 0,{$wpdb->prefix}posts.id,{$wpdb->prefix}posts.post_parent - 1 + ({$wpdb->prefix}posts.id)/pow(10,char_length(cast({$wpdb->prefix}posts.id as char)))) as parent_sort_id";
     $order_by       = " ORDER BY parent_sort_id desc";
@@ -118,7 +133,7 @@ function get_data_woo ( $post, $offset, $limit, $is_export = false ) {
 
         } else {
             $parent_name = '';
-            $post_status = "('publish', 'draft')";
+            $post_status = "('publish', 'pending', 'draft')";
             $post_type = "('product')";
             $parent_sort_id = '';
             $order_by = " ORDER BY {$wpdb->prefix}posts.id desc";
@@ -213,7 +228,7 @@ function get_data_woo ( $post, $offset, $limit, $is_export = false ) {
                                             AND post_id IN (SELECT id FROM {$wpdb->prefix}posts
                                                                 WHERE post_parent > 0
                                                                  AND post_type IN ('product_variation')
-                                                                 AND post_status IN ('publish', 'draft'))";
+                                                                 AND post_status IN ('publish', 'pending', 'draft'))";
             $wpdb->query ( $query_delete_variations );
         }
 
@@ -1020,8 +1035,21 @@ function get_data_woo ( $post, $offset, $limit, $is_export = false ) {
 
                 unset($records[$i]['prod_othermeta_value']);
                 unset($records[$i]['prod_othermeta_key']);
-                $prod_meta_key_values = array_combine($prod_meta_key, $prod_meta_values);
+                $temp = array_combine($prod_meta_key, $prod_meta_values);
                 $product_type = wp_get_object_terms($records[$i]['id'], 'product_type', array('fields' => 'slugs'));
+
+        //for formatting meta keys of custom keys
+
+        $prod_meta_key_values = array();
+
+        if (empty($_POST['func_nm'])) {
+            foreach ($temp as $key => $val) {
+                $key = preg_replace('/[^A-Za-z0-9\-_]/', '', $key);
+                $prod_meta_key_values [$key] = $val;  // Removes special chars.
+            }
+        } else {
+            $prod_meta_key_values = $temp;
+        }   
 
                 // Code to get the Category Name from the term_taxonomy_id
                 
@@ -2264,6 +2292,10 @@ if ( !function_exists( 'get_attributes_value' ) ) {
 // Searching a product in the grid
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getData') {
 
+    check_ajax_referer('smart-manager-security','security');
+
+    global $current_user;
+
     //Code to handle get_data for Coupons dashboard
     if (isset ( $_POST ['couponFields'] ) && $_POST ['couponFields'] != '') {
 
@@ -2312,7 +2344,6 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getData') {
     } else {
         $encoded = get_data_woo ( $_POST, $offset, $limit );
     }
-
      
    // ob_clean("ob_gzhandler");
 
@@ -2329,6 +2360,8 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getData') {
 }
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'state') {
+
+        check_ajax_referer('smart-manager-security','security');
 
         global $current_user , $wpdb;
 
@@ -2690,9 +2723,9 @@ function woo_insert_update_data($post) {
 
         $post_meta_info = array();
         // To get distinct meta_key for Simple Products. => Executed only once
-        $post_meta_info = $wpdb->get_col( "SELECT distinct postmeta.meta_key FROM {$wpdb->prefix}postmeta AS postmeta INNER JOIN {$wpdb->prefix}posts AS posts on posts.ID = postmeta.post_id WHERE posts.post_type='product' AND posts.post_status IN ('publish','draft')" );
+        $post_meta_info = $wpdb->get_col( "SELECT distinct postmeta.meta_key FROM {$wpdb->prefix}postmeta AS postmeta INNER JOIN {$wpdb->prefix}posts AS posts on posts.ID = postmeta.post_id WHERE posts.post_type='product' AND posts.post_status IN ('publish', 'pending', 'draft')" );
         // To get distinct meta_key for Child Products i.e. Variations. => Executed only once
-        $post_meta_info_variations = $wpdb->get_col( "SELECT distinct postmeta.meta_key FROM {$wpdb->prefix}postmeta AS postmeta INNER JOIN {$wpdb->prefix}posts AS posts on posts.ID = postmeta.post_id WHERE posts.post_type='product_variation' AND posts.post_status IN ('publish','draft') AND posts.post_parent > 0" );
+        $post_meta_info_variations = $wpdb->get_col( "SELECT distinct postmeta.meta_key FROM {$wpdb->prefix}postmeta AS postmeta INNER JOIN {$wpdb->prefix}posts AS posts on posts.ID = postmeta.post_id WHERE posts.post_type='product_variation' AND posts.post_status IN ('publish', 'pending', 'draft') AND posts.post_parent > 0" );
                 
         // meta_key required for new products, that are entered through Smart Manager   
             // if (count($post_meta_info) <= 0 || count($post_meta_info) < 23) {
@@ -2713,9 +2746,9 @@ function woo_insert_update_data($post) {
     if( is_foreachable( $new_product ) ) {
 
         $woo_prod_obj = '';
-        if ($_POST['SM_IS_WOO21'] == "true" || $_POST['SM_IS_WOO22'] == "true") {
-            $woo_prod_obj = new WC_Product_Variable();
-        }
+        // if ($_POST['SM_IS_WOO21'] == "true" || $_POST['SM_IS_WOO22'] == "true") {
+        //     $woo_prod_obj = new WC_Product_Variable();
+        // }
 
         foreach ($new_product as $obj){
             if($_POST ['active_module'] == 'Products') {
@@ -2900,6 +2933,8 @@ function woo_insert_update_data($post) {
                             if ($parent_id > 0) {
                                 if ($_POST['SM_IS_WOO21'] == "true" || $_POST['SM_IS_WOO22'] == "true") {
                                     WC_Product_Variable::sync($parent_id);
+                                    delete_transient( 'wc_product_children_' . $parent_id ); //added in woo24
+
                                 } else {
                                     variable_price_sync($parent_id);
                                 }
@@ -3022,6 +3057,8 @@ function woo_insert_update_data($post) {
 // For insert updating product in woo.
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'saveData') {
 
+        check_ajax_referer('smart-manager-security','security');
+
         //For encoding the string in UTF-8 Format
 //                $charset = "EUC-JP, ASCII, UTF-8, ISO-8859-1, JIS, SJIS";
         $charset = ( get_bloginfo('charset') === 'UTF-8' ) ? null : get_bloginfo('charset');
@@ -3119,6 +3156,8 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'saveData') {
 
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
+
+    check_ajax_referer('smart-manager-security','security');
 
     global $wpdb;
 
@@ -3270,6 +3309,9 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
 }
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'delData') {
+
+    check_ajax_referer('smart-manager-security','security');
+
     $delCnt = 0;
     $activeModule = substr( $_POST ['active_module'], 0, -1 );
 
@@ -3317,6 +3359,9 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'delData') {
 }
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getRolesDashboard') {
+
+    check_ajax_referer('smart-manager-security','security');
+
     global $wpdb, $current_user;
 
     if (!function_exists('wp_get_current_user')) {
@@ -3389,6 +3434,9 @@ function get_term_taxonomy_id($term_name) {                 // for woocommerce o
 }
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getTerms'){
+
+    check_ajax_referer('smart-manager-security','security');
+
     global $wpdb;
 
     $terms_combo_store = array();
@@ -3455,6 +3503,9 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getTerms'){
 }
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getRegion') {
+
+    check_ajax_referer('smart-manager-security','security');
+
     global $wpdb, $woocommerce;
     $cnt = 0;
     if ( !empty ( $woocommerce->countries->states[$_POST['country_id']] ) ) {
@@ -3478,6 +3529,9 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'getRegion') {
 }
 
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'editImage') {
+
+    check_ajax_referer('smart-manager-security','security');
+
     $woo_default_image = WP_PLUGIN_URL . '/smart-reporter-for-wp-e-commerce/resources/themes/images/woo_default_image.png';
 
     if (!empty($_POST['thumbnail_id'])) {
