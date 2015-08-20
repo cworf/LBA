@@ -1,14 +1,14 @@
 ﻿=== Portfolio Gallery ===
 Contributors: Huge-IT
 Donate link: http://huge-it.com/portfolio-gallery/
-Tags: Portfolio Gallery, portfolio, portfolio plugin, portfolios, picture, pictures, album, custom fields, image display, image-size, images gallery, gallery, labels, visual items, thumbnails, image gallery, wordpress FAQ, grid, web designer, slider, sliders, wordpress slider, wordpress slideshow, wp slider, slide, slide show, slider, slider plugin, slider widget, slides, slideshow, slideshow manager, gallery description, slideshow plugin, gallery slider,  galeri, galerie, widget slider, widget slideshow, foto, responsive, responsive slider, responsive slideshow, Photo Slider, plugin, Image Rotator, carousel, wordpress gallery, wordpress gallery plugin, banner rotator, photo, photos, image, images, best gallery, best gallery plugin, image album, image gallery plugin, images gallery, photo album, photo albums, photo gallery, photoset, Simple gallery, website gallery, widget gallery, wp gallery plugins, wp gallery plugin, wp gallery, photoalbum, view images, multiple pictures, lightbox, lightbox photo, image lightbox, gallery lightbox, content slider, wordpress portfolio, galleries, galleria, wordpress portfolio plugin, project, photography, filterable gallery, filterable portfolio, jquery portfolio, jquery gallery, sortable portfolio, prettyphoto, picture gallery, picture portfolio,  fullscreen, thumbnail, iphone gallery, free photo gallery, widget portfolio, fullscreen photo, free gallery, best portfolio plugin, free gallery, fullscreen slider, gallery shortcode, pretty photo, free slider, showcase, nextcellent, wordpress responsive gallery, filterable, masonry, Responsive Portfolio, image-portfolio, photographs, fullscreen gallery, thumbnail view,
+Tags: Portfolio Gallery, portfolio, portfolio plugin, portfolios, picture, pictures, album, custom fields, image display, image-size, images gallery, gallery, labels, visual items, thumbnails, image gallery, wordpress FAQ, grid, web designer, slider, sliders, wordpress slider, wordpress slideshow, wp slider, slide, slide show, slider, slider plugin, slider widget, slides, slideshow, slideshow manager, gallery description, slideshow plugin, gallery slider,  galeri, galerie, widget slider, widget slideshow, foto, responsive, responsive slider, responsive slideshow, Photo Slider, plugin, Image Rotator, carousel, wordpress gallery, wordpress gallery plugin, banner rotator, best gallery, best gallery plugin, image album, image gallery plugin, images gallery, photo album, photo albums, photo gallery, photoset, Simple gallery, website gallery, widget gallery, wp gallery plugins, wp gallery plugin, wp gallery, photoalbum, view images, multiple pictures, lightbox, lightbox photo, image lightbox, gallery lightbox, content slider, wordpress portfolio, galleries, galleria, wordpress portfolio plugin, project, photography, filterable gallery, filterable portfolio, jquery portfolio, jquery gallery, sortable portfolio, prettyphoto, picture gallery, picture portfolio,  fullscreen, thumbnail, iphone gallery, free photo gallery, widget portfolio, fullscreen photo, free gallery, best portfolio plugin, free gallery, fullscreen slider, gallery shortcode, pretty photo, free slider, showcase, nextcellent, wordpress responsive gallery, filterable, masonry, Responsive Portfolio, image-portfolio, photographs, fullscreen gallery, thumbnail view, image description, simple portfolio, faq, post, posts, video, video gallery, youtube, youtube gallery, youtube project, vimeo, vimeo gallery, video portfolio
 Requires at least: 3.0.1
-Tested up to: 4.2.2
-Stable tag: 1.5.3
+Tested up to: 4.3
+Stable tag: 1.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Portfolio Gallery is a great plugin for adding specialized portfolios or gallery to your site. There are various view options for the images to choose
+Portfolio Gallery is a great plugin for adding specialized portfolios or gallery to your site. There are various view options for the images or videos to choose.
 
 == Description ==
 
@@ -23,9 +23,9 @@ https://www.youtube.com/watch?v=uq6Cw3ou-gM
 
 **Portfolio Gallery** is perfect for using for creating various portfolios or gallery within various views. The product allows adding descriptions and titles for each portfolio gallery. It is rather useful whever using with various pages and posts, as well as within custom location.
 
-You can use **portfolio gallery** plugin to make your portfolio's projects as well as to create your own image gallery, It has also the ability to create nicely designed FAQ system. 
+You can use **portfolio gallery** plugin to make your portfolio's projects as well as to create your own image or video gallery, It has also the ability to create nicely designed FAQ system. 
 You can can use portfolio gallery on different pages so if you need to create portfolio, gallery, gallery with description, faq, slider and content slider you can install only portfolio gallery plugin.
-With nicely designed user friendly admin panel of portfolio gallery It will take you 2 minutes to create your portfolio or gallery on your website. Over 184,757 our users who tried Portfolio Gallery, can prove it's great functionality and utility. So try an enjoy!
+With nicely designed user friendly admin panel of portfolio gallery It will take you 2 minutes to create your portfolio or gallery on your website. Over 212,045 our users who tried Portfolio Gallery, can prove it's great functionality and utility. So try an enjoy!
 
 Portfolio Gallery uses 7 view options and can be customized using the General Options. Almost all kind of texts are customizable in terms of text and color.
 
@@ -43,9 +43,9 @@ Portfolio Gallery uses 7 view options and can be customized using the General Op
 *   Content Slider
 *   Lightbox Gallery
 
-*    Unlimited amount of images to be added to the Portfolio Gallery
+*    Unlimited amount of images or videos to be added to the Portfolio Gallery
 *	 Possibility of adding various portfolios
-*    Possibility of adding various images for each portfolio gallery
+*    Possibility of adding various images or videos for each portfolio gallery
 *    Image, title and description to the Portfolio Gallery
 *    Possibility to add URL to tailor specific pages to the Portfolio Gallery
 *    Possibility to use different Portfolios / Galleries for different pages
@@ -76,7 +76,7 @@ MySQL 5.x
 4. Click `Install Now` button.     
 5. Then click `Activate Plugin` button. 
 
-Now you can set your Portfolio Gallery options, images and use our portfolio gallery.
+Now you can set your Portfolio Gallery options, images or videos and use our portfolio gallery.
 
 If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com)
 
@@ -117,8 +117,8 @@ All kind of changes made in free version will remain, even if you delete the plu
 **How to change “New Portfolio / Gallery” name?**
 In order to change Portfolio / Gallery name just double click on it’s name (on top tabs)
 
-**How to see the title of the image in lightbox?**
-In order to add name to your image and see it in lightbox. 
+**How to see the title of the image or video in lightbox?**
+In order to add name to your image or video and see it in lightbox. 
 Add attribute title=”X” in <a> tag of image code, where X is the name, 
 Set “show the title” from Lightbox Options
 
@@ -135,6 +135,18 @@ If you still see "free version" notification after installation of pro version
 ### If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com).
 
 == Changelog ==
+
+= 1.5.7 =
+*  Bug fixed in Portfolio Gallery.
+
+= 1.5.6 =
+*  Bug fixed in Portfolio Gallery.
+
+= 1.5.5 =
+*  Added ability to add Videos instead of images.
+
+= 1.5.4 =
+*  Bug fixed in Portfolio Gallery.
 
 = 1.5.3 =
 *  Bug fixed in Portfolio Gallery.
@@ -294,7 +306,7 @@ On the upper right hand you can identify three blocks of options for the portfol
 
 Current Portfolio Gallery Options. Choose one of the options for the portfolio gallery image display.
 
-Usage. Here you will see the shortcode for the created portfolio gallery. You can add the shortcode to the page or post where you want the images to be displayed. In addition you can find the shortcode icon width each post and page within its TinyMCE editor and can click on it, select the portfolio gallery and insert the shortcode.
+Usage. Here you will see the shortcode for the created portfolio gallery. You can add the shortcode to the page or post where you want the images or videos to be displayed. In addition you can find the shortcode icon width each post and page within its TinyMCE editor and can click on it, select the portfolio gallery and insert the shortcode.
 
 Template Usage. If you want to use the portfolio gallery for a custom location with the theme, you can copy and paste the provided code.
 
