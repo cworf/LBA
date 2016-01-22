@@ -4,6 +4,14 @@
 	background: url("../images/logo-32x32.png") no-repeat scroll transparent;
 }
 
+/*Added for WP4.4*/
+.sm-h2 {
+	font-size: 23px;
+	font-weight: 400;
+	padding: 9px 15px 4px 0;
+	line-height: 29px;
+}
+
 .icon32 {
 	float: left;
 	height: 34px;
@@ -47,7 +55,9 @@
 }
 
 .x-panel-mc {
-	font: normal 11px tahoma, arial, helvetica, sans-serif;
+	/*font: normal 11px tahoma, arial, helvetica, sans-serif;*/
+	font-weight: normal;
+	font-size: 11px;
 	background-color: transparent;
 }
 
@@ -111,7 +121,9 @@
 }
 
 .x-grid3-row td,.x-grid3-summary-row td {
-	font: normal 11px arial, tahoma, helvetica, sans-serif;
+	/*font: normal 11px arial, tahoma, helvetica, sans-serif;*/
+	font-weight: normal;
+	font-size: 11px;
 }
 
 .x-toolbar .x-toolbar-cell {
@@ -155,4 +167,212 @@
     cursor: pointer;
     color: #0074a2;
     text-decoration: underline;
+}
+
+
+/*========================
+EXTJS Theme related CSS
+==========================*/
+
+/*CSS for the dashboard select*/
+#dashboardComboBox {
+    /*width: 100% !important;*/
+    border: none !important;
+    /*border-bottom: 1px solid #3892D3 !important;*/
+    background: none !important;
+    box-shadow: none !important;
+}
+
+
+#dashboardComboBox_lbl:after {
+    /*content:'>';*/
+    content: "\f347";
+    font-size:20px;
+    font-family: dashicons;
+    color:#3892D3;
+    right:12px;
+    line-height: 23px;
+    position:absolute;
+    pointer-events:none;
+}
+#dashboardComboBox_lbl:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:transparent;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
+
+
+#addProductButton button:before , #sm_advanced_search_or:before, #bu_add_row button:before, #bu_add_row_main button:before {
+	content: '\f132';
+    display: inline-block;
+    font: normal 18px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+#bu_add_row button:before, #bu_add_row_main button:before {
+	margin-right: 0;
+	margin-top: 2px;
+}
+
+#sm_advanced_search_or:before {
+	margin-right: 0px;	
+}
+
+
+#deleteButton button:before, #bu_delete_row button:before  {
+	content: '\f182';
+    display: inline-block;
+    font: normal 17px/1 'dashicons';
+    color: #FF5B5E;
+    vertical-align: middle;
+}
+
+
+#batchUpdateButton button:before {
+	content: '\f233';
+    display: inline-block;
+    font: normal 17px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+#exportCsvButton button {
+	padding-top: 2px;
+}
+
+#exportCsvButton button:before {
+	content: '\f123';
+    display: inline-block;
+    font: normal 15px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: top;
+    margin-right: 3px;
+}
+
+#searchIconId button {
+	padding-top: 2px;
+}
+
+#searchIconId button:before, #sm_advanced_search_submit:before {
+	content: '\f179';
+    display: inline-block;
+    font: normal 16px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: top;
+}
+
+#sm_advanced_search_submit:before {
+	vertical-align: middle;
+	margin-top: 1px;
+}
+
+.x-tbar-loading:before, #resetButton button:before {
+	content: '\f463';
+    display: inline-block;
+    font: normal 18px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: top;
+}
+
+#resetButton button:before {
+	vertical-align: middle;
+	margin-right: 2px;
+}
+
+#editlink:before {
+	content: '\f310';
+    display: inline-block;
+    font: normal 16px/1 'dashicons';
+    color: #63AEE3;
+    vertical-align: top;
+}
+
+#prod_variation_img:before, #wpsc_prod_variation_img:before {
+	content: '\e028';
+    display: inline-block;
+    font: normal 12px/1 'WooCommerce';
+    color: #63AEE3;
+    vertical-align: middle;	
+}
+
+#wpsc_prod_variation_img:before {
+	content: '\f155';
+	font: normal 12px/1 'dashicons';
+}
+
+/*#duplicateButton button {
+	padding-top: 2px;
+}*/
+
+#duplicateButton button:before {
+	content: '\f105';
+    display: inline-block;
+    font: normal 16px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: top;
+}
+
+#addProductButton button:before, #duplicateButton button:before {
+	color: #12B41F;
+}
+
+#fromDateMenuId button:before, #toDateMenuId button:before {
+	content: '\f145';
+    display: inline-block;
+    font: normal 16px/1 'dashicons';
+    color: #3892D3;
+    vertical-align: top;
+}
+
+.x-tbar-loading {
+	background-image: none !important;
+}
+
+.x-toolbar .xtb-sep {
+	margin: 3px 2px 0;
+}
+
+#addProductButton, #deleteButton, #batchUpdateButton, #saveButton, #exportCsvButton, #duplicateButton, #resetButton, #updateButton, 
+#bu_add_row, #bu_add_row_main, #printButton {
+	border: 1px solid transparent;
+}
+
+#sm_advanced_search_submit {
+	border: 1px solid #3892D3;	
+	background-color: transparent;
+	border-radius: 3px;
+}
+
+#addProductButton:hover, #deleteButton:hover, #batchUpdateButton:hover, #saveButton:hover, #exportCsvButton:hover, #duplicateButton:hover, 
+#resetButton:hover, #updateButton:hover, #bu_add_row:hover, #bu_add_row_main:hover, #printButton:hover {
+	border: 1px solid #3892D3;
+	border-radius: 3px;
+}
+
+.x-item-disabled:hover  {
+	border: 1px solid transparent !important;	
+}
+
+.x-btn-tl, .x-btn-tr, .x-btn-tc, .x-btn-ml, .x-btn-mr, .x-btn-mc, .x-btn-bl, .x-btn-br, .x-btn-bc{
+	background-image: none !important;
+}
+
+.x-toolbar .x-small-editor {
+	background-image: none;
+}
+
+#batch_update_window .x-panel-bbar {
+	border: none !important;
+}
+
+/*For hiding the update notices on subscriptions page*/
+.update-nag, .updated, .error { 
+  display: none; 
 }

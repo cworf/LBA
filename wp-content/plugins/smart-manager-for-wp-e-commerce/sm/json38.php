@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
+
 ob_start();
 
 // Code for checking whether user is valid or not
@@ -35,6 +36,11 @@ if ( !is_user_logged_in() || !is_admin() || ( $current_user_role[0] != 'administ
     exit;
 }
 
+global $sm_text_domain;
+
+// creating a domain name for mutilingual
+$sm_text_domain = (defined('SM_TEXT_DOMAIN')) ? SM_TEXT_DOMAIN : 'smart-manager-for-wp-e-commerce';
+
 include_once (ABSPATH . 'wp-includes/wp-db.php');
 include_once (ABSPATH . 'wp-includes/functions.php');
 include_once (ABSPATH . 'wp-admin/includes/screen.php'); // Fix to handle the WPeC 3.8.10 and Higher versions
@@ -46,9 +52,9 @@ global $wp_version;
 
 if (version_compare ( $wp_version, '4.0', '>=' )) {
     global $locale;
-    load_textdomain( 'smart-manager', WP_PLUGIN_DIR . '/' . dirname( dirname(plugin_basename( __FILE__ ))) . '/languages/smart-manager-' . $locale . '.mo' );
+    load_textdomain( $sm_text_domain, WP_PLUGIN_DIR . '/' . dirname( dirname(plugin_basename( __FILE__ ))) . '/languages/smart-manager-' . $locale . '.mo' );
 } else {
-    load_textdomain( 'smart-manager', WP_PLUGIN_DIR . '/' . dirname(dirname(plugin_basename( __FILE__ ))) . '/languages/smart-manager-' . WPLANG . '.mo' );
+    load_textdomain( $sm_text_domain, WP_PLUGIN_DIR . '/' . dirname(dirname(plugin_basename( __FILE__ ))) . '/languages/smart-manager-' . WPLANG . '.mo' );
 }
 
 
@@ -681,7 +687,7 @@ function variation_query_params(){
                         //Code to handle condition if the ids of previous cond are present in temp table
                         if (($index == 0 && $count_temp_previous_cond > 0) || (!empty($result_postmeta_search))) {
                             $postmeta_advanced_search_from = " JOIN {$wpdb->base_prefix}sm_advanced_search_temp
-                                                                ON ({$wpdb->base_prefix}sm_advanced_search_temp.product_id = {$wpdb->prefix}postmeta.posts_id)";
+                                                                ON ({$wpdb->base_prefix}sm_advanced_search_temp.product_id = {$wpdb->prefix}postmeta.post_id)";
 
                             $postmeta_advanced_search_where = " AND {$wpdb->base_prefix}sm_advanced_search_temp.flag = 0";
                         }
@@ -809,7 +815,7 @@ function variation_query_params(){
         if ($num_rows <= 0) {
 			$encoded ['totalCount'] = '';
 			$encoded ['items'] = '';
-			$encoded ['msg'] = __( 'No Records Found', 'smart-manager' ); 
+			$encoded ['msg'] = __( 'No Records Found', $sm_text_domain ); 
 		} else {
 
             if (empty($_POST['func_nm'])) {
@@ -1227,7 +1233,7 @@ elseif ($active_module == 'Orders') {
 		if ($num_records == 0) {
 			$encoded ['totalCount'] = '';
 			$encoded ['items'] = '';
-			$encoded ['msg'] = __( 'No Records Found', 'smart-manager' );
+			$encoded ['msg'] = __( 'No Records Found', $sm_text_domain );
 		} else {			
                          
                         foreach ( $results as $data ) {
@@ -1472,7 +1478,7 @@ elseif ($active_module == 'Orders') {
                 if ($num_records == 0) {
 			$encoded ['totalCount'] = '';
 			$encoded ['items'] = '';
-			$encoded ['msg'] = __( 'No Records Found', 'smart-manager' );
+			$encoded ['msg'] = __( 'No Records Found', $sm_text_domain );
 		} else {
 				
 			foreach ( $customer_details_results as $result ) {
@@ -1614,71 +1620,70 @@ if (isset ( $_GET ['func_nm'] ) && $_GET ['func_nm'] == 'exportCsvWpsc') {
     ini_set('memory_limit','512M');
     set_time_limit(0);
 
-	$sm_domain = 'smart-manager';
     $columns_header = array();
 	$active_module = $_GET ['active_module'];
         
 	switch ( $active_module ) {
 		
 		case 'Products':
-				$columns_header['id'] 						= __('Post ID', $sm_domain);
-				$columns_header['thumbnail'] 				= __('Product Image', $sm_domain);
-				$columns_header['post_title'] 				= __('Product Name', $sm_domain);
-				$columns_header['_wpsc_price'] 				= __('Price', $sm_domain);
-				$columns_header['_wpsc_special_price'] 		= __('Sale Price', $sm_domain);
-				$columns_header['_wpsc_stock'] 				= __('Inventory / Stock', $sm_domain);
-				$columns_header['_wpsc_sku'] 				= __('SKU', $sm_domain);
-				$columns_header['category'] 				= __('Category / Group', $sm_domain);
-				$columns_header['weight'] 					= __('Weight', $sm_domain);
-				$columns_header['weight_unit'] 				= __('Weight Unit', $sm_domain);
-				$columns_header['height'] 					= __('Height', $sm_domain);
-				$columns_header['height_unit'] 				= __('Height Unit', $sm_domain);
-				$columns_header['width'] 					= __('Width', $sm_domain);
-				$columns_header['width_unit'] 				= __('Width Unit', $sm_domain);
-				$columns_header['length'] 					= __('Length', $sm_domain);
-				$columns_header['length_unit'] 				= __('Length Unit', $sm_domain);
-				$columns_header['local'] 					= __('Local Shipping Fee', $sm_domain);
-				$columns_header['international'] 			= __('International Shipping Fee', $sm_domain);
+				$columns_header['id'] 						= __('Post ID', $sm_text_domain);
+				$columns_header['thumbnail'] 				= __('Product Image', $sm_text_domain);
+				$columns_header['post_title'] 				= __('Product Name', $sm_text_domain);
+				$columns_header['_wpsc_price'] 				= __('Price', $sm_text_domain);
+				$columns_header['_wpsc_special_price'] 		= __('Sale Price', $sm_text_domain);
+				$columns_header['_wpsc_stock'] 				= __('Inventory / Stock', $sm_text_domain);
+				$columns_header['_wpsc_sku'] 				= __('SKU', $sm_text_domain);
+				$columns_header['category'] 				= __('Category / Group', $sm_text_domain);
+				$columns_header['weight'] 					= __('Weight', $sm_text_domain);
+				$columns_header['weight_unit'] 				= __('Weight Unit', $sm_text_domain);
+				$columns_header['height'] 					= __('Height', $sm_text_domain);
+				$columns_header['height_unit'] 				= __('Height Unit', $sm_text_domain);
+				$columns_header['width'] 					= __('Width', $sm_text_domain);
+				$columns_header['width_unit'] 				= __('Width Unit', $sm_text_domain);
+				$columns_header['length'] 					= __('Length', $sm_text_domain);
+				$columns_header['length_unit'] 				= __('Length Unit', $sm_text_domain);
+				$columns_header['local'] 					= __('Local Shipping Fee', $sm_text_domain);
+				$columns_header['international'] 			= __('International Shipping Fee', $sm_text_domain);
 			break;
 			
 		case 'Customers':
-				$columns_header['id'] 					= __('User ID', $sm_domain);
-				$columns_header['billingfirstname'] 	= __('First Name', $sm_domain);
-				$columns_header['billinglastname'] 		= __('Last Name', $sm_domain);
-				$columns_header['billingemail'] 		= __('E-mail ID', $sm_domain);
-				$columns_header['billingaddress'] 		= __('Address', $sm_domain);
-				$columns_header['billingpostcode'] 		= __('Postcode', $sm_domain);
-				$columns_header['billingcity'] 			= __('City', $sm_domain);
-				$columns_header['billingstate'] 		= __('State / Region', $sm_domain);
-				$columns_header['billingcountry'] 		= __('Country', $sm_domain);
-				$columns_header['billingphone'] 		= __('Phone / Mobile', $sm_domain);
-                $columns_header['_order_total'] 		= __('Last Order Total', $sm_domain);
-				$columns_header['Last_Order'] 		= __('Last Order Date', $sm_domain);
-                $columns_header['count_orders']          = __('Total Number Of Orders', $sm_domain);
-                $columns_header['total_orders'] 		= __('Total Purchased Till Date (By Customer)', $sm_domain);
+				$columns_header['id'] 					= __('User ID', $sm_text_domain);
+				$columns_header['billingfirstname'] 	= __('First Name', $sm_text_domain);
+				$columns_header['billinglastname'] 		= __('Last Name', $sm_text_domain);
+				$columns_header['billingemail'] 		= __('E-mail ID', $sm_text_domain);
+				$columns_header['billingaddress'] 		= __('Address', $sm_text_domain);
+				$columns_header['billingpostcode'] 		= __('Postcode', $sm_text_domain);
+				$columns_header['billingcity'] 			= __('City', $sm_text_domain);
+				$columns_header['billingstate'] 		= __('State / Region', $sm_text_domain);
+				$columns_header['billingcountry'] 		= __('Country', $sm_text_domain);
+				$columns_header['billingphone'] 		= __('Phone / Mobile', $sm_text_domain);
+                $columns_header['_order_total'] 		= __('Last Order Total', $sm_text_domain);
+				$columns_header['Last_Order'] 		= __('Last Order Date', $sm_text_domain);
+                $columns_header['count_orders']          = __('Total Number Of Orders', $sm_text_domain);
+                $columns_header['total_orders'] 		= __('Total Purchased Till Date (By Customer)', $sm_text_domain);
 				
 			break;
 			
 		case 'Orders':
-				$columns_header['id'] 						= __('Order ID', $sm_domain);
-				$columns_header['date'] 					= __('Order Date', $sm_domain);
-				$columns_header['billingfirstname'] 		= __('Billing First Name', $sm_domain);
-				$columns_header['billinglastname'] 			= __('Billing Last Name', $sm_domain);
-				$columns_header['billingemail'] 			= __('Billing E-mail ID', $sm_domain);
-                $columns_header['billingphone'] 			= __('Billing Phone Number', $sm_domain);
-				$columns_header['amount'] 					= __('Order Total', $sm_domain);
-				$columns_header['details'] 					= __('Total No. of Items', $sm_domain);
-				$columns_header['products_name'] 			= __('Order Items (Product Name[SKU])', $sm_domain);
-				$columns_header['order_status'] 			= __('Order Status', $sm_domain);
-				$columns_header['track_id'] 				= __('Track ID', $sm_domain);
-				$columns_header['notes'] 					= __('Order Notes', $sm_domain);
-				$columns_header['shippingfirstname'] 		= __('Shipping First Name', $sm_domain);
-				$columns_header['shippinglastname'] 		= __('Shipping Last Name', $sm_domain);
-				$columns_header['shippingaddress'] 			= __('Shipping Address', $sm_domain);
-				$columns_header['shippingpostcode'] 		= __('Shipping Postcode', $sm_domain);
-				$columns_header['shippingcity'] 			= __('Shipping City', $sm_domain);
-				$columns_header['shippingstate'] 			= __('Shipping State / Region', $sm_domain);
-				$columns_header['shippingcountry'] 			= __('Shippping Country', $sm_domain);
+				$columns_header['id'] 						= __('Order ID', $sm_text_domain);
+				$columns_header['date'] 					= __('Order Date', $sm_text_domain);
+				$columns_header['billingfirstname'] 		= __('Billing First Name', $sm_text_domain);
+				$columns_header['billinglastname'] 			= __('Billing Last Name', $sm_text_domain);
+				$columns_header['billingemail'] 			= __('Billing E-mail ID', $sm_text_domain);
+                $columns_header['billingphone'] 			= __('Billing Phone Number', $sm_text_domain);
+				$columns_header['amount'] 					= __('Order Total', $sm_text_domain);
+				$columns_header['details'] 					= __('Total No. of Items', $sm_text_domain);
+				$columns_header['products_name'] 			= __('Order Items (Product Name[SKU])', $sm_text_domain);
+				$columns_header['order_status'] 			= __('Order Status', $sm_text_domain);
+				$columns_header['track_id'] 				= __('Track ID', $sm_text_domain);
+				$columns_header['notes'] 					= __('Order Notes', $sm_text_domain);
+				$columns_header['shippingfirstname'] 		= __('Shipping First Name', $sm_text_domain);
+				$columns_header['shippinglastname'] 		= __('Shipping Last Name', $sm_text_domain);
+				$columns_header['shippingaddress'] 			= __('Shipping Address', $sm_text_domain);
+				$columns_header['shippingpostcode'] 		= __('Shipping Postcode', $sm_text_domain);
+				$columns_header['shippingcity'] 			= __('Shipping City', $sm_text_domain);
+				$columns_header['shippingstate'] 			= __('Shipping State / Region', $sm_text_domain);
+				$columns_header['shippingcountry'] 			= __('Shippping Country', $sm_text_domain);
 			break;
 	}
 	if ( $active_module == 'Products' ) {
@@ -1711,6 +1716,8 @@ if (isset ( $_GET ['func_nm'] ) && $_GET ['func_nm'] == 'exportCsvWpsc') {
 if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
 
     check_ajax_referer('smart-manager-security','security');
+
+    $sm_dup_limit = (!empty($_POST['dup_limit'])) ? $_POST['dup_limit'] : 20; 
 
     global $wpdb;
     require_once (WP_PLUGIN_DIR . '/wp-e-commerce/wpsc-admin/admin.php');
@@ -1750,7 +1757,7 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
                 $encoded ['val'] = $perval;
         }
         elseif ($result == false) {
-                $encoded ['msg'] = $activeModule . __('s were not duplicated','smart-manager');
+                $encoded ['msg'] = $activeModule . __('s were not duplicated',$sm_text_domain);
         }
         echo json_encode ( $encoded );
 
@@ -1789,10 +1796,10 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
         }
         $dupCnt = count ( $data_dup );
 
-        if ($dupCnt > 20) {
+        if ($dupCnt > $sm_dup_limit) {
             for ($i=0;$i<$dupCnt;) {
                 $count_dup ++;
-                $i = $i+20;
+                $i = $i+$sm_dup_limit;
             }
         }
         else{
@@ -1826,7 +1833,7 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
                 if ($per == 100) {
                     $dupCnt = $_POST['total_records'];
                     if ($data_count == 1) {
-                        $msg = $dupCnt . " " . $activeModule . __(' Duplicated Successfully','smart-manager');
+                        $msg = $dupCnt . " " . $activeModule . __(' Duplicated Successfully',$sm_text_domain);
                     }
                     else if ($data_count == 0) {
                         $msg = "Sorry! Variations Cannot be Duplicated";
@@ -1835,7 +1842,7 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
                         $msg = "Store Duplicated Successfully";
                     }
                     else{
-                        $msg = $dupCnt . " " . $activeModule . __('s Duplicated Successfully','smart-manager');
+                        $msg = $dupCnt . " " . $activeModule . __('s Duplicated Successfully',$sm_text_domain);
                     }
                 }
                 else{
@@ -1879,16 +1886,16 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'delData') {
 		
 		if ($result == true) {
 			if ($delCnt == 1) {
-				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Product Deleted Successfully', 'smart-manager' ); 
+				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Product Deleted Successfully', $sm_text_domain ); 
 				$encoded ['delCnt'] = $delCnt;
 			} else {
-				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Products Deleted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Products Deleted Successfully', $sm_text_domain );
 				$encoded ['delCnt'] = $delCnt;
 			}
 		} elseif ($result == false) {
-			$encoded ['msg'] = __("Products were not deleted", 'smart-manager' );
+			$encoded ['msg'] = __("Products were not deleted", $sm_text_domain );
 		} else {
-			$encoded ['msg'] = __( "Products removed from the grid", 'smart-manager' );
+			$encoded ['msg'] = __( "Products removed from the grid", $sm_text_domain );
 		}
 	} else if ($active_module == 'Orders') {
 		$data = json_decode ( stripslashes ( $_POST ['data'] ) );
@@ -1900,14 +1907,14 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'delData') {
 		if ($output) {
 			//			$encoded ['msg'] = strip_tags($output);
 			if ($delCnt == 1) {
-				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Purchase Log deleted Successfully', 'smart-manager' ) ;
+				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Purchase Log deleted Successfully', $sm_text_domain ) ;
 				$encoded ['delCnt'] = $delCnt;
 			} else {
-				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Purchase Logs deleted Successfully', 'smart-manager' ) ;
+				$encoded ['msg'] = "<b>" . $delCnt . "</b> " . __( 'Purchase Logs deleted Successfully', $sm_text_domain ) ;
 				$encoded ['delCnt'] = $delCnt;
 			}
 		} else
-			$encoded ['msg'] = __( "Purchase Logs removed from the grid", 'smart-manager' ); 
+			$encoded ['msg'] = __( "Purchase Logs removed from the grid", $sm_text_domain ); 
 	}
 	// ob_clean();
 
@@ -2381,28 +2388,28 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'saveData') {
 	if ($result ['result']) {
 		if ($result ['updated'] && $result ['inserted']) {
 			if ($result ['updateCnt'] == 1 && $result ['insertCnt'] == 1)
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', $sm_text_domain );
 			elseif ($result ['updateCnt'] == 1 && $result ['insertCnt'] != 1)
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', $sm_text_domain );
 			elseif ($result ['updateCnt'] != 1 && $result ['insertCnt'] == 1)
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', $sm_text_domain );
 			else
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', 'smart-manager' ); 
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', $sm_text_domain ); 
 		} else {
 			
 			if ($result ['updated'] == 1) {
 				if ($result ['updateCnt'] == 1) {
-					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated Successfully', 'smart-manager' );
+					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated Successfully', $sm_text_domain );
 				} else {
-					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated Successfully', 'smart-manager' );
+					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated Successfully', $sm_text_domain );
                                 }
 			}
 			
 			if ($result ['inserted'] == 1) {
 				if ($result ['insertCnt'] == 1) {
-					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', 'smart-manager' ); 
+					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', $sm_text_domain ); 
                                 } else {
-					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __(' New Records Inserted Successfully', 'smart-manager' );
+					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __(' New Records Inserted Successfully', $sm_text_domain );
                                 }
 			}
 			

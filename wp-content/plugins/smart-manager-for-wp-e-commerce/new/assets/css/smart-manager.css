@@ -16,6 +16,14 @@
 	width: 100%;
 }
 
+/*Added for WP4.4*/
+.sm-h2 {
+    font-size: 23px;
+    font-weight: 400;
+    padding: 9px 15px 4px 0;
+    line-height: 29px;
+}
+
 td {
     border-color: #F0F0F0 !important;
 	/*border-color: #c1c1c1 !important;*/
@@ -76,7 +84,7 @@ input[type=checkbox] {
 }
 
 
-/*CSS fro the dashboard select*/
+/*CSS for the dashboard select*/
 #sm_dashboard_select {
     padding:0px 0px 2px 2px;
     margin: 0;
@@ -121,6 +129,11 @@ input[type=checkbox] {
     position:absolute;
     pointer-events:none;
     display:block;
+}
+
+/*For hiding the update notices on subscriptions page*/
+.update-nag, .updated, .error { 
+  display: none; 
 }
 
 /*==============================================

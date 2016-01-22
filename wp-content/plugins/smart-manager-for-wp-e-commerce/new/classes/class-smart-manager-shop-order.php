@@ -24,7 +24,7 @@ if ( ! class_exists( 'Smart_Manager_Shop_Order' ) ) {
 
 			$post_type_col_index = sm_multidimesional_array_search('posts_post_status', 'index', $dashboard_model[$this->dashboard_key]['columns']);
 			
-			$dashboard_model[$this->dashboard_key]['columns'][$post_type_col_index]['values'] = wc_get_order_statuses();
+			$dashboard_model[$this->dashboard_key]['columns'][$post_type_col_index]['values'] = array_flip(wc_get_order_statuses());
 
 			return $dashboard_model;
 

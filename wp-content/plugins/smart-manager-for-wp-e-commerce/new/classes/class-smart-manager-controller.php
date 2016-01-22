@@ -26,9 +26,11 @@ if ( ! class_exists( 'Smart_Manager_Controller' ) ) {
 		}
 
 		public function sm_footer() {
-			echo '<div id="sm_wp_editor" style="display:none;">';
-			wp_editor( '', 'sm_inline_wp_editor' );
-			echo '</div>';
+			if(isset($_GET['sm_beta']) && $_GET['sm_beta'] == '1'){
+				echo '<div id="sm_wp_editor" style="display:none;">';
+				wp_editor( '', 'sm_inline_wp_editor' );
+				echo '</div>';
+			}
 		}
 
 		//Function to call custom actions on admin_init		

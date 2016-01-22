@@ -56,6 +56,8 @@ Ext.onReady(function () {
 	var updated	  		  = parseInt( updated_data );
 	var dateFormat        = 'M d Y';
 	var limit 		   	  = parseInt( sm_record_limit );
+	var dup_limit 	  	  = parseInt( sm_dup_limit );		  //duplicate products limit.
+	var batch_limit 	  = parseInt( sm_batch_limit );		  //batch products limit.
 	
 	try{
 		//Stateful
@@ -391,19 +393,25 @@ Ext.onReady(function () {
 				if (sm.getCount()) {					
 					if(fileExists == 1) {
 						pagingToolbar.batchButton.enable();
-                    	editorGrid.getTopToolbar().get('duplicateButton').enable();	
+                    	// editorGrid.getTopToolbar().get('duplicateButton').enable();	
                     	if(pagingToolbar.hasOwnProperty('printButton'))
 							pagingToolbar.printButton.enable();
 					}	
-                                        
+                    
+					if(pagingToolbar.hasOwnProperty('duplicateButton'))
+					pagingToolbar.duplicateButton.enable();
+
 					if(pagingToolbar.hasOwnProperty('deleteButton'))
 					pagingToolbar.deleteButton.enable();
 					
 				} else {					
 					pagingToolbar.batchButton.disable();
 					
-                                        editorGrid.getTopToolbar().get('duplicateButton').disable();
-                                        
+                    // editorGrid.getTopToolbar().get('duplicateButton').disable();
+                       
+                    if(pagingToolbar.hasOwnProperty('duplicateButton'))
+					pagingToolbar.duplicateButton.disable();
+
 					if(pagingToolbar.hasOwnProperty('deleteButton'))
 					pagingToolbar.deleteButton.disable();
 					
@@ -539,7 +547,7 @@ Ext.onReady(function () {
 			var addProductButton = new Ext.Button({
 				text   	  : getText('Add product'),
 				tooltip   : getText('Add a new product'),
-				icon      : imgURL + 'add.png',
+				// icon      : imgURL + 'add.png',
 				disabled  : true,
 				hidden    : false,
 				id 	 	  : 'addProductButton',
@@ -568,6 +576,74 @@ Ext.onReady(function () {
 		if(typeof pagingToolbar.addProductButton != 'undefined' && typeof Ext.getCmp('addProductSeparator') != 'undefined'){
 			pagingToolbar.remove(pagingToolbar.addProductButton);
 			pagingToolbar.remove(Ext.getCmp('addProductSeparator'));
+		}
+	};
+
+	//creates new Duplicate Button & a vertical Separator and is added to the pagingtoolbar.
+	var showDuplicateButton = function(){
+		if(typeof pagingToolbar.duplicateButton == 'undefined' && typeof Ext.getCmp('duplicateProductSeparator') == 'undefined'){
+			var duplicateProductSeparator = new Ext.Toolbar.Separator({
+				id: 'duplicateProductSeparator'
+			});
+
+			//Code to create a new button for dulicating product
+	        var duplicateButton = new Ext.SplitButton({
+	                        id          : 'duplicateButton',
+	                        menu: [{
+	                                text: getText('Selected Products'),
+	                                handler: function(){
+	                                    if ( fileExists != 1 ) {
+						Ext.notification.msg('Smart Manager', getText('Duplicate Product feature is available only in Pro version') ); 
+						return;
+	                                    }
+	                                    else{
+	                                        duplicateRecords('selected');
+	                                    }
+	                                }
+	                                },{
+	                                text: getText('Duplicate Store'),
+	                                handler: function(){
+	                                    if ( fileExists != 1 ) {
+						Ext.notification.msg('Smart Manager', getText('Duplicate Store feature is available only in Pro version') ); 
+						return;
+	                                    }
+	                                    else{
+	                                        duplicateRecords('store');
+	                                    }
+	                                }
+	                                }],
+	                        text        : getText('Duplicate'),
+	                        tooltip     : getText('Duplicate Product / Store'),
+	                        // icon        : imgURL + 'duplicate.png',
+	                        scope       : this,
+	                        width       : 100,
+	                        disabled    : true,
+	                        hidden      : false,
+	                        ref         : 'duplicateButton',
+	                        listeners: {
+	                                click: function () {
+	                                    if(this.pressed == true){
+	                                        this.hideMenu();
+	                                        this.pressed = false;
+	                                    }
+	                                    else{
+	                                        this.showMenu();
+	                                        this.menu.visible = true;
+	                                        this.pressed = true;
+	                                    }
+	                                   
+	                                }}
+	                        });
+			pagingToolbar.add(duplicateProductSeparator);
+			pagingToolbar.add(duplicateButton);
+		}
+	};
+
+	// removed Duplicate Button & the vertical Separator from the pagingtoolbar.
+	var hideDuplicateButton = function(){
+		if(typeof pagingToolbar.duplicateButton != 'undefined' && typeof Ext.getCmp('duplicateProductSeparator') != 'undefined'){
+			pagingToolbar.remove(pagingToolbar.duplicateButton);
+			pagingToolbar.remove(Ext.getCmp('duplicateProductSeparator'));
 		}
 	};
 
@@ -622,7 +698,7 @@ Ext.onReady(function () {
 				disabled: true,
 				ref: 'deleteButton',
 				id: 'deleteButton',
-				icon: imgURL + 'delete.png',
+				// icon: imgURL + 'delete.png',
 				scope: this,
 				listeners: { click: function () { deleteRecords(); }}
 			});
@@ -784,7 +860,7 @@ Ext.onReady(function () {
 			hidden: true,
                         dragable:false,
 			renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-				return (value == 0 ? '<img id=editUrl src="' + imgURL + 'fav.gif"/>' : '');
+				return (value == 0 ? '<span id=wpsc_prod_variation_img> </span>' : '');
 			}
 		},
 		{
@@ -1078,9 +1154,10 @@ Ext.onReady(function () {
                         dragable:false,
 			id: 'editLink',
 			renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                            if(record.get('post_parent') == 0) {
-                                return '<img id=editUrl src="' + imgURL + 'edit.gif"/>';
-                            }
+	            if(record.get('post_parent') == 0) {
+	                // return '<img id=editUrl src="' + imgURL + 'edit.gif"/>';
+	                return '<span id=editlink> </span>';
+	            }
 			}
 		},{
 			header: '',
@@ -1376,13 +1453,14 @@ Ext.onReady(function () {
 		hidePrintButton();
 		hideDeleteButton();
 		showAddProductButton();
+		showDuplicateButton();
 		showDeleteButton();
 		pagingToolbar.doLayout(true,true);
 				
 		for(var i=2;i<=8;i++)
 		editorGrid.getTopToolbar().get(i).hide();
 		editorGrid.getTopToolbar().get('incVariation').show();
-        editorGrid.getTopToolbar().get('duplicateButton').show();
+        // editorGrid.getTopToolbar().get('duplicateButton').show();
 
 		productsStore.load();
 		pagingToolbar.bind(productsStore);
@@ -1464,7 +1542,7 @@ var pagingToolbar = new Ext.PagingToolbar({
 	{
 		text: getText('Batch Update'), 
 		tooltip: getText('Update selected items'),
-		icon: imgURL + 'batch_update.png',
+		// icon: imgURL + 'batch_update.png',
 		id: 'batchUpdateButton',
 		disabled: true,
 		ref: 'batchButton',
@@ -1495,7 +1573,7 @@ var pagingToolbar = new Ext.PagingToolbar({
 	},{xtype:'tbseparator', id:'beforeSaveSeparator'},{
 		text: getText('Save'),
 		tooltip: getText('Save all Changes'),
-		icon: imgURL + 'save.png',
+		icon: sm_beta_imgURL + 'jqgrid/save_img-blue-15X15.png',
 		disabled: true,
 		scope: this,
 		ref: 'saveButton',
@@ -1513,7 +1591,7 @@ var pagingToolbar = new Ext.PagingToolbar({
 	{
 		text: getText('Export CSV'),
 		tooltip: getText('Download CSV file'), 
-		icon: imgURL + 'export_csv.gif',
+		// icon: imgURL + 'export_csv.gif',
 		id: 'exportCsvButton',
 		ref: 'exportButton',
 		disabled: sm_disabled_lite(),
@@ -1749,6 +1827,7 @@ var pagingActivePage = pagingToolbar.getPageData().activePage;
 					params: {
 						cmd : 'dupData',
                                                 part : i+1,
+                                                dup_limit: dup_limit,
                                                 dupcnt : dupcnt,
                                                 fdupcnt : fdupcnt,
                                                 count : count,
@@ -1797,6 +1876,7 @@ var pagingActivePage = pagingToolbar.getPageData().activePage;
                             params: {
                                     cmd: 'dupData',
                                     part: 'initial',
+                                    dup_limit: dup_limit,
                                     menu : menu,
                                     active_module: SM.activeModule,
                                     incvariation: SM.incVariation,
@@ -1919,56 +1999,6 @@ var pagingActivePage = pagingToolbar.getPageData().activePage;
 		}
 	};
 	
-        //Code to create a new button for dulicating product
-        SM.duplicateButton = new Ext.SplitButton({
-                        id          : 'duplicateButton',
-                        menu: [{
-                                text: getText('Selected Products'),
-                                handler: function(){
-                                    if ( fileExists != 1 ) {
-					Ext.notification.msg('Smart Manager', getText('Duplicate Product feature is available only in Pro version') ); 
-					return;
-                                    }
-                                    else{
-                                        duplicateRecords('selected');
-                                    }
-                                }
-                                },{
-                                text: getText('Duplicate Store'),
-                                handler: function(){
-                                    if ( fileExists != 1 ) {
-					Ext.notification.msg('Smart Manager', getText('Duplicate Store feature is available only in Pro version') ); 
-					return;
-                                    }
-                                    else{
-                                        duplicateRecords('store');
-                                    }
-                                }
-                                }],
-                        text        : getText('Duplicate Product'),
-                        tooltip     : getText('Duplicate Product'),
-                        icon        : imgURL + 'duplicate.png',
-                        scope       : this,
-                        width       : 100,
-                        disabled    : true,
-                        hidden      : false,
-                        ref         : 'SM.duplicateButton',
-                        listeners: {
-                                click: function () {
-                                    if(this.pressed == true){
-                                        this.hideMenu();
-                                        this.pressed = false;
-                                    }
-                                    else{
-                                        this.showMenu();
-                                        this.menu.visible = true;
-                                        this.pressed = true;
-                                    }
-                                   
-                                }}
-                        });
-        
-
         
 var mask = new Ext.LoadMask(Ext.getBody(), {
 	msg: getText('Please wait') + "..."
@@ -2429,12 +2459,13 @@ var batchMask = new Ext.LoadMask(Ext.getBody(), {
 			hidePrintButton();
 			hideDeleteButton();
 			hideAddProductButton();
+			hideDuplicateButton();
 			pagingToolbar.doLayout(true,true);
 			
 			for(var i=2;i<=8;i++)
 			editorGrid.getTopToolbar().get(i).hide();
 			editorGrid.getTopToolbar().get('incVariation').hide();
-            editorGrid.getTopToolbar().get('duplicateButton').hide();
+            // editorGrid.getTopToolbar().get('duplicateButton').hide();
 
 			if(customersFields != 0)
 			fieldsStore.loadData(customersFields);
@@ -2811,6 +2842,7 @@ if(isWPSC38 == '1'){
 			fieldsStore.loadData(ordersFields);
 			
 			hideAddProductButton();
+			hideDuplicateButton();
 			hideDeleteButton();
 			
 			showPrintButton();
@@ -2820,7 +2852,7 @@ if(isWPSC38 == '1'){
 			for(var i=2;i<=8;i++)
 			editorGrid.getTopToolbar().get(i).show();
 			editorGrid.getTopToolbar().get('incVariation').hide();
-                        editorGrid.getTopToolbar().get('duplicateButton').hide();
+                        // editorGrid.getTopToolbar().get('duplicateButton').hide();
 
 			ordersStore.load();
 			editorGrid.reconfigure(ordersStore,ordersColumnModel);
@@ -2990,6 +3022,13 @@ var categoryStore = new Ext.data.ArrayStore({
 	autoDestroy: false
 });
 
+var postStatusStoreData = new Array();
+    postStatusStoreData = [
+                            ['publish', getText('Publish')],
+                            ['pending', getText('Pending Review')],
+                            ['draft', getText('Draft')]
+                          ];
+
 //store to populate weightUnits in fifth combobox(weightUnits combobox) on selecting 'weight' from first combobox(field combobox)
 //and 'set to' from second combobox(actions combobox).
 	weightUnitStore = new Ext.data.Store({
@@ -3062,7 +3101,7 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 							if(SM['productsCols'][this.value] != undefined ){
 								var categoryActionType = SM['productsCols'][this.value].actionType;
 							}							
-							if (field_type == 'category' || categoryActionType == 'category_actions') {
+							if (field_type == 'category' || categoryActionType == 'category_actions' || field_name == 'Publish') {
 								setTextfield.hide();
 								comboWeightUnitCmp.hide();
                                                                 comboCategoriesActionCmp.show();
@@ -3073,7 +3112,7 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 								comboWeightUnitCmp.hide();
 								comboCategoriesActionCmp.hide();
                                                                 lblImg.hide();
-							}else if (field_name == 'Stock: Quantity Limited' || field_name == 'Publish' || field_name == 'Stock: Inform When Out Of Stock' || field_name == 'Disregard Shipping') {								
+							}else if (field_name == 'Stock: Quantity Limited' || field_name == 'Stock: Inform When Out Of Stock' || field_name == 'Disregard Shipping' || actionType == 'YesNoActions') {								
 								setTextfield.hide();
 								comboWeightUnitCmp.hide();
 								comboCategoriesActionCmp.hide();
@@ -3302,17 +3341,24 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 							categoryStore.loadData(categories[comboFieldCmp.getValue()]);
 						}else{
 							var category = categories["category-"+SM['productsCols'][selectedValue].colFilter];
-							if ( category instanceof Object ) {
-								var categoryData = [];
-								for ( var catId in category  ) {
-									if ( category[catId] != undefined ) {
-										categoryData.push(category[catId]);
+							var field_name = comboFieldCmp.store.reader.jsonData.items[selectedFieldIndex].name;
+
+							if ( field_name == 'Publish' ) {
+                                categoryStore.loadData( postStatusStoreData );
+                            } else {
+                            	if ( category instanceof Object ) {
+									var categoryData = [];
+									for ( var catId in category  ) {
+										if ( category[catId] != undefined ) {
+											categoryData.push(category[catId]);
+										}
 									}
-								}
-								categoryStore.loadData(categoryData);
-							} else {
-								categoryStore.loadData(category);
-							}
+									categoryStore.loadData(categoryData);
+								} else {
+									categoryStore.loadData(category);
+								}	
+                            }
+							
 					    }
 				    }
 				}
@@ -3471,8 +3517,9 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
                                 }
                         }, '->',
 			{
-				icon: imgURL + 'del_row.png',
+				// icon: imgURL + 'del_row.png',
 				tooltip: getText('Delete Row'),
+				id: 'bu_delete_row',
 				handler: function () {
 					toolbarCount--;
 					var toolbarParent = this.findParentByType(batchUpdateToolbarInstance, true);
@@ -3492,7 +3539,8 @@ var batchUpdateToolbar = new Ext.Toolbar({
 		text: getText('Add Row'), 
 		tooltip: getText('Add a new row'),
 		ref: 'addRowButton',
-		icon: imgURL + 'add_row.png',
+		id: 'bu_add_row_main',
+		// icon: imgURL + 'add_row.png',
 		handler: function () {
 			var newBatchUpdateToolbar = new batchUpdateToolbarInstance();
 			toolbarCount++;
@@ -3515,7 +3563,7 @@ var batchUpdatePanel = new Ext.Panel({
 		id: 'resetButton',
 		ref: 'resetButton',
 		tooltip: getText('Reset all fields'),
-                icon: imgURL + '/default/grid/refresh.gif',
+                // icon: imgURL + '/default/grid/refresh.gif',
                 disabled: false,
 		listeners: { click: function () {
                         batchupdate_reset(); // to reset the batch update window on store change 
@@ -3528,7 +3576,7 @@ var batchUpdatePanel = new Ext.Panel({
 		id: 'updateButton',
 		ref: 'updateButton',
 		tooltip: getText('Apply all changes'),
-		icon: imgURL + 'batch_update.png',
+		icon: sm_beta_imgURL + 'jqgrid/save_img-blue-15X15.png',
 		disabled: false,
 		listeners: { click: function () {
 			var clickRadio = Ext.getCmp('updateItemsOrStore').getValue();
@@ -3555,7 +3603,7 @@ var batchUpdatePanel = new Ext.Panel({
 				}
 
 			}
-			batchUpdateRecords(batchUpdatePanel,toolbarCount,cnt_array,store,jsonURL,batchUpdateWindow,radioValue,flag,pagingToolbar,products_search_flag);
+			batchUpdateRecords(batchUpdatePanel,toolbarCount,cnt_array,store,jsonURL,batchUpdateWindow,radioValue,flag,pagingToolbar,products_search_flag,batch_limit);
 		}}
 	}]
 });
@@ -3714,12 +3762,16 @@ var showCustomerDetails = function(record,rowIndex){
         var wWidth = 0;
 
         //code to handle the sizing od the Smart Manager Grid w.r.to collapse menu
-        if ( !jQuery(document.body).hasClass('folded') ) {
-            wWidth  = document.documentElement.offsetWidth - 183;
-        }
-        else {
-            wWidth  = document.documentElement.offsetWidth - 67;
-        }
+        if ( document.documentElement.offsetWidth > 557 ) {
+	        if ( !jQuery(document.body).hasClass('folded') ) {
+	            wWidth  = document.documentElement.offsetWidth - 183;
+	        }
+	        else {
+	            wWidth  = document.documentElement.offsetWidth - 67;
+	        }
+	    } else {
+	    	wWidth = 1000;
+	    }
     
         var variation_state=""; // Variable to handle the incVariation checkbox state
         var column_move = false;
@@ -3748,11 +3800,11 @@ var showCustomerDetails = function(record,rowIndex){
 	sm: editorGridSelectionModel,
 	tbar: [ SM.dashboardComboBox,
 			{xtype: 'tbspacer',id:'afterComboTbspacer', width: 15},
-		   {text:'From:', id: 'fromTextId'},fromDateTxt,{icon: imgURL + 'calendar.gif', menu: fromDateMenu, id:'fromDateMenuId'},
-			{text:'To:', id:'toTextId'},toDateTxt,{icon: imgURL + 'calendar.gif', menu: toDateMenu, id:'toDateMenuId'},
+		   {text:'From:', id: 'fromTextId'},fromDateTxt,{menu: fromDateMenu, id:'fromDateMenuId'},
+			{text:'To:', id:'toTextId'},toDateTxt,{menu: toDateMenu, id:'toDateMenuId'},
 			toComboSearchBox,
 			{xtype: 'tbspacer', id:'afterDateMenuTbspacer', width: 15},
-			SM.searchTextField,{ icon: imgURL + 'search.png', id:'searchIconId' },
+			SM.searchTextField,{ id:'searchIconId' },
 
 			//Advanced Search Box [only for Products]
 			// '<div id="sm_advanced_search_content" style="background-color:#d0def0;margin-top: -5px;margin-left: -10px;float:left;">'+
@@ -3760,8 +3812,8 @@ var showCustomerDetails = function(record,rowIndex){
 			'<div style="width: 100%;"> <div id="sm_advanced_search_box" > <div id="sm_advanced_search_box_0" style="width:80%;margin-left:7px;margin-bottom:5px"> </div>'+
 			'<input type="text" id="sm_advanced_search_box_value_0" name="sm_advanced_search_box_value_0" hidden> </div>'+ 
 			'<input type="text" id="sm_advanced_search_query" hidden>'+
-			'<img src='+imgURL+'add_row.png id="sm_advanced_search_or" style="float: left;margin-top: -23px;margin-left: 83%;opacity: 0.75;cursor: pointer;" title="Add Another Condition">'+
-			'<button id="sm_advanced_search_submit" style="float: left;margin-top: -28px;margin-left: 88%;cursor: pointer;"><img src='+imgURL+'search.png style="vertical-align:middle"> Search </button>'+
+			'<span id="sm_advanced_search_or" style="float: left;margin-top: -23px;margin-left: 83%;opacity: 0.75;cursor: pointer;" title="Add Another Condition"> </span>'+
+			'<button id="sm_advanced_search_submit" style="float: left;margin-top: -28px;margin-left: 88%;cursor: pointer;"> Search </button>'+
 			'</div>',
 
 			{xtype: 'tbspacer', id:'afterDateMenuTbspacer', width: 10},
@@ -3807,9 +3859,7 @@ var showCustomerDetails = function(record,rowIndex){
 			 			}
 			 		}
 			 	}
-			},
-                         {xtype: 'tbspacer',width: 10, id:'afterShowVariation'},
-                         SM.duplicateButton
+			}
                         ],
 	scrollOffset: 50,
 	listeners: {
@@ -4071,7 +4121,14 @@ var showCustomerDetails = function(record,rowIndex){
 
 		viewready: function(grid){
 			showSelectedModule( SM.dashboardComboBox.getValue() );
-                        SM.dashboardComboBox.setValue( getText( SM.dashboardComboBox.getValue() ) );
+            SM.dashboardComboBox.setValue( getText( SM.dashboardComboBox.getValue() ) );
+
+            jQuery( "#dashboardComboBox" ).wrap( "<label id='dashboardComboBox_lbl'></label>" );
+            jQuery( "#dashboardComboBox_lbl" ).next('img').remove();
+            jQuery( "#pagingToolbar" ).css({'border': 0, 'background-image' : 'none'});
+
+            //Fix for WP4.4
+			jQuery("#editor-grid").find('.x-panel-bwrap').css('overflow','visible');
 		},
 
         applyState : function(state){

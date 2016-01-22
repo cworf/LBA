@@ -199,25 +199,25 @@ if ( ! class_exists( 'Smart_Manager_Product' ) ) {
 					} else if ( $src == '_sale_price_dates_from' || $src == '_sale_price_dates_to' ) {
 						$column['type'] = 'datetime';
 					} else if ($src == '_visibility') {
-						$column ['values'] = array('visible' => __('Catalog & Search'),
-												   'catalog' => __('Catalog'),
-												   'search' => __('Search'),
-												   'hidden' => __('Hidden'));
+						$column ['values'] = array('visible' => __('Catalog & Search', Smart_Manager::$text_domain),
+												   'catalog' => __('Catalog', Smart_Manager::$text_domain),
+												   'search' => __('Search', Smart_Manager::$text_domain),
+												   'hidden' => __('Hidden', Smart_Manager::$text_domain));
 					} else if ($src == '_tax_status') {
-						$column ['values'] = array('taxable' => __('Taxable'),
-												   'shipping' => __('Shipping only'),
-												   'none' => __('None'));
+						$column ['values'] = array('taxable' => __('Taxable', Smart_Manager::$text_domain),
+												   'shipping' => __('Shipping only', Smart_Manager::$text_domain),
+												   'none' => __('None', Smart_Manager::$text_domain));
 					} else if ($src == '_stock_status') {
-						$column ['values'] = array('instock' => __('In stock'),
-												   'outofstock' => __('Out of stock'));
+						$column ['values'] = array('instock' => __('In stock', Smart_Manager::$text_domain),
+												   'outofstock' => __('Out of stock', Smart_Manager::$text_domain));
 					} else if ($src == '_tax_class') {
-						$column ['values'] = array('' => __('Standard'),
-												   'reduced-rate' => __('Reduced Rate'),
-												   'zero-rate' => __('Zero Rate'));
+						$column ['values'] = array('' => __('Standard', Smart_Manager::$text_domain),
+												   'reduced-rate' => __('Reduced Rate', Smart_Manager::$text_domain),
+												   'zero-rate' => __('Zero Rate', Smart_Manager::$text_domain));
 					} else if ($src == '_backorders') {
-						$column ['values'] = array('no' => __('Do Not Allow'),
-												   'notify' => __('Allow, but notify customer'),
-												   'yes' => __('Allow'));
+						$column ['values'] = array('no' => __('Do Not Allow', Smart_Manager::$text_domain),
+												   'notify' => __('Allow, but notify customer', Smart_Manager::$text_domain),
+												   'yes' => __('Allow', Smart_Manager::$text_domain));
 					}
 				}
 			}
@@ -229,7 +229,7 @@ if ( ! class_exists( 'Smart_Manager_Product' ) ) {
 				$column_model [$index] = array();
 				$column_model [$index]['src'] = 'custom/product_attributes';
 				$column_model [$index]['index'] = sanitize_title(str_replace('/', '_', $column_model [$index]['src'])); // generate slug using the wordpress function if not given 
-				$column_model [$index]['name'] = __(ucwords(str_replace('_', ' ', 'attributes')));
+				$column_model [$index]['name'] = __(ucwords(str_replace('_', ' ', 'attributes')), Smart_Manager::$text_domain);
 				$column_model [$index]['type'] = 'serialized';
 				$column_model [$index]['hidden']	= true;
 				$column_model [$index]['editable']	= false;
@@ -548,6 +548,10 @@ if ( ! class_exists( 'Smart_Manager_Product' ) ) {
 						}
 					}
 				}
+			}
+
+			if( empty($attr_values) ) {
+				return;
 			}
 
 			foreach ($edited_data as $edited_row) {

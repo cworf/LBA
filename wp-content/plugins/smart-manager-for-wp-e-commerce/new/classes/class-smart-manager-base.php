@@ -6,6 +6,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 	class Smart_Manager_Base {
 
 		public $dashboard_key = '',
+			$post_type = '',
 			$default_store_model = array(),
 			$terms_val_parent = array(),
 			$req_params = array(),
@@ -83,7 +84,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 					$field_nm = (!empty($posts_col['Field'])) ? $posts_col['Field'] : '';
 					$temp ['src'] = 'posts/'.$field_nm;
 					$temp ['index'] = sanitize_title(str_replace('/', '_', $temp ['src'])); // generate slug using the wordpress function if not given 
-					$temp ['name'] = __(ucwords(str_replace('_', ' ', $field_nm)));
+					$temp ['name'] = __(ucwords(str_replace('_', ' ', $field_nm)), Smart_Manager::$text_domain);
 
 					$type = 'string';
 					$temp ['width'] = 100;
@@ -164,9 +165,9 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 					$temp ['values'] = array();
 					if ($field_nm == 'post_status') {
 						$temp ['type'] = 'list';
-						$temp ['values'] = array('publish' => __('Publish'),
-												 'pending' => __('Pending Review'),
-												 'draft' => __('Draft'));
+						$temp ['values'] = array('publish' => __('Publish', Smart_Manager::$text_domain),
+												 'pending' => __('Pending Review', Smart_Manager::$text_domain),
+												 'draft' => __('Draft', Smart_Manager::$text_domain));
 					}
 
 					if ( $field_nm == 'ID' || $field_nm == 'post_title' || $field_nm == 'post_date' || $field_nm == 'post_name'
@@ -236,7 +237,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 				$col_model [$index] = array();
 				$col_model [$index]['src'] = 'postmeta/post_id';
 				$col_model [$index]['index'] = sanitize_title(str_replace('/', '_', $col_model [$index]['src'])); // generate slug using the wordpress function if not given 
-				$col_model [$index]['name'] = __(ucwords(str_replace('_', ' ', 'post_id')));
+				$col_model [$index]['name'] = __(ucwords(str_replace('_', ' ', 'post_id')), Smart_Manager::$text_domain);
 				$col_model [$index]['type'] = 'number';
 				$col_model [$index]['hidden']	= true;
 				$col_model [$index]['allow_showhide'] = false;
@@ -251,7 +252,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 
 					$temp ['src'] = 'postmeta/meta_key='.$meta_key.'/meta_value='.$meta_key;
 					$temp ['index'] = sanitize_title(str_replace(array('/','='), '_', $temp ['src'])); // generate slug using the wordpress function if not given 
-					$temp ['name'] = __(ucwords(str_replace('_', ' ', $meta_key)));
+					$temp ['name'] = __(ucwords(str_replace('_', ' ', $meta_key)), Smart_Manager::$text_domain);
 
 					$temp ['width'] = 100;
 
@@ -307,7 +308,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 				$col_model [$index] = array();
 				$col_model [$index]['src'] = 'terms/object_id';
 				$col_model [$index]['index'] = sanitize_title(str_replace('/', '_', $col_model [$index]['src'])); // generate slug using the wordpress function if not given 
-				$col_model [$index]['name'] = __(ucwords(str_replace('_', ' ', 'object_id')));
+				$col_model [$index]['name'] = __(ucwords(str_replace('_', ' ', 'object_id')), Smart_Manager::$text_domain);
 				$col_model [$index]['type'] = 'number';
 				$col_model [$index]['allow_showhide'] = false;
 				$col_model [$index]['hidden']	= true;
@@ -336,7 +337,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 
 					$terms_col ['src'] 				= 'terms/'.$taxonomy;
 					$terms_col ['index'] 			= sanitize_title(str_replace(array('/','='), '_', $terms_col ['src'])); // generate slug using the wordpress function if not given 
-					$terms_col ['name'] 			= __(ucwords(str_replace('_', ' ', $taxonomy)));
+					$terms_col ['name'] 			= __(ucwords(str_replace('_', ' ', $taxonomy)), Smart_Manager::$text_domain);
 
 					$terms_col ['width'] = 200;
 
@@ -366,7 +367,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 
 			$this->default_store_model = array ();
 			$this->default_store_model[$this->dashboard_key] = array( 
-																	'display_name' => __(ucwords(str_replace('_', ' ', $this->dashboard_key))),
+																	'display_name' => __(ucwords(str_replace('_', ' ', $this->dashboard_key)), Smart_Manager::$text_domain),
 																	'tables' => array(
 																					'posts' 				=> array(
 																													'pkey' => 'ID',
@@ -480,7 +481,7 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 						$column_model['values'] = (!empty($this->terms_val_parent[$col_nm])) ? $this->terms_val_parent[$col_nm] : $column_model['values'];
 					}
 
-					if (!isset($column_model['position']) && $column_model['position'] == '') continue;
+					if( empty($column_model['position']) ) continue;
 						
 					$priority_columns[] = $column_model;
 					unset($final_column_model[$key]);
@@ -780,11 +781,16 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 
 			$edited_data = (!empty($this->req_params['edited_data'])) ? json_decode(stripslashes($this->req_params['edited_data']), true) : array();
 			$current_store_model = get_transient( 'sm_dashboard_model_'.$this->dashboard_key );
+
+			if( empty($current_store_model) ){
+				$current_store_model = $this->get_dashboard_model();
+			}
+
 			$table_model = (!empty($current_store_model[$this->dashboard_key]['tables'])) ? $current_store_model[$this->dashboard_key]['tables'] : array();
 			$col_model = (!empty($current_store_model[$this->dashboard_key]['columns'])) ? $current_store_model[$this->dashboard_key]['columns'] : array();
 
-			if (empty($edited_data) || empty($table_model) || empty($col_model)) return;
-
+			if (empty($edited_data) || empty($table_model) || empty($col_model)) return;			
+			
 			$edited_data = apply_filters('sm_inline_update_pre', $edited_data);
 
 			$data_cols_serialized = array();
@@ -821,7 +827,6 @@ if ( ! class_exists( 'Smart_Manager_Base' ) ) {
 					}
 
 					$data_cols_multiselect_val[$col_nm] = $final_multiselect_val;
-					
 				} else if ($col['type'] == 'list') {
 					$data_cols_list[] = $col_nm;
 					$data_cols_list_val[$col_nm] = (!empty($col['values'])) ? $col['values'] : array();

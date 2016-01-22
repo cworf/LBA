@@ -32,9 +32,14 @@ if ( !is_user_logged_in() || !is_admin() || ( $current_user_role[0] != 'administ
     exit;
 }
 
+global $sm_text_domain;
+
+// creating a domain name for mutilingual
+$sm_text_domain = (defined('SM_TEXT_DOMAIN')) ? SM_TEXT_DOMAIN : 'smart-manager-for-wp-e-commerce';
+
 include_once (ABSPATH . 'wp-includes/wp-db.php');
 include_once (ABSPATH . 'wp-includes/functions.php');
-load_textdomain( 'smart-manager', WP_PLUGIN_DIR . '/' . dirname( dirname(plugin_basename( __FILE__ ))) . '/languages/smart-manager-' . WPLANG . '.mo' );
+load_textdomain( $sm_text_domain, WP_PLUGIN_DIR . '/' . dirname( dirname(plugin_basename( __FILE__ ))) . '/languages/smart-manager-' . WPLANG . '.mo' );
 
 global $wpdb;
 $limit = 10;
@@ -139,7 +144,7 @@ function get_data_wpsc_37 ( $post, $offset, $limit, $is_export = false ) {
 		if ($num_rows == 0) {
 			$encoded ['totalCount'] = '';
 			$encoded ['items'] = '';
-			$encoded ['msg'] = __( 'No Records Found','smart-manager' ) ;
+			$encoded ['msg'] = __( 'No Records Found',$sm_text_domain ) ;
 		} else {
 			foreach ( (array)$record as $data )
 				$records[] = (array)$data;
@@ -314,7 +319,7 @@ elseif ($active_module == 'Orders') {
 		if ($num_rows == 0) {
 			$encoded ['totalCount'] = '';
 			$encoded ['items'] = '';
-			$encoded ['msg'] = __( 'No Records Found', 'smart-manager' ) ;
+			$encoded ['msg'] = __( 'No Records Found', $sm_text_domain ) ;
 		} else {
 			$count = 0;
 			foreach ( $result as $obj ) {
@@ -439,7 +444,7 @@ elseif ($active_module == 'Orders') {
 		if ($num_rows == 0) {
 			$encoded ['totalCount'] = '';
 			$encoded ['items'] = '';
-			$encoded ['msg'] = __( 'No Records Found' , 'smart-manager');
+			$encoded ['msg'] = __( 'No Records Found' , $sm_text_domain);
 		} else {
 			foreach ( $result as $obj ) {
 				$data = (array) $obj;
@@ -588,14 +593,14 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'delData') {
 		$delCnt = mysql_affected_rows ();
 		if ($result) {
 			if ($delCnt == 1) {
-				$encoded ['msg'] = $delCnt . " " . __( 'Product deleted Successfully' , 'smart-manager');
+				$encoded ['msg'] = $delCnt . " " . __( 'Product deleted Successfully' , $sm_text_domain);
 				$encoded ['delCnt'] = $delCnt;
 			} else {
-				$encoded ['msg'] = $delCnt . " " . __( 'Products deleted Successfully' , 'smart-manager'); 
+				$encoded ['msg'] = $delCnt . " " . __( 'Products deleted Successfully' , $sm_text_domain); 
 				$encoded ['delCnt'] = $delCnt;
 			}
 		} else
-			$encoded ['msg'] = __( "Products removed from the grid" , 'smart-manager'); 
+			$encoded ['msg'] = __( "Products removed from the grid" , $sm_text_domain); 
 	} else if ($active_module == 'Orders') {
 		global $purchlogs;
 		$data = json_decode ( stripslashes ( $_POST ['data'] ) );
@@ -606,14 +611,14 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'delData') {
 		if ($output) {
 			//			$encoded ['msg'] = strip_tags($output);
 			if ($delCnt == 1) {
-				$encoded ['msg'] = $delCnt . " " . __( 'Purchase Log deleted Successfully' , 'smart-manager');
+				$encoded ['msg'] = $delCnt . " " . __( 'Purchase Log deleted Successfully' , $sm_text_domain);
 				$encoded ['delCnt'] = $delCnt;
 			} else {
-				$encoded ['msg'] = $delCnt . " " . __( 'Purchase Logs deleted Successfully' , 'smart-manager');
+				$encoded ['msg'] = $delCnt . " " . __( 'Purchase Logs deleted Successfully' , $sm_text_domain);
 				$encoded ['delCnt'] = $delCnt;
 			}
 		} else
-			$encoded ['msg'] = __( "Purchase Logs removed from the grid" . 'smart-manager'); 
+			$encoded ['msg'] = __( "Purchase Logs removed from the grid" . $sm_text_domain); 
 	}
 	// ob_clean();
 
@@ -663,26 +668,26 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'saveData') {
 	if ($result ['result']) {
 		if ($result ['updated'] && $result ['inserted']) {
 			if ($result ['updateCnt'] == 1 && $result ['insertCnt'] == 1)
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', $sm_text_domain );
 			elseif ($result ['updateCnt'] == 1 && $result ['insertCnt'] != 1)
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', $sm_text_domain );
 			elseif ($result ['updateCnt'] != 1 && $result ['insertCnt'] == 1)
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', 'smart-manager' ); 
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Record Inserted Successfully', $sm_text_domain ); 
 			else
-				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', 'smart-manager' ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', 'smart-manager' );
+				$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated and', $sm_text_domain ) . "<br><b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', $sm_text_domain );
 		} else {
 			if ($result ['updated'] == 1) {
 				if ($result ['updateCnt'] == 1)
-					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated Successfully', 'smart-manager' );
+					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Record Updated Successfully', $sm_text_domain );
 				else
-					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated Successfully', 'smart-manager' ); 
+					$encoded ['msg'] = "<b>" . $result ['updateCnt'] . "</b> " . __( 'Records Updated Successfully', $sm_text_domain ); 
 			}
 			
 			if ($result ['inserted'] == 1) {
 				if ($result ['updateCnt'] == 1)
-					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', 'smart-manager' );
+					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', $sm_text_domain );
 				else
-					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', 'smart-manager' ); 
+					$encoded ['msg'] = "<b>" . $result ['insertCnt'] . "</b> " . __( 'New Records Inserted Successfully', $sm_text_domain ); 
 			}
 		}
 	}

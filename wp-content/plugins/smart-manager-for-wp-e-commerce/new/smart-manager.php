@@ -3,8 +3,9 @@
 if ( ! class_exists( 'Smart_Manager' ) ) {
 	class Smart_Manager {
 
-		public  $text_domain 	= '',
-				$plugin_path 	= '',
+		static $text_domain;
+
+		public  $plugin_path 	= '',
 				$plugin_url 	= '',
 				$plugin_info 	= '',
 				$version 		= '',
@@ -16,7 +17,7 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 			include_once (ABSPATH . WPINC . '/functions.php');
 
-			$this->text_domain = 'smart_manager';
+			self::$text_domain = (defined('SM_TEXT_DOMAIN')) ? SM_TEXT_DOMAIN : 'smart-manager-for-wp-e-commerce';
         	$this->plugin_path  = untrailingslashit( plugin_dir_path( __FILE__ ) );
 			$this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) );
 
@@ -90,6 +91,7 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 
 			// Code for loading custom js automatically
 			$custom_js = glob( $this->plugin_path .'/assets/js/*.js' );
+			$index = 0;
 
 	        foreach ( $custom_js as $file ) {
 
@@ -114,19 +116,22 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 			$sm_dashboards = $wpdb->get_col($query_post_types);
 
 			$sm_dashboards_final = array();
-			$sm_dashboards_final ['post'] = __(ucwords('post'));
-			$sm_dashboards_final ['page'] = __(ucwords('page'));
+			$sm_dashboards_final ['post'] = __(ucwords('post'), self::$text_domain);
+			$sm_dashboards_final ['page'] = __(ucwords('page'), self::$text_domain);
 
-			$exclude_from_dashboards = array('product_variation');
-
-			$dashboard_names = array( 'shop_order' => 'Order' );
+			if (! is_plugin_active( 'woocommerce/woocommerce.php' )) {
+				$exclude_from_dashboards = array('product_variation', 'product', 'shop_order', 'shop_coupon');
+			} else {
+				$exclude_from_dashboards = array('product_variation');
+				$dashboard_names = array( 'shop_order' => 'Orders', 'shop_coupon' => 'Coupons', 'product' => 'Products' );
+			}
 
 			if (!empty($sm_dashboards)) {
 				foreach ($sm_dashboards as $sm_dashboard) {
 
 					if (in_array($sm_dashboard, $exclude_from_dashboards)) continue;
 
-					$sm_dashboards_final [$sm_dashboard] = (!empty($dashboard_names[$sm_dashboard])) ? $dashboard_names[$sm_dashboard] : __(ucwords(str_replace('_', ' ', $sm_dashboard)));
+					$sm_dashboards_final [$sm_dashboard] = (!empty($dashboard_names[$sm_dashboard])) ? $dashboard_names[$sm_dashboard] : __(ucwords(str_replace('_', ' ', $sm_dashboard)), self::$text_domain);
 				}	
 			}
 			
@@ -135,7 +140,9 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 			$sm_dashboards = apply_filters('sm_active_dashboards', $sm_dashboards_final);
 
 			$sm_dashboard_keys = array_keys($sm_dashboards);
-			$sm_dashboards ['default'] = $sm_dashboard_keys[0];
+
+			// set the default dashboard
+			$sm_dashboards ['default'] = (is_plugin_active( 'woocommerce/woocommerce.php' )) ? 'product' : $sm_dashboard_keys[0];
 
 			$sm_dashboards ['sm_nonce'] = wp_create_nonce( 'smart-manager-security' );
 
@@ -191,7 +198,7 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 		// function for removing the Help Tab
 		function remove_help_tab(){
 			//condition to remove the help tab only from SM pages
-			if ( isset($_GET['page']) && ($_GET['page'] == "smart-manager-beta")) {
+			if(isset($_GET['sm_beta']) && $_GET['sm_beta'] == '1'){
 				$screen = get_current_screen();
 		    	$screen->remove_help_tabs();
 			}
@@ -216,7 +223,8 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 			</style>    
 			<?php if ( SMPRO === true && function_exists( 'smart_support_ticket_content' ) ) smart_support_ticket_content();  ?>    
 			    
-			<h2><?php
+			<h2 class="sm-h2">
+				<?php
 		                echo 'Smart Manager <sup style="vertical-align:super;color:red;font-size:small;">Beta</sup>';
 						// echo (SMPRO === true) ? 'Pro' : 'Lite';
 		                $plug_page = '';
@@ -235,7 +243,7 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 					$sm_old = '';
 
 		            if ( isset($_GET['page']) && ($_GET['page'] == "smart-manager-woo" || $_GET['page'] == "smart-manager-wpsc")) {
-						$sm_old = '<a href="'. admin_url('edit.php?post_type=product&page='.$_GET['page']) .'" title="'. __( 'Switch back to Smart Manager', 'smart-manager' ) .'"> ' . __( 'Switch back to Smart Manager', 'smart-manager' ) .'</a> | ';
+						$sm_old = '<a href="'. admin_url('edit.php?post_type='.$_GET['post_type'].'&page='.$_GET['page']) .'" title="'. __( 'Switch back to Smart Manager', self::$text_domain ) .'"> ' . __( 'Switch back to Smart Manager', self::$text_domain ) .'</a> | ';
 		            }       
 
                     if ( SMPRO === true ) {
@@ -252,17 +260,17 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 	                    }
 	                    
 	                }
-						//			printf ( __ ( '%1s%2s%3s<a href="%4s" target=_storeapps>Docs</a>' , 'smart-manager'), $before_plug_page, $plug_page, $after_plug_page, "http://www.storeapps.org/support/documentation/" );
-							printf ( __ ( '%1s%2s<a href="%3s" target="_blank">Docs</a>' , 'smart-manager'), $sm_old, $before_plug_page, "http://www.storeapps.org/support/documentation/smart-manager" );
+						//			printf ( __ ( '%1s%2s%3s<a href="%4s" target=_storeapps>Docs</a>' , self::$text_domain), $before_plug_page, $plug_page, $after_plug_page, "http://www.storeapps.org/support/documentation/" );
+							printf ( __ ( '%1s%2s<a href="%3s" target="_blank">Docs</a>' , self::$text_domain), $sm_old, $before_plug_page, "http://www.storeapps.org/support/documentation/smart-manager" );
 							?>
 							</span><?php
-						_e( '10x productivity gains with store administration. Quickly find and update products, orders and customers', 'smart-manager' );
+						_e( '10x productivity gains with store administration. Quickly find and update products, orders and customers', self::$text_domain );
 						?></p>
 						</h2>
 						<h6 align="right"><?php
 								if (! $is_pro_updated) {
 									$admin_url = ADMIN_URL . "plugins.php";
-									$update_link = __( 'An upgrade for Smart Manager Pro', 'smart-manager' ) . " " . $latest_version . " " . __( 'is available.', 'smart-manager' ) . " " . "<a align='right' href=$admin_url>" . __( 'Click to upgrade.', 'smart-manager' ) . "</a>";
+									$update_link = __( 'An upgrade for Smart Manager Pro', self::$text_domain ) . " " . $latest_version . " " . __( 'is available.', self::$text_domain ) . " " . "<a align='right' href=$admin_url>" . __( 'Click to upgrade.', self::$text_domain ) . "</a>";
 									$this->display_notice( $update_link );
 								}
 								?>
@@ -275,7 +283,7 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 						<div id="message" class="updated fade">
 						
 						<p><?php
-								printf( ('<b>' . __( 'Important:', 'smart-manager' ) . '</b> ' . __( 'Upgrade to Pro to get features like \'<i>Batch Update</i>\' , \'<i>Export CSV</i>\' , \'<i>Duplicate Products</i>\' &amp; many more...', 'smart-manager' ) . " " . '<br /><a href="%1s" target=_storeapps>' . " " .__( 'Learn more about Pro version', 'smart-manager' ) . '</a> ' . __( 'or take a', 'smart-manager' ) . " " . '<a href="%2s" target=_livedemo>' . " " . __( 'Live Demo', 'smart-manager' ) . '</a>'), 'http://www.storeapps.org/product/smart-manager', 'http://demo.storeapps.org/?demo=sm-woo' );
+								printf( ('<b>' . __( 'Important:', self::$text_domain ) . '</b> ' . __( 'Upgrade to Pro to get features like \'<i>Batch Update</i>\' , \'<i>Export CSV</i>\' , \'<i>Duplicate Products</i>\' &amp; many more...', self::$text_domain ) . " " . '<br /><a href="%1s" target=_storeapps>' . " " .__( 'Learn more about Pro version', self::$text_domain ) . '</a> ' . __( 'or take a', self::$text_domain ) . " " . '<a href="%2s" target=_livedemo>' . " " . __( 'Live Demo', self::$text_domain ) . '</a>'), 'http://www.storeapps.org/product/smart-manager', 'http://demo.storeapps.org/?demo=sm-woo' );
 								?>
 						</p>
 						</div>
@@ -288,8 +296,18 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 	            <table id="sm_editor_grid" ></table>
 	            <div id="sm_pagging_bar"></div>
 	            
-				<div id="sm_beta_social_links" class="wrap">
-					<?php echo $this->add_social_links(); ?>
+
+	            <div id="sm_beta_footer" style="float:left;">
+					<div id="sm_beta_social_links" class="wrap sm_beta_social_links">
+					    <?php echo $this->add_social_links(); ?>
+					</div>
+
+
+					<div id="sm_beta_wp_rating" class="wrap" style="color:#9e9b9b;font-size:0.95em;">
+					  <?php
+					    echo sprintf( __( 'If you like <strong>Smart Manager</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from StoreApps in advance!', self::$text_domain ), '<a href="https://wordpress.org/support/view/plugin-reviews/smart-manager-for-wp-e-commerce?filter=5#postform" target="_blank" data-rated="' . esc_attr__( 'Thanks :)', self::$text_domain ) . '">', '</a>' );
+					  ?>
+					</div>
 				</div>
 
 				<?php
@@ -302,49 +320,48 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 				include_once ($this->plugin_path . '/pro/sm-privilege.php');
 				return;
 			} else {
-				$error_message = __( "A required Smart Manager file is missing. Can't continue. ", 'smart-manager' );
+				$error_message = __( "A required Smart Manager file is missing. Can't continue. ", self::$text_domain );
 			}
 		}
 
 		//function to add social links
 		function add_social_links($prefix = '') {
 			$social_link = '<style type="text/css">
-		                        div > iframe {
-		                            vertical-align: middle;
-		                            padding: 5px 2px 0px 0px;
-		                        }
-		                        iframe[id^="twitter-widget"] {
-		                        	max-height: 1.5em;
-		                            max-width: 10.3em;
-		                        }
-		                        iframe#fb_like_' . $prefix . ' {
-		                        	max-height: 1.5em;
-		                            max-width: 6em;
-		                        }
-		                        span > iframe {
-		                            vertical-align: middle;
-		                        }
-		                    </style>';
-		    $social_link .= '<a href="https://twitter.com/storeapps" class="twitter-follow-button" data-show-count="true" data-dnt="true" data-show-screen-name="false">Follow</a>';
-		    $social_link .= "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
-		    $social_link .= '<iframe id="fb_like_' . $prefix . '" src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FStore-Apps%2F614674921896173&width=100&layout=button_count&action=like&show_faces=false&share=false&height=21"></iframe>';
-		    $social_link .= '<script src="//platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script><script type="IN/FollowCompany" data-id="3758881" data-counter="right"></script>';
+	                            div.sm_beta_social_links > iframe {
+	                                max-height: 1.5em;
+	                                vertical-align: middle;
+	                                padding: 5px 2px 0px 0px;
+	                            }
+	                            iframe[id^="twitter-widget"] {
+	                                max-width: 10.3em;
+	                            }
+	                            iframe#fb_like_sm {
+	                                max-width: 6em;
+	                            }
+	                            span > iframe {
+	                                vertical-align: middle;
+	                            }
+	                        </style>';
+	        $social_link .= '<a href="https://twitter.com/storeapps" class="twitter-follow-button" data-show-count="true" data-dnt="true" data-show-screen-name="false">Follow</a>';
+	        $social_link .= "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
+	        $social_link .= '<iframe id="fb_like_sm" src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FStore-Apps%2F614674921896173&width=100&layout=button_count&action=like&show_faces=false&share=false&height=21"></iframe>';
+	        $social_link .= '<script src="//platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script><script type="IN/FollowCompany" data-id="3758881" data-counter="right"></script>';
 
-		    return $social_link;
+	        return $social_link;
 		}
 
 		//function to display notices
 		function display_notice($notice) {
 			echo "<div id='message' class='updated fade'>
 		             <p>";
-			echo _e( $notice );
+			echo _e( $notice, self::$text_domain );
 			echo "</p></div>";
 		}
 
 		//function to error messages
 		function display_err() {
 			echo "<div id='notice' class='error'>";
-			echo "<b>" . __( 'Error:', 'smart-manager' ) . "</b>" . $this->error_message;
+			echo "<b>" . __( 'Error:', self::$text_domain ) . "</b>" . $this->error_message;
 			echo "</div>";
 		}
 	}

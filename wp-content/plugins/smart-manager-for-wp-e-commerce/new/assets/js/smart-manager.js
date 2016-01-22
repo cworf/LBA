@@ -147,10 +147,10 @@ var load_dashboard = function () {
     // $('#sm_editor_grid').jqGrid('gridUnload');
     $.jgrid.gridUnload('sm_editor_grid');
 
-    column_names = new Array();
     column_names_batch_update = new Array();
 
     if ( typeof(sm.dashboard_model) == 'undefined' || sm.dashboard_model == '' ) {
+        column_names = new Array();
         get_dashboard_model();    
     }
 
@@ -497,6 +497,11 @@ var load_dashboard = function () {
 
     // Code for handling the show/hide columns functionality
     $("#show_hide_cols_sm_editor_grid").click(function(){
+
+        setTimeout(function() {
+            $("div.ui-widget-overlay.ui-front").hide();
+        },10);
+        
         $('#sm_editor_grid').jqGrid('columnChooser', {
                                                         modal: true,
                                                         done : function (perm) {
@@ -1072,14 +1077,44 @@ $(document).on('sm_on_cell_click',function(e,rowid, celname, value, iRow, iCol){
             var multiselect_data = [];
 
             for (var index in actual_value) {
-                if (actual_value[index].parent == "0") {
-                    multiselect_data[index] = {'term' : actual_value[index].term};
-                } else {
-                    if (multiselect_data[actual_value[index].parent].hasOwnProperty('child') === false) {
-                        multiselect_data[actual_value[index].parent].child = {};
+
+                if (actual_value[index]['parent'] == "0") {
+
+                    if (multiselect_data[index] !== undefined) {
+                        if ( multiselect_data[index].hasOwnProperty('child') !== false ) {
+                            multiselect_data[index].term = actual_value[index].term;    
+                        }
+                        
+                    } else {
+                        multiselect_data[index] = {'term' : actual_value[index].term};    
                     }
-                    multiselect_data[actual_value[index].parent].child[index] = actual_value[index].term;
+
+                    
+                } else {
+
+                    if( multiselect_data[actual_value[index]['parent']] === undefined ) {
+
+                        //For hirecheal categories
+                        for (var mindex in multiselect_data) {
+                            if (multiselect_data[mindex].hasOwnProperty('child') === false) {
+                                continue;
+                            }
+
+                            for (var cindex in multiselect_data[mindex].child) {
+
+                            }
+
+                        }
+
+                        multiselect_data[actual_value[index]['parent']] = {};
+                    }
+
+                    if (multiselect_data[actual_value[index]['parent']].hasOwnProperty('child') === false) {
+                        multiselect_data[actual_value[index]['parent']].child = {};
+                    }
+                    multiselect_data[actual_value[index]['parent']].child[index] = actual_value[index].term;
                 }
+
             }
 
             multiselect_chkbox_list += '<ul>';
