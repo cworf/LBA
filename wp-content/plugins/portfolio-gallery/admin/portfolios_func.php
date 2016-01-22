@@ -102,6 +102,10 @@ function editportfolio($id)
 	  
 	  global $wpdb;
 	  
+	  				 @session_start();
+		 if(isset($_POST['csrf_token_hugeit_gallery']) && (!isset($_SESSION["csrf_token_hugeit_gallery"]) || $_SESSION["csrf_token_hugeit_gallery"] != @$_POST['csrf_token_hugeit_gallery']))
+		 { exit; }
+	 
 	  if(isset($_GET["removeslide"])){
 	     if($_GET["removeslide"] != ''){
 	
@@ -178,7 +182,7 @@ function add_portfolio()
 INSERT INTO 
 
 `" . $table_name . "` ( `name`, `sl_height`, `sl_width`, `pause_on_hover`, `portfolio_list_effects_s`, `description`, `param`, `sl_position`, `ordering`, `published`, `categories`, `ht_show_sorting`, `ht_show_filtering`) VALUES
-( 'New portfolio', '375', '600', 'on', 'cubeH', '4000', '1000', 'center', '1', '300', 'My First Category,My Second Category,My Third Category,', 'off', 'off')";
+( 'New portfolio', '375', '600', 'on', 'cubeH', '4000', '1000', 'off', '1', '300', 'My First Category,My Second Category,My Third Category,', 'off', 'off')";
 
       $wpdb->query($sql_2);
 
@@ -274,6 +278,7 @@ function removeportfolio($id)
 
 	global $wpdb;
 	 $sql_remov_tag=$wpdb->prepare("DELETE FROM ".$wpdb->prefix."huge_itportfolio_portfolios WHERE id = %d", $id);
+	 $sql_remov_image=$wpdb->prepare("DELETE FROM ".$wpdb->prefix."huge_itportfolio_images WHERE portfolio_id = %d", $id);
  if(!$wpdb->query($sql_remov_tag))
  {
 	  ?>
@@ -282,6 +287,7 @@ function removeportfolio($id)
 	 
  }
  else{
+	 $wpdb->query($sql_remov_image);
  ?>
  <div class="updated"><p><strong><?php _e('Item Deleted.' ); ?></strong></p></div>
  <?php
@@ -305,6 +311,10 @@ function apply_cat($id)
 	 
             $query=$wpdb->prepare("SELECT sl_width FROM ".$wpdb->prefix."huge_itportfolio_portfolios WHERE id = %d", $id);
 	        $id_bef=$wpdb->get_var($query);
+			
+							 @session_start();
+		 if(isset($_POST['csrf_token_hugeit_gallery']) && (!isset($_SESSION["csrf_token_hugeit_gallery"]) || $_SESSION["csrf_token_hugeit_gallery"] != @$_POST['csrf_token_hugeit_gallery']))
+		 { exit; }
       
 	if(isset($_POST["content"])){
 	$script_cat = preg_replace('#<script(.*?)>(.*?)</script>#is', '', stripslashes($_POST["content"]));
@@ -317,7 +327,6 @@ function apply_cat($id)
 	$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  portfolio_list_effects_s = %s  WHERE id = %d ", $_POST["portfolio_effects_list"], $id));
 	$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  description = %s  WHERE id = %d ", $_POST["sl_pausetime"], $id));
 	$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  param = %s  WHERE id = %d ", $_POST["sl_changespeed"], $id));
-	$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  sl_position = %s  WHERE id = %d ", $_POST["sl_position"], $id));
 	$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  ordering = '1'  WHERE id = %d ", $id));
         $wpdb->query("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  categories = '".$_POST["allCategories"]."'  WHERE id = '".$id."' ");
                         $wpdb->query("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  ht_show_sorting = '".$_POST["ht_show_sorting"]."'  WHERE id = '".$id."' ");
@@ -421,23 +430,33 @@ function apply_cat($id)
 			    $query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."huge_itportfolio_images where portfolio_id = %d order by id ASC", $row->id);
 			   $rowim=$wpdb->get_results($query);
 			   
-			   foreach ($rowim as $key=>$rowimages){
+	if(isset($_POST['changedvalues']) && $_POST['changedvalues'] != '') {
+			$query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."huge_itportfolio_images where portfolio_id = %d AND id in (".$_POST['changedvalues'].") order by id ASC",$row->id);
+			$rowim=$wpdb->get_results($query);
+			//   var_dump($_POST['changedvalues']);
+			foreach ($rowim as $key=>$rowimages){
 
-$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  ordering = '".$_POST["order_by_".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
-$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  link_target = '".$_POST["sl_link_target".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
-$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  sl_url = '".$_POST["sl_url".$rowimages->id.""]."' WHERE ID = %d ", $rowimages->id));
-$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  name = '".$_POST["titleimage".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
-$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  description = '".$_POST["im_description".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
-$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  image_url = '".$_POST["imagess".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
-				/***<image optimize>***/
-					$imagesuploader = explode(";", $_POST["imagess".$rowimages->id.""]);
-					array_pop($imagesuploader);$count = count($imagesuploader);
-					for($i = 0;$i < $count;$i++) {
-						huge_it_copy_image_to_small($imagesuploader[$i],$image_prefix,$cropwidth);
-					}
-				
-				/***</image optimize>***/
-}
+				$imgDescription = str_replace("%","%%",$_POST["im_description".$rowimages->id.""]);
+				$imgTitle = str_replace("%","%%",$_POST["titleimage".$rowimages->id.""]);
+				//var_dump($imgDescription);
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  ordering = '".$_POST["order_by_".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  link_target = '".$_POST["sl_link_target".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  sl_url = '".$_POST["sl_url".$rowimages->id.""]."' WHERE ID = %d ", $rowimages->id));
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  name = '".$imgTitle."'  WHERE ID = %d ", $rowimages->id));
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  description = '".$imgDescription."'  WHERE ID = %d ", $rowimages->id));
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  image_url = '".$_POST["imagess".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
+					/***<image optimize>***/
+						$imagesuploader = explode(";", $_POST["imagess".$rowimages->id.""]);
+						array_pop($imagesuploader);
+						$count = count($imagesuploader);
+						
+						for($i = 0;$i < $count;$i++) {
+							huge_it_copy_image_to_small($imagesuploader[$i],$image_prefix,$cropwidth);
+						}
+					
+					/***</image optimize>***/
+			}
+	}
 
 	
 				   if($_POST["imagess"] != ''){

@@ -4,11 +4,21 @@
 Plugin Name: Huge IT Portfolio Gallery
 Plugin URI: http://huge-it.com/portfolio-gallery
 Description: Portfolio Gallery is a great plugin for adding specialized portfolios or gallery to your site. There are various view options for the images or videos to choose from.
-Version: 1.5.7
+Version: 1.8.5
 Author: Huge IT
 Author URI: http://huge-it.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: portfolio-gallery
+Domain Path: /languages
 */
+
+
+function portfolio_gallery_load_plugin_textdomain() {
+    load_plugin_textdomain( 'portfolio-gallery', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+
+add_action( 'plugins_loaded', 'portfolio_gallery_load_plugin_textdomain' );
+
 
 add_action('media_buttons_context', 'add_portfolio_my_custom_button');
 
@@ -33,39 +43,255 @@ function add_portfolio_my_custom_button($context) {
   
   return $context;
 }
+add_action('wp_ajax_my_action', 'huge_it_portfolio_my_action_callback_frontend');
+add_action('wp_ajax_nopriv_my_action', 'huge_it_portfolio_my_action_callback_frontend' );
+    function huge_it_portfolio_my_action_callback_frontend(){
+        //var_dump($_POST);
+        global $wpdb;
+        if($_POST['post'] == 'portfolioChangeOptions'){
+            
+            if(isset($_POST['id'])){
+                $id = $_POST['id'];
+                $query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."huge_itportfolio_portfolios WHERE id = %d", $id);
+                $row=$wpdb->get_row($query);
+                $response = array(  'portfolio_effects_list'    => $row->portfolio_list_effects_s,
+                                    'ht_show_sorting'           => $row->ht_show_sorting,
+                                    'sl_pausetime'              => $row->description,
+                                    'sl_changespeed'            => $row->param,
+                                    'pause_on_hover'            => $row->pause_on_hover);
+                echo json_encode($response);
+                die();
+            }
+        }
+        if($_POST['post'] == 'portfolioSaveOptions'){
+            if(isset($_POST["htportfolio_id"])){
+                $id = $_POST["htportfolio_id"];  
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  ht_show_sorting = '%s'  WHERE id = %d ", sanitize_text_field($_POST["ht_show_sorting"]), $id));
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  description = '%s'  WHERE id = %d ", sanitize_text_field($_POST["sl_pausetime"]), $id));
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  param = '%s'  WHERE id = %d ", sanitize_text_field($_POST["sl_changespeed"]), $id));
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  description = '%s'  WHERE id = %d ", sanitize_text_field($_POST["sl_pausetime"]), $id));
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  pause_on_hover = '%s'  WHERE id = %d ", sanitize_text_field($_POST["pause_on_hover"]), $id));
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  portfolio_list_effects_s = '%s'  WHERE id = %d ", sanitize_text_field($_POST["portfolio_effects_list"]), $id));
+                /*$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  sl_loading_icon = '%s' WHERE id = %d ", $_POST["sl_loading_icon"], $id));
+                $wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_portfolios SET  show_thumb = '%s' WHERE id = %d ", $_POST["show_thumb"], $id));/*add*/
+            }
+        }
+    }
 
 function add_portfolio_inline_popup_content() {
 ?>
+<style>
+    #portfolio-unique-options-list label{
+        width:152px;
+        display:inline-block;
+    }
+    #hugeitportfolioinsert{
+        margin-left:10px;
+    }
+    #portfolio-unique-options-list input[type='checkbox']{
+        margin-left: 1px;
+    }
+    #TB_window{
+        background: #f1f1f1;
+    }
+    #sl_pausetime{
+        width:80px;
+    }
+    #sl_changespeed{
+        width:80px;
+    }
+</style>
 <script type="text/javascript">
 				jQuery(document).ready(function() {
-				  jQuery('#hugeitportfolioinsert').on('click', function() {
+                                       var ht_show_sorting;
+                                       var ht_show_filtering;
+                                       var pause_on_hover;
+                                       
+                                    jQuery('#ht_show_sorting').change(function(){
+                                            if(jQuery('#ht_show_sorting').prop('checked')  == false){
+                                               jQuery('#ht_show_sorting').val('off');
+                                            }
+                                            else if(jQuery('#ht_show_sorting').prop('checked')  == true){
+                                               jQuery('#ht_show_sorting').val('on');
+                                        }
+                                    }); 
+                                        jQuery('#pause_on_hover').change(function(){
+                                            if(jQuery('#pause_on_hover').prop('checked')  == false){
+                                               jQuery('#pause_on_hover').val('off');
+                                            }
+                                            else if(jQuery('#pause_on_hover').prop('checked')  == true){
+                                               jQuery('#pause_on_hover').val('on');
+                                            }
+                                        }); 
+                                        
+                                    jQuery('#hugeitportfolioinsert').on('click', function() {console.log(1);
+                                        ht_show_sorting = jQuery('#ht_show_sorting').val();
+                                        pause_on_hover = jQuery('#pause_on_hover').val();
 				  	var id = jQuery('#huge_it_portfolio-select option:selected').val();
-			
+                                        var portfolio_effects_list = jQuery('#portfolio_effects_list').val();
+                                        var sl_pausetime = jQuery('#sl_pausetime').val();
+                                        var sl_changespeed = jQuery('#sl_changespeed').val();
+                                        var err=0;
+                                        if(!jQuery.isNumeric(sl_pausetime) || sl_pausetime < 0){
+                                            err = err + 1;
+                                        }else{
+                                            sl_pausetime = Math.round(sl_pausetime);
+                                        }
+                                        if(!jQuery.isNumeric(sl_changespeed) || sl_changespeed < 0){
+                                            err = err + 1;
+                                        }else{
+                                            sl_changespeed = Math.round(sl_changespeed);
+                                        }
+                                        if(err>0) {
+                                            alert('Fill the fields correctly.');
+                                            return false;
+                                        }
+                                        var data = {
+                                                action:                 'my_action',
+                                                post:                   'portfolioSaveOptions',
+                                                htportfolio_id:         id,
+                                                portfolio_effects_list: portfolio_effects_list,
+                                                ht_show_sorting:        ht_show_sorting,
+                                                sl_pausetime:           sl_pausetime,
+                                                sl_changespeed:         sl_changespeed,
+                                                pause_on_hover:         pause_on_hover
+                                            };
+                                            jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>", data, function(response) {
+                                            
+                                            });
 				  	window.send_to_editor('[huge_it_portfolio id="' + id + '"]');
 					tb_remove();
-				  })
+				 
 				});
+                                    jQuery('#portfolio_effects_list').on('change',function(){
+                                        var sel = jQuery(this).val();
+                                        if(sel == 5) {
+                                                jQuery('.for-content-slider').css('display','block')
+                                        }
+                                        else {
+                                                jQuery('.for-content-slider').css('display','none')
+                                        }
+                                        });
+                                        jQuery('#portfolio_effects_list').change();
+
+                                        //////////////////portfolio change options/////////////////////
+                                        jQuery('#huge_it_portfolio-select').change(function(){
+                                            
+                                            var sel = jQuery(this).val();
+                                            var data = {
+                                                action: 'my_action',
+                                                post:   'portfolioChangeOptions',
+                                                id:     sel
+                                            };
+                                            jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>", data, function(response) {
+                                                response = JSON.parse(response);
+                                                console.log(response);
+                                                var list_effect = response.portfolio_list_effects_s;
+                                                jQuery('#portfolio_effects_list').val(response.portfolio_effects_list);
+                                                jQuery('#portfolio_effects_list option[value=list_effect]').attr('selected');
+                                                jQuery('#ht_show_sorting').val(response.ht_show_sorting);
+                                                if(jQuery('#ht_show_sorting').val()  == 'on'){
+                                                    jQuery('#ht_show_sorting').attr('checked','checked');
+                                                }
+                                                else jQuery('#ht_show_sorting').removeAttr('checked');
+                                                jQuery('#sl_pausetime').val(response.sl_pausetime);
+                                                jQuery('#sl_changespeed').val(response.sl_changespeed);
+                                                jQuery('#pause_on_hover').val(response.pause_on_hover);
+                                                if(jQuery('#pause_on_hover').val()  == 'on'){
+                                                    jQuery('#pause_on_hover').attr('checked','checked');
+                                                }
+                                                else jQuery('#pause_on_hover').removeAttr('checked');
+                                                if(response){
+                                                    sel1 = jQuery('#portfolio_effects_list').val();
+                                                    if(sel1 == 5) {
+                                                        jQuery('.for-content-slider').css('display','block')
+                                                    }
+                                                    else {
+                                                        jQuery('.for-content-slider').css('display','none')
+                                                    };
+                                                }
+
+                                            });
+                                            
+                                                
+                                    });
+                                });
 </script>
 
 <div id="huge_it_portfolio" style="display:none;">
   <h3>Select Huge IT Portfolio Gallery to insert into post</h3>
   <?php 
   	  global $wpdb;
+          $query="SELECT * FROM ".$wpdb->prefix."huge_itportfolio_portfolios";
+	  $firstrow=$wpdb->get_row($query);
+          $container_id = 'huge_it_portfolio';
+	  if(isset($_POST["hugeit_portfolio_id"])){
+	  $id=$_POST["hugeit_portfolio_id"];
+	  }
+	  else{
+	  $id=$firstrow->id;
+	  }
 	  $query="SELECT * FROM ".$wpdb->prefix."huge_itportfolio_portfolios order by id ASC";
 			   $shortcodeportfolios=$wpdb->get_results($query);
+        $query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."huge_itportfolio_portfolios WHERE id= %d", $id);
+	$row=$wpdb->get_row($query);
 			   ?>
 
  <?php 	if (count($shortcodeportfolios)) {
-							echo "<select id='huge_it_portfolio-select'>";
+            ?>
+  
+  <?php
+							echo "<select id='huge_it_portfolio-select'  name='hugeit_portfolio_id'>";
 							foreach ($shortcodeportfolios as $shortcodeportfolio) {
 								echo "<option value='".$shortcodeportfolio->id."'>".$shortcodeportfolio->name."</option>";
 							}
-							echo "</select>";
-							echo "<button class='button primary' id='hugeitportfolioinsert'>Insert portfolio gallery</button>";
+							echo "</select>";?>
+                                                        <?php	echo "<button class='button primary' id='hugeitportfolioinsert'>Insert portfolio gallery</button>";
 						} else {
 							echo "No slideshows found", "huge_it_portfolio";
 						}
 						?>
+	
+                                            <h3>Current Portfolio Options</h3>   		          
+                                            <ul id="portfolio-unique-options-list">
+						<li style="display:none;">
+							<label for="sl_width"><?php echo __( 'The requested action is not valid.', 'portfolio-gallery' );?></label>
+							<input type="text" name="sl_width" id="sl_width" value="1111" class="text_area" />
+						</li>
+						<li style="display:none;">
+							<label for="sl_height"><?php echo __( 'Height', 'portfolio-gallery' );?></label>
+							<input type="text" name="sl_height" id="sl_height" value="<?php echo $row->sl_height; ?>" class="text_area" />
+						</li>
+						<li>
+							<label for="portfolio_effects_list"><?php echo __( 'Select The View', 'portfolio-gallery' );?></label>
+							<select name="portfolio_effects_list" id="portfolio_effects_list">
+									<option <?php if($row->portfolio_list_effects_s == '0'){ echo 'selected'; } ?>  value="0"><?php echo __( 'Blocks Toggle Up/Down', 'portfolio-gallery' );?></option>
+									<option <?php if($row->portfolio_list_effects_s == '1'){ echo 'selected'; } ?>  value="1"><?php echo __( 'Full-Height Blocks', 'portfolio-gallery' );?></option>
+									<option <?php if($row->portfolio_list_effects_s == '2'){ echo 'selected'; } ?>  value="2"><?php echo __( 'Gallery/Content-Popup', 'portfolio-gallery' );?></option>
+									<option <?php if($row->portfolio_list_effects_s == '3'){ echo 'selected'; } ?>  value="3"><?php echo __( 'Full-Width Blocks', 'portfolio-gallery' );?></option>
+									<option <?php if($row->portfolio_list_effects_s == '4'){ echo 'selected'; } ?>  value="4"><?php echo __( 'FAQ Toggle Up/Down', 'portfolio-gallery' );?></option>
+									<option <?php if($row->portfolio_list_effects_s == '5'){ echo 'selected'; } ?>  value="5"><?php echo __( 'Content Slider', 'portfolio-gallery' );?></option>
+									<option <?php if($row->portfolio_list_effects_s == '6'){ echo 'selected'; } ?>  value="6"><?php echo __( 'Lightbox-Gallery', 'portfolio-gallery' );?></option>
+							</select>
+						</li>
+                                                <li class="allowIsotope">
+                                                    <label for="ht_show_sorting"><?php echo __( 'Show Sorting Buttons', 'portfolio-gallery' );?></label>
+						    <input type="checkbox" id="ht_show_sorting"  <?php if($row->ht_show_sorting  == 'on'){ echo 'checked="checked"'; } ?>  name="ht_show_sorting" value="<?php echo $row->ht_show_sorting;?>" />
+                                                </li>
+                                                <li style="display:none;" class="for-content-slider">
+							<label for="sl_pausetime"><?php echo __( 'Pause time', 'portfolio-gallery' );?></label>
+                                                        <input type="number" name="sl_pausetime" id="sl_pausetime" value="<?php echo $row->description; ?>" class="text_area" />
+						</li>
+						<li style="display:none;"  class="for-content-slider">
+							<label for="sl_changespeed"><?php echo __( 'Change speed', 'portfolio-gallery' );?></label>
+							<input type="number" name="sl_changespeed" id="sl_changespeed" value="<?php echo $row->param; ?>" class="text_area" />
+						<li style="display:none;margin-top:10px"  class="for-content-slider">
+							<label for="pause_on_hover"><?php echo __( 'Autoslide ', 'portfolio-gallery' );?></label>
+							<input type="checkbox" name="pause_on_hover"  value="<?php echo $row->pause_on_hover;?>" id="pause_on_hover"  <?php if($row->pause_on_hover  == 'on'){ echo 'checked="checked"'; } ?> />
+						</li>
+					</ul>
+                                            
+						
 	
 </div>
 <?php
@@ -196,8 +422,8 @@ function portfolio_frontend_scripts_and_styles() {
     wp_register_script( 'jquery.colorbox-js', plugins_url('/js/jquery.colorbox.js', __FILE__), array('jquery'),'1.0.0',true  ); 
     wp_enqueue_script( 'jquery.colorbox-js' );
     
-    wp_register_script( 'hugeitmicro-min-js', plugins_url('/js/jquery.hugeitmicro.min.js', __FILE__), array('jquery'),'1.0.0',true  ); 
-    wp_enqueue_script( 'hugeitmicro-min-js' );
+     wp_register_script( 'hugeitmicro-min-js', plugins_url('/js/jquery.hugeitmicro.min.js', __FILE__), array('jquery'),'1.0.0',true  ); 
+     wp_enqueue_script( 'hugeitmicro-min-js' );
     
     
     wp_register_style( 'style2-os-css', plugins_url('/style/style2-os.css', __FILE__) );   
@@ -467,7 +693,7 @@ CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "huge_itportfolio_images` (
   `category`  varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5";
+)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5";
 
     $sql_huge_itportfolio_portfolios = "
 CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "huge_itportfolio_portfolios` (
@@ -487,7 +713,7 @@ CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "huge_itportfolio_portfolios` (
   `ht_show_filtering` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ";
+)   DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ";
 
 
 
