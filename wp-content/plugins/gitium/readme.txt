@@ -1,11 +1,11 @@
 === Gitium ===
 
-Contributors: PressLabs
-Donate link: http://www.presslabs.com/gitium/
+Contributors: Presslabs
+Donate link: https://www.presslabs.com/gitium/
 Tags: git, version, versioning, deployment, version-control, github, bitbucket, travis, code, revision, testing, development, branch, production, staging, debug, plugin, gitium, presslabs, simple
 Requires at least: 3.9
-Tested up to: 4.1.2
-Stable tag: 0.5.2-beta
+Tested up to: 4.4.1
+Stable tag: 0.5.3-beta
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ Gitium is designed with sane development environments in mind, allowing staging 
 
 Gitium requires `git` command line tool with a minimum version of 1.7 installed on the server and the `proc_open` PHP function enabled.
 
-Gitium is the latest element discovered at [PressLabs](http://www.presslabs.com/gitium/).
+Gitium is the latest element discovered at [Presslabs](https://www.presslabs.com/gitium/).
 
 == Screenshots ==
 
@@ -68,6 +68,12 @@ Submodules are currently not supported.
 
 
 == Changelog ==
+
+= 0.5.3-beta =
+* Fix paths with spaces bug
+* Add a Disconnect from repo button
+* Fix POST var `path` conflicts
+* Fix travis tests
 
 = 0.5.2-beta =
 * Add Contextual Help to Configuration page
