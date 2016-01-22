@@ -31,7 +31,7 @@
 					<?php $this->warning() ?>
 				<?php endif ?>
 				
-				<?php $post_type = $post['custom_type']; ?>
+				<?php $post_type = $post['custom_type'];?>
 
 				<?php if ( in_array('caption', $visible_sections) ): ?>								
 
@@ -108,9 +108,10 @@
 
 					if ( in_array('featured', $visible_sections) ) {
 						$is_images_section_enabled = apply_filters('wp_all_import_is_images_section_enabled', true, $post_type);						
-						if ( $is_images_section_enabled ) {							
+						if ( $is_images_section_enabled ) {
 							PMXI_API::add_additional_images_section(__('Images', 'wp_all_import_plugin'), '', $post, $post_type, true, true);
 						}
+							
 						do_action('pmxi_extend_options_featured', $post_type, $post);
 					}
 
@@ -134,11 +135,50 @@
 						do_action('pmxi_extend_options_nested', $post_type);
 					}*/
 
-				?>																
+					$uploads = wp_upload_dir();
+					$functions = $uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';					
+					
+					?>
+
+					<div class="wpallimport-collapsed closed wpallimport-section">
+						<div class="wpallimport-content-section">
+							<div class="wpallimport-collapsed-header">
+								<h3><?php _e('Function Editor', 'wp_all_import_plugin'); ?></h3>	
+							</div>
+							<div class="wpallimport-collapsed-content" style="padding: 0;">
+								<div class="wpallimport-collapsed-content-inner">									
+									<div class="wpallimport-free-edition-notice" style="text-align:center; margin-top:0; margin-bottom: 40px;">
+										<a href="http://www.wpallimport.com/upgrade-to-pro/?utm_source=free-plugin&utm_medium=in-plugin&utm_campaign=custom-fields" target="_blank" class="upgrade_link"><?php _e('Upgrade to the professional edition of WP All Import to enable the Function Editor.', 'wp_all_import_plugin');?></a>
+										<p><?php _e('If you already own it, remove the free edition and install the professional edition.', 'wp_all_import_plugin'); ?></p>
+									</div>
+									
+									<textarea id="wp_all_import_code" name="wp_all_import_code"><?php echo "<?php\n\n?>";?></textarea>						
+
+									<div class="input" style="margin-top: 10px;">
+
+										<div class="input" style="display:inline-block; margin-right: 20px;">
+											<input type="button" class="button-primary wp_all_import_save_functions" disabled="disabled" value="<?php _e("Save Functions", 'wp_all_import_plugin'); ?>"/>
+											<a href="#help" class="wpallimport-help" title="<?php printf(__("Add functions here for use during your import. You can access this file at %s", "wp_all_import_plugin"), preg_replace("%.*wp-content%", "wp-content", $functions));?>" style="top: 0;">?</a>
+											<div class="wp_all_import_functions_preloader"></div>
+										</div>						
+										<div class="input wp_all_import_saving_status" style="display:inline-block;">
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>															
 				
 				<hr>
 				
 				<div class="input wpallimport-section" style="padding-bottom: 8px; padding-left: 8px;">
+
+					<?php 
+						wp_all_import_template_notifications( $post, 'notice' );							
+					?>					
 										
 					<p style="margin: 11px; float: left;">
 						<input type="hidden" name="save_template_as" value="0" />

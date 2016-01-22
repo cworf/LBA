@@ -34,8 +34,8 @@
 							<div class="input">
 								<input type="hidden" name="is_fast_mode" value="0" />
 								<input type="checkbox" id="is_fast_mode" name="is_fast_mode" value="1" class="fix_checkbox" <?php echo $post['is_fast_mode'] ? 'checked="checked"': '' ?>/>
-								<label for="is_fast_mode"><?php _e('Increase speed by disabling do_action calls in wp_insert_post during import.', 'wp_all_import_plugin') ?> <a href="#help" class="wpallimport-help" style="position: relative; top: -2px;" title="<?php _e('This option is for advanced users with knowledge of WordPress development. Your theme or plugins may require these calls when posts are created. Verify your created posts work properly if you check this box.', 'wp_all_import_plugin') ?>">?</a></label>
-								<a href="#help" class="wpallimport-help" style="position: relative; top: -2px;" title="<?php _e('This option is for advanced users with knowledge of WordPress development. Your theme or plugins may require these calls when posts are created. Next action will be disabled: \'transition_post_status\', \'save_post\', \'pre_post_update\', \'add_attachment\', \'edit_attachment\', \'edit_post\', \'post_updated\', \'wp_insert_post\'. Verify your created posts work properly if you check this box.', 'wp_all_import_plugin') ?>">?</a></label>
+								<label for="is_fast_mode"><?php _e('Increase speed by disabling do_action calls in wp_insert_post during import.', 'wp_all_import_plugin') ?> 
+									<a href="#help" class="wpallimport-help" style="position: relative; top: -2px;" title="<?php _e('This option is for advanced users with knowledge of WordPress development. Your theme or plugins may require these calls when posts are created. Next action will be disabled: \'transition_post_status\', \'save_post\', \'pre_post_update\', \'add_attachment\', \'edit_attachment\', \'edit_post\', \'post_updated\', \'wp_insert_post\'. Verify your created posts work properly if you check this box.', 'wp_all_import_plugin') ?>">?</a></label>
 							</div>					
 							<?php if ( ! $this->isWizard ): ?>
 
@@ -91,6 +91,12 @@
 									<input type="text" name="xpath" value="<?php echo esc_attr($import->xpath) ?>" style="width: 50%; font-size: 18px; color: #555; height: 50px; padding: 10px;"/>
 								</div>														
 								
+								<h4><?php _e('Downloads', 'wp_all_import_plugin'); ?></h4>
+
+								<div class="input">
+									<button class="button button-primary download_import_template" rel="<?php echo add_query_arg(array('page' => 'pmxi-admin-manage', 'id' => $_GET['id'], 'action' => 'get_template', '_wpnonce' => wp_create_nonce( '_wpnonce-download_template' )), $this->baseUrl); ?>" style="background-image: none;"><?php _e('Import Template', 'wp_all_import_plugin'); ?></button>
+									<button class="button button-primary download_import_bundle" rel="<?php echo add_query_arg(array('page' => 'pmxi-admin-manage', 'id' => $_GET['id'], 'action' => 'bundle', '_wpnonce' => wp_create_nonce( '_wpnonce-download_bundle' )), $this->baseUrl); ?>" style="background-image: none;"><?php _e('Import Bundle', 'wp_all_import_plugin'); ?></button>
+								</div>
 							<?php endif; ?>
 							<h4><?php _e('Other', 'wp_all_import_plugin'); ?></h4>
 							<div class="input">

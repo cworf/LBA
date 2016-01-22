@@ -28,13 +28,13 @@
 			
 			$response = wp_remote_get($filePath);
 			$headers = wp_remote_retrieve_headers( $response );			
-			$content_type = (!empty($headers['content-type'])) ? explode('/', $headers['content-type']) : false;		
+			$content_type = (!empty($headers['content-type'])) ? explode('/', $headers['content-type']) : false;					
 			if (!empty($content_type[1])){				
 				if (preg_match('%jpeg%i', $content_type[1])) return 'jpeg';
 				if (preg_match('%jpg%i', $content_type[1])) return 'jpg';
 				if (preg_match('%png%i', $content_type[1])) return 'png';
 				if (preg_match('%gif%i', $content_type[1])) return 'gif';
-				return $content_type[1];
+				return ($content_type[1] == "unknown") ? "" : $content_type[1];
 			}
 
 			return '';
@@ -44,11 +44,11 @@
 
 	if ( ! function_exists('pmxi_getExtension')){
 		function pmxi_getExtension($str) 
-	    {
+	    {	    	
 	        $i = strrpos($str,".");        
 	        if (!$i) return "";
 	        $l = strlen($str) - $i;        
-	        $ext = substr($str,$i+1,$l);
+	        $ext = substr($str,$i+1,$l);	        
 	        return (strlen($ext) <= 4) ? $ext : "";
 		}
 	}
@@ -57,7 +57,7 @@
 		function pmxi_getExtensionFromStr($str) 
 	    {
 	    	$filetype = wp_check_filetype($str);	              
-	        return $filetype['ext'];
+	        return ($filetype['ext'] == "unknown") ? "" : $filetype['ext'];
 		}
 	}			
 
@@ -127,3 +127,25 @@
 		    return preg_match('/^[a-f0-9]{32}$/', $md5);
 		}
 	}
+
+	if ( ! function_exists('wp_all_import_get_relative_path') ){
+		function wp_all_import_get_relative_path($path){
+
+			$uploads = wp_upload_dir();
+
+			return str_replace($uploads['basedir'], '', $path);			
+
+		}
+	}
+
+	if ( ! function_exists('wp_all_import_get_absolute_path') ){
+		function wp_all_import_get_absolute_path($path){
+			
+			$uploads = wp_upload_dir();			
+
+			return ( strpos($path, $uploads['basedir']) === false and ! preg_match('%^https?://%i', $path)) ? $uploads['basedir'] . $path : $path;
+			
+		}
+	}
+
+

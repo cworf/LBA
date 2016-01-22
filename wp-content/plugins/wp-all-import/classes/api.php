@@ -55,15 +55,15 @@ class PMXI_API
 
 			case 'simple':
 				?>
-				<input type="text" name="<?php echo $params['field_name']; ?>" id="<?php echo sanitize_title($params['field_name']); ?>" value="<?php echo $params['field_value']; ?>" style="width:100%;"/>
+				<input type="text" name="<?php echo $params['field_name']; ?>" id="<?php echo sanitize_title($params['field_name']); ?>" value="<?php echo esc_attr($params['field_value']); ?>" style="width:100%;"/>
 				<?php
 				break;
 
-			case 'enum':
-				
+			case 'enum':				
+
 				$is_set_with_xpath_visible = true;
-				foreach ($params['enum_values'] as $key => $value):?>
-					<div class="form-field wpallimport-radio-field">
+				foreach ($params['enum_values'] as $key => $value): ?>
+					<div class="form-field wpallimport-radio-field wpallimport-<?php echo sanitize_title($params['field_name']); ?>_<?php echo $key; ?>">						
 						<input type="radio" id="<?php echo sanitize_title($params['field_name']); ?>_<?php echo $key; ?>" class="switcher" name="<?php echo $params['field_name']; ?>" value="<?php echo $key; ?>" <?php echo $key == $params['field_value'] ? 'checked="checked"': '' ?>/>
 						<?php  
 							$label = '';
@@ -108,7 +108,7 @@ class PMXI_API
 					</div>
 				<?php endforeach;?>		
 				<?php if ( $is_set_with_xpath_visible ): ?>
-				<div class="form-field wpallimport-radio-field">
+				<div class="form-field wpallimport-radio-field wpallimport-<?php echo sanitize_title($params['field_name']); ?>_xpath">
 					<input type="radio" id="<?php echo sanitize_title($params['field_name']); ?>_xpath" class="switcher" name="<?php echo $params['field_name']; ?>" value="xpath" <?php echo 'xpath' === $params['field_value'] ? 'checked="checked"': '' ?>/>
 					<label for="<?php echo sanitize_title($params['field_name']); ?>_xpath"><?php _e('Set with XPath', 'wp_all_import_plugin' )?></label>
 					<span class="wpallimport-clear"></span>
@@ -246,7 +246,7 @@ class PMXI_API
 
 			case 'textarea':
 				?>
-				<textarea name="<?php echo $params['field_name']; ?>" id="<?php echo sanitize_title($params['field_name']); ?>" class="rad4 newline" style="height: 70px;margin: 5px 0;padding-top: 5px;width: 70%;"><?php echo $params['field_value']; ?></textarea>
+				<textarea name="<?php echo $params['field_name']; ?>" id="<?php echo sanitize_title($params['field_name']); ?>" class="rad4 newline" style="height: 70px;margin: 5px 0;padding-top: 5px;width: 70%;"><?php echo esc_attr($params['field_value']); ?></textarea>
 				<?php
 				break;
 
@@ -353,13 +353,16 @@ class PMXI_API
 		if (empty($img_url)) return false;
 
 		$url = str_replace(" ", "%20", trim($img_url));
-		$bn  = preg_replace('/[\\?|&].*/', '', basename($url));
+		$bn  = wp_all_import_sanitize_filename(basename($url));		
 
 		if ($image_name == ""){
 			$img_ext = pmxi_getExtensionFromStr($url);			
 			$default_extension = pmxi_getExtension($bn);
 			if ($img_ext == "") $img_ext = pmxi_get_remote_image_ext($url);
-			$image_name = urldecode(sanitize_file_name(($img_ext) ? str_replace("." . $default_extension, "", $bn) : $bn)) . (("" != $img_ext) ? '.' . $img_ext : '');
+			
+			// generate local file name
+			$image_name = apply_filters("wp_all_import_image_filename", urldecode(sanitize_file_name((($img_ext) ? str_replace("." . $default_extension, "", $bn) : $bn))) . (("" != $img_ext) ? '.' . $img_ext : ''));
+
 		}
 
 		$uploads   = wp_upload_dir();
@@ -369,9 +372,9 @@ class PMXI_API
 		$result = false;
 		$wp_filetype = false;
 
-		global $wpdb;
+		global $wpdb;		
 
-		$attch = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->posts . " WHERE (post_title = %s OR post_title = %s) AND post_type = %s;", $image_name, preg_replace('/\\.[^.\\s]{3,4}$/', '', $image_name), "attachment" ) );
+		$attch = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->posts . " WHERE (post_title = %s OR post_title = %s OR post_name = %s) AND post_type = %s AND post_mime_type LIKE %s;", $image_name, preg_replace('/\\.[^.\\s]{3,4}$/', '', $image_name), sanitize_title($image_name), "attachment", "image%" ) );
 
 		if ( $attch != null ){			
 
@@ -404,7 +407,7 @@ class PMXI_API
 					}
 					else {
 						$result = true;											
-						$logger and call_user_func($logger, sprintf(__('- File `%s` has been successfully founded', 'wp_all_import_plugin'), $wpai_image_path));
+						$logger and call_user_func($logger, sprintf(__('- File `%s` has been successfully found', 'wp_all_import_plugin'), $wpai_image_path));
 					}
 				}	
 				// validate import images
@@ -413,7 +416,7 @@ class PMXI_API
 						$logger and call_user_func($logger, sprintf(__('- <b>WARNING</b>: File %s is not a valid image and cannot be set as featured one', 'wp_all_import_plugin'), $image_filepath));					
 						@unlink($image_filepath);
 					} else {
-						$logger and call_user_func($logger, sprintf(__('- Image `%s` has been successfully founded', 'wp_all_import_plugin'), $wpai_image_path));
+						$logger and call_user_func($logger, sprintf(__('- Image `%s` has been successfully found', 'wp_all_import_plugin'), $wpai_image_path));
 						$result = true;
 					}
 				}
@@ -476,7 +479,7 @@ class PMXI_API
 						}
 						else {
 							$result = true;											
-							$logger and call_user_func($logger, sprintf(__('- File `%s` has been successfully founded', 'wp_all_import_plugin'), $url));
+							$logger and call_user_func($logger, sprintf(__('- File `%s` has been successfully found', 'wp_all_import_plugin'), $url));
 						}
 					}					
 				}
@@ -485,6 +488,10 @@ class PMXI_API
 
 		if ($create_image and $result){
 
+			// you must first include the image.php file
+			// for the function wp_generate_attachment_metadata() to work
+			require_once(ABSPATH . 'wp-admin/includes/image.php');
+				
 			if($file_type == 'images'){
 				$logger and call_user_func($logger, sprintf(__('- Creating an attachment for image `%s`', 'wp_all_import_plugin'), $targetUrl . '/' . $image_filename));	
 			}
@@ -510,10 +517,7 @@ class PMXI_API
 			if (is_wp_error($attid)) {
 				$logger and call_user_func($logger, __('- <b>WARNING</b>', 'wp_all_import_plugin') . ': ' . $attid->get_error_message());			
 				return false;
-			} else {
-				// you must first include the image.php file
-				// for the function wp_generate_attachment_metadata() to work
-				require_once(ABSPATH . 'wp-admin/includes/image.php');
+			} else {				
 				wp_update_attachment_metadata($attid, wp_generate_attachment_metadata($attid, $image_filepath));																
 				$logger and call_user_func($logger, sprintf(__('- Attachment has been successfully created for image `%s`', 'wp_all_import_plugin'), $targetUrl . '/' . $image_filename));
 				return $attid;											
@@ -521,5 +525,5 @@ class PMXI_API
 
 		}
 		else return $result;		
-	}	
+	}		
 }

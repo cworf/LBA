@@ -1,23 +1,26 @@
-<h2>
+<h4>
 	<?php if ($import->path): ?>
+		<?php $path = wp_all_import_get_absolute_path($import->path); ?>
 		<?php if ( in_array($import->type, array('upload'))): ?>
 			<?php
-			$path = $import->path;
+			//$path = $import->path;
 			$path_parts = pathinfo($import->path);
 			if ( ! empty($path_parts['dirname'])){
 				$path_all_parts = explode('/', $path_parts['dirname']);
 				$dirname = array_pop($path_all_parts);
 				if ( wp_all_import_isValidMd5($dirname)){								
-					$path = str_replace($dirname . '/', '', str_replace('temp/','',$import->path));
+					$path = str_replace($dirname, preg_replace('%^(.{3}).*(.{3})$%', '$1***$2', $dirname), str_replace('temp/', '', $path));	
 				}
 			}
 			?>
-			<em><?php printf(__('%s - Import History', 'wp_all_import_plugin'), str_replace("\\", '/', preg_replace('%^(\w+://[^:]+:)[^@]+@%', '$1*****@', $path))); ?></em>
-		<?php else:?>
-		<em><?php printf(__('%s - Import History', 'wp_all_import_plugin'), str_replace("\\", '/', preg_replace('%^(\w+://[^:]+:)[^@]+@%', '$1*****@', $import->path))); ?></em>
+			<em><?php printf(__('%s - Import History', 'wp_all_import_plugin'), str_replace("\\", '/', preg_replace('%^(\w+://[^:]+:)[^@]+@%', '$1*****@', preg_replace('%.*wp-content/%', 'wp-content/', $path)))); ?></em>
+		<?php elseif (in_array($import->type, array('file'))):?>
+			<em><?php printf(__('%s - Import History', 'wp_all_import_plugin'), str_replace("\\", '/', preg_replace('%^(\w+://[^:]+:)[^@]+@%', '$1*****@', preg_replace('%.*wp-content/%', 'wp-content/', $path)))); ?></em>
+		<?php else: ?>
+		<em><?php printf(__('%s - Import History', 'wp_all_import_plugin'), str_replace("\\", '/', preg_replace('%^(\w+://[^:]+:)[^@]+@%', '$1*****@', $path))); ?></em>
 		<?php endif; ?>
 	<?php endif ?>	
-</h2>
+</h4>
 
 <?php if ($this->errors->get_error_codes()): ?>
 	<?php $this->error() ?>
@@ -130,7 +133,7 @@ $columns = array(
 									<?php if ('0000-00-00 00:00:00' == $item['date']): ?>
 										<em>never</em>
 									<?php else: ?>
-										<?php echo mysql2date(__('Y/m/d g:i a', 'wp_all_import_plugin'), $item['date']) ?>
+										<?php echo get_date_from_gmt($item['date'], "m/d/Y g:i a"); ?>
 									<?php endif ?>
 								</td>
 								<?php
@@ -180,8 +183,7 @@ $columns = array(
 									<?php 
 									if ( ! in_array($item['type'], array('trigger'))){
 										$wp_uploads = wp_upload_dir();
-										$log_file = wp_all_import_secure_file( $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . PMXI_Plugin::LOGS_DIRECTORY, $item['id'] ) . DIRECTORY_SEPARATOR . $item['id'] . '.html';
-										
+										$log_file = wp_all_import_secure_file( $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . PMXI_Plugin::LOGS_DIRECTORY, $item['id'] ) . DIRECTORY_SEPARATOR . $item['id'] . '.html';										
 										if (file_exists($log_file)){
 											?>											
 											<a href="<?php echo add_query_arg(array('id' => $import->id, 'action' => 'log', 'history_id' => $item['id'], '_wpnonce' => wp_create_nonce( '_wpnonce-download_log' )), $this->baseUrl); ?>"><?php _e('Download Log', 'wp_all_import_plugin'); ?></a>

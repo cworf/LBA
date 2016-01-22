@@ -39,7 +39,7 @@ if ( ! empty($post_taxonomies)):
 															<div class="switcher-target-tax_logic_single_<?php echo $ctx->name;?> sub_input">
 																<input type="hidden" name="term_assing[<?php echo $ctx->name;?>]" value="0"/>
 																<input type="checkbox" name="term_assing[<?php echo $ctx->name;?>]" <?php echo (isset($post['term_assing'][$ctx->name])) ? (( ! empty($post['term_assing'][$ctx->name]) ) ? 'checked="checked"' : '') : 'checked="checked"'; ?> title="<?php _e('Assign post to the taxonomy.','wp_all_import_plugin');?>" value="1"/>
-																<input type="text" class="widefat single_xpath_field" name="tax_single_xpath[<?php echo $ctx->name; ?>]" value="<?php echo ( ! empty($post['tax_single_xpath'][$ctx->name])) ? esc_attr($post['tax_single_xpath'][$ctx->name]) : ''; ?>" style="width:50%;"/>
+																<input type="text" class="widefat single_xpath_field" name="tax_single_xpath[<?php echo $ctx->name; ?>]" value="<?php echo ( ! empty($post['tax_single_xpath'][$ctx->name])) ? esc_textarea($post['tax_single_xpath'][$ctx->name]) : ''; ?>" style="width:50%;"/>
 																<div class="input tax_is_full_search_single" style="margin: 10px 0;">
 																	<input type="hidden" name="tax_is_full_search_single[<?php echo $ctx->name; ?>]" value="0"/>
 																	<input type="checkbox" id="tax_is_full_search_single_<?php echo $ctx->name; ?>" class="switcher" <?php if ( ! empty($post['tax_is_full_search_single'][$ctx->name]) ) echo "checked='checked'"; ?> name="tax_is_full_search_single[<?php echo $ctx->name; ?>]" value="1"/>
@@ -49,10 +49,11 @@ if ( ! empty($post_taxonomies)):
 																			<input type="hidden" name="tax_assign_to_one_term_single[<?php echo $ctx->name; ?>]" value="0"/>
 																			<input type="checkbox" id="tax_assign_to_one_term_single_<?php echo $ctx->name; ?>" <?php if ( ! empty($post['tax_assign_to_one_term_single'][$ctx->name]) ) echo "checked='checked'"; ?> name="tax_assign_to_one_term_single[<?php echo $ctx->name; ?>]" value="1"/>
 																			<label for="tax_assign_to_one_term_single_<?php echo $ctx->name;?>"><?php printf(__('Only assign %s to the imported %s, not the entire hierarchy', 'wp_all_import_plugin'), $custom_type->labels->name, $ctx->labels->singular_name); ?></label>
+																			<a href="#help" class="wpallimport-help" title="<?php _e('By default all categories above the matched category will also be assigned to the post. If enabled, only the imported category will be assigned to the post.', 'wp_all_import_plugin'); ?>" style="position:relative; top: -1px;">?</a>
 																		</div>
 																	</div>
 																</div>
-															</div>
+															</div>															
 														</div>
 														<div class="input">
 															<input type="radio" name="tax_logic[<?php echo $ctx->name;?>]" value="multiple" id="tax_logic_multiple_<?php echo $ctx->name;?>" class="switcher" <?php echo (!empty($post['tax_logic'][$ctx->name]) and $post['tax_logic'][$ctx->name] == 'multiple') ? 'checked="checked"' : ''; ?>/>
@@ -60,7 +61,7 @@ if ( ! empty($post_taxonomies)):
 															<div class="switcher-target-tax_logic_multiple_<?php echo $ctx->name;?> sub_input">
 																<input type="hidden" name="multiple_term_assing[<?php echo $ctx->name;?>]" value="0"/>
 																<input type="checkbox" name="multiple_term_assing[<?php echo $ctx->name;?>]" <?php echo (isset($post['multiple_term_assing'][$ctx->name])) ? (( ! empty($post['multiple_term_assing'][$ctx->name]) ) ? 'checked="checked"' : '') : 'checked="checked"'; ?> title="<?php _e('Assign post to the taxonomy.','wp_all_import_plugin');?>" value="1"/>																
-																<input type="text" class="widefat multiple_xpath_field" name="tax_multiple_xpath[<?php echo $ctx->name; ?>]" value="<?php echo ( ! empty($post['tax_multiple_xpath'][$ctx->name])) ? esc_attr($post['tax_multiple_xpath'][$ctx->name]) : ''; ?>" style="width:50%;"/>
+																<input type="text" class="widefat multiple_xpath_field" name="tax_multiple_xpath[<?php echo $ctx->name; ?>]" value="<?php echo ( ! empty($post['tax_multiple_xpath'][$ctx->name])) ? esc_textarea($post['tax_multiple_xpath'][$ctx->name]) : ''; ?>" style="width:50%;"/>
 																<label><?php _e('Separated by', 'wp_all_import_plugin'); ?></label>										
 																<input type="text" class="small tax_delim" name="tax_multiple_delim[<?php echo $ctx->name; ?>]" value="<?php echo ( ! empty($post['tax_multiple_delim'][$ctx->name]) ) ? str_replace("&amp;","&", htmlentities(htmlentities($post['tax_multiple_delim'][$ctx->name]))) : ',' ?>" />
 																<div class="input tax_is_full_search_multiple" style="margin: 10px 0;">
@@ -72,10 +73,11 @@ if ( ! empty($post_taxonomies)):
 																			<input type="hidden" name="tax_assign_to_one_term_multiple[<?php echo $ctx->name; ?>]" value="0"/>
 																			<input type="checkbox" id="tax_assign_to_one_term_multiple_<?php echo $ctx->name; ?>" <?php if ( ! empty($post['tax_assign_to_one_term_multiple'][$ctx->name]) ) echo "checked='checked'"; ?> name="tax_assign_to_one_term_multiple[<?php echo $ctx->name; ?>]" value="1"/>
 																			<label for="tax_assign_to_one_term_multiple_<?php echo $ctx->name;?>"><?php printf(__('Only assign %s to the imported %s, not the entire hierarchy', 'wp_all_import_plugin'), $custom_type->labels->name, $ctx->labels->singular_name); ?></label>
+																			<a href="#help" class="wpallimport-help" title="<?php _e('By default all categories above the matched category will also be assigned to the post. If enabled, only the imported category will be assigned to the post.', 'wp_all_import_plugin'); ?>" style="position:relative; top: -1px;">?</a>
 																		</div>
 																	</div>
 																</div>
-															</div>
+															</div>															
 														</div>
 														<?php if ($ctx->hierarchical): ?>
 														<div class="input">
@@ -93,7 +95,7 @@ if ( ! empty($post_taxonomies)):
 																					<div style="position:relative;">
 																						<input type="hidden" name="tax_hierarchical_assing[<?php echo $ctx->name;?>][<?php echo $k;?>]" value="0"/>
 																						<input type="checkbox" class="assign_term" name="tax_hierarchical_assing[<?php echo $ctx->name;?>][<?php echo $k; ?>]" <?php echo (isset($post['tax_hierarchical_assing'][$ctx->name][$k])) ? (( ! empty($post['tax_hierarchical_assing'][$ctx->name][$k]) ) ? 'checked="checked"' : '') : 'checked="checked"'; ?> title="<?php _e('Assign post to the taxonomy.','wp_all_import_plugin');?>" value="1"/>
-																						<input type="text" class="widefat hierarchical_xpath_field" name="tax_hierarchical_xpath[<?php echo $ctx->name; ?>][]" value="<?php echo esc_attr($path); ?>"/>
+																						<input type="text" class="widefat hierarchical_xpath_field" name="tax_hierarchical_xpath[<?php echo $ctx->name; ?>][]" value="<?php echo esc_textarea($path); ?>"/>
 																						<a href="javascript:void(0);" class="icon-item remove-ico" style="top:8px;"></a>
 																					</div>
 																				</li>
@@ -160,7 +162,7 @@ if ( ! empty($post_taxonomies)):
 																							<li id="item_<?php echo $i; ?>" class="dragging">
 																								<div class="drag-element">		
 																									<input type="checkbox" class="assign_term" <?php if (!empty($cat->assign)): ?>checked="checked"<?php endif; ?> title="<?php _e('Assign post to the taxonomy.','wp_all_import_plugin');?>"/>
-																									<input type="text" class="widefat xpath_field" value="<?php echo esc_attr($cat->xpath); ?>"/>
+																									<input type="text" class="widefat xpath_field" value="<?php echo esc_textarea($cat->xpath); ?>"/>
 																									
 																									<?php do_action('pmxi_category_view', $cat, $i, $ctx->name, $post_type); ?>
 
@@ -173,7 +175,25 @@ if ( ! empty($post_taxonomies)):
 																					}
 
 																				endif;
-
+																			else:
+																			?>
+																			<li id="item_1" class="dragging">
+																				<div class="drag-element">		
+																					<input type="checkbox" class="assign_term" checked="checked" title="<?php _e('Assign post to the taxonomy.','wp_all_import_plugin');?>"/>
+																					<input type="text" class="widefat xpath_field" value=""/>																																									
+																				</div>
+																				<a href="javascript:void(0);" class="icon-item remove-ico"></a>
+																				<ol>
+																					<li id="item_2" class="dragging">
+																		            	<div class="drag-element">	            		
+																		            		<input type="checkbox" class="assign_term" checked="checked" title="<?php _e('Assign post to the taxonomy.','wp_all_import_plugin');?>"/>
+																		            		<input class="widefat xpath_field" type="text" value=""/>	            																				            		
+																		            	</div>
+																		            	<a href="javascript:void(0);" class="icon-item remove-ico"></a>																		            	
+																		            </li>
+																				</ol>																				
+																			</li>
+																			<?php
 																			endif;?>
 
 																			<li id="item" class="template">
@@ -192,7 +212,7 @@ if ( ! empty($post_taxonomies)):
 																			<label><?php _e('Separated by', 'wp_all_import_plugin'); ?></label>										
 																			<input type="text" class="small tax_delim" name="tax_manualhierarchy_delim[<?php echo $ctx->name; ?>]" value="<?php echo ( ! empty($post['tax_manualhierarchy_delim'][$ctx->name]) ) ? str_replace("&amp;","&", htmlentities(htmlentities($post['tax_manualhierarchy_delim'][$ctx->name]))) : ',' ?>" />
 																		</div>
-																		<a href="javascript:void(0);" class="icon-item add-new-ico"><?php _e('Add Another','wp_all_import_plugin');?></a>
+																		<a href="javascript:void(0);" class="icon-item add-new-ico"><?php _e('Add Another Row','wp_all_import_plugin');?></a>
 																	</div>																	
 																</div>
 															</div>
@@ -273,7 +293,7 @@ if ( ! empty($post_taxonomies)):
 																			</tr>
 																			<tr>
 																				<td colspan="3">
-																					<a href="javascript:void(0);" title="<?php _e('Add Another', 'wp_all_import_plugin')?>" class="action add-new-key add-new-entry"><?php _e('Add Another', 'wp_all_import_plugin') ?></a>
+																					<a href="javascript:void(0);" title="<?php _e('Add Another Rule', 'wp_all_import_plugin')?>" class="action add-new-key add-new-entry"><?php _e('Add Another Rule', 'wp_all_import_plugin') ?></a>
 																				</td>
 																			</tr>																	
 																		</tbody>
@@ -286,7 +306,7 @@ if ( ! empty($post_taxonomies)):
 																	<label for="tax_logic_mapping_<?php echo $ctx->name; ?>"><?php _e('Apply mapping rules before splitting via separator symbol','wp_all_import_plugin'); ?></label>																	
 																</div>
 															</div>
-														</div>														
+														</div>															
 													</div>											
 												</div>
 											</div>
