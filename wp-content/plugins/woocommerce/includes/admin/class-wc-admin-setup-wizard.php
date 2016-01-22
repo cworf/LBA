@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WC_Admin_Setup_Wizard class
+ * WC_Admin_Setup_Wizard class.
  */
 class WC_Admin_Setup_Wizard {
 
@@ -26,10 +26,8 @@ class WC_Admin_Setup_Wizard {
 
 	/** @var array Tweets user can optionally send after install */
 	private $tweets = array(
-		'WooCommerce kickstarts online stores. It\'s free and has been downloaded over 6 million times.',
-		'Building an online store? WooCommerce is the leading #eCommerce plugin for WordPress (and it\'s free).',
-		'WooCommerce is a free #eCommerce plugin for #WordPress for selling #allthethings online, beautifully.',
-		'Ready to ship your idea? WooCommerce is the fastest growing #eCommerce plugin for WordPress on the web'
+		'Someone give me woo-t, I just set up a new store with #WordPress and @WooCommerce!',
+		'Someone give me high five, I just set up a new store with #WordPress and @WooCommerce!'
 	);
 
 	/**
@@ -50,7 +48,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Show the setup wizard
+	 * Show the setup wizard.
 	 */
 	public function setup_wizard() {
 		if ( empty( $_GET['page'] ) || 'wc-setup' !== $_GET['page'] ) {
@@ -91,6 +89,7 @@ class WC_Admin_Setup_Wizard {
 		$this->step = isset( $_GET['step'] ) ? sanitize_key( $_GET['step'] ) : current( array_keys( $this->steps ) );
 		$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
+		wp_register_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
 		wp_register_script( 'select2', WC()->plugin_url() . '/assets/js/select2/select2' . $suffix . '.js', array( 'jquery' ), '3.5.2' );
 		wp_register_script( 'wc-enhanced-select', WC()->plugin_url() . '/assets/js/admin/wc-enhanced-select' . $suffix . '.js', array( 'jquery', 'select2' ), WC_VERSION );
 		wp_localize_script( 'wc-enhanced-select', 'wc_enhanced_select_params', array(
@@ -113,7 +112,7 @@ class WC_Admin_Setup_Wizard {
 		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 		wp_enqueue_style( 'wc-setup', WC()->plugin_url() . '/assets/css/wc-setup.css', array( 'dashicons', 'install' ), WC_VERSION );
 
-		wp_register_script( 'wc-setup', WC()->plugin_url() . '/assets/js/admin/wc-setup.min.js', array( 'jquery', 'wc-enhanced-select'  ), WC_VERSION );
+		wp_register_script( 'wc-setup', WC()->plugin_url() . '/assets/js/admin/wc-setup.min.js', array( 'jquery', 'wc-enhanced-select', 'jquery-blockui' ), WC_VERSION );
 		wp_localize_script( 'wc-setup', 'wc_setup_params', array(
 			'locale_info' => json_encode( include( WC()->plugin_path() . '/i18n/locale-info.php' ) )
 		) );
@@ -136,7 +135,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Setup Wizard Header
+	 * Setup Wizard Header.
 	 */
 	public function setup_wizard_header() {
 		?>
@@ -147,7 +146,8 @@ class WC_Admin_Setup_Wizard {
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<title><?php _e( 'WooCommerce &rsaquo; Setup Wizard', 'woocommerce' ); ?></title>
 			<?php wp_print_scripts( 'wc-setup' ); ?>
-			<?php do_action( 'admin_print_styles' );  ?>
+			<?php do_action( 'admin_print_styles' ); ?>
+			<?php do_action( 'admin_head' ); ?>
 		</head>
 		<body class="wc-setup wp-core-ui">
 			<h1 id="wc-logo"><a href="http://woothemes.com/woocommerce"><img src="<?php echo WC()->plugin_url(); ?>/assets/images/woocommerce_logo.png" alt="WooCommerce" /></a></h1>
@@ -155,7 +155,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Setup Wizard Footer
+	 * Setup Wizard Footer.
 	 */
 	public function setup_wizard_footer() {
 		?>
@@ -168,7 +168,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Output the steps
+	 * Output the steps.
 	 */
 	public function setup_wizard_steps() {
 		$ouput_steps = $this->steps;
@@ -189,7 +189,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Output the content for the current step
+	 * Output the content for the current step.
 	 */
 	public function setup_wizard_content() {
 		echo '<div class="wc-setup-content">';
@@ -198,7 +198,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Introduction step
+	 * Introduction step.
 	 */
 	public function wc_setup_introduction() {
 		?>
@@ -206,14 +206,14 @@ class WC_Admin_Setup_Wizard {
 		<p><?php _e( 'Thank you for choosing WooCommerce to power your online store! This quick setup wizard will help you configure the basic settings. <strong>It’s completely optional and shouldn’t take longer than five minutes.</strong>', 'woocommerce' ); ?></p>
 		<p><?php _e( 'No time right now? If you don’t want to go through the wizard, you can skip and return to the WordPress dashboard. Come back anytime if you change your mind!', 'woocommerce' ); ?></p>
 		<p class="wc-setup-actions step">
-			<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button-primary button button-large"><?php _e( 'Let\'s Go!', 'woocommerce' ); ?></a>
-			<a href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>" class="button button-large"><?php _e( 'Not right now', 'woocommerce' ); ?></a>
+			<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button-primary button button-large button-next"><?php _e( 'Let\'s Go!', 'woocommerce' ); ?></a>
+			<a href="<?php echo esc_url( admin_url() ); ?>" class="button button-large"><?php _e( 'Not right now', 'woocommerce' ); ?></a>
 		</p>
 		<?php
 	}
 
 	/**
-	 * Page setup
+	 * Page setup.
 	 */
 	public function wc_setup_pages() {
 		?>
@@ -254,8 +254,8 @@ class WC_Admin_Setup_Wizard {
 			<p><?php printf( __( 'Once created, these pages can be managed from your admin dashboard on the %sPages screen%s. You can control which pages are shown on your website via %sAppearance > Menus%s.', 'woocommerce' ), '<a href="' . esc_url( admin_url( 'edit.php?post_type=page' ) ) . '" target="_blank">', '</a>', '<a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '" target="_blank">', '</a>' ); ?></p>
 
 			<p class="wc-setup-actions step">
-				<input type="submit" class="button-primary button button-large" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
-				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
+				<input type="submit" class="button-primary button button-large button-next" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
+				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large button-next"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
 				<?php wp_nonce_field( 'wc-setup' ); ?>
 			</p>
 		</form>
@@ -263,18 +263,18 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Save Page Settings
+	 * Save Page Settings.
 	 */
 	public function wc_setup_pages_save() {
 		check_admin_referer( 'wc-setup' );
 
 		WC_Install::create_pages();
-		wp_redirect( $this->get_next_step_link() );
+		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
 	}
 
 	/**
-	 * Locale settings
+	 * Locale settings.
 	 */
 	public function wc_setup_locale() {
 		$user_location  = WC_Geolocation::geolocate_ip();
@@ -285,8 +285,9 @@ class WC_Admin_Setup_Wizard {
 		// Defaults
 		$currency       = get_option( 'woocommerce_currency', 'GBP' );
 		$currency_pos   = get_option( 'woocommerce_currency_pos', 'left' );
-		$decimal_sep    = get_option( 'woocommerce_decimal_sep', '.' );
-		$thousand_sep   = get_option( 'woocommerce_thousand_sep', ',' );
+		$decimal_sep    = get_option( 'woocommerce_price_decimal_sep', '.' );
+		$num_decimals   = get_option( 'woocommerce_price_num_decimals', '2' );
+		$thousand_sep   = get_option( 'woocommerce_price_thousand_sep', ',' );
 		$dimension_unit = get_option( 'woocommerce_dimension_unit', 'cm' );
 		$weight_unit    = get_option( 'woocommerce_weight_unit', 'kg' );
 		?>
@@ -304,11 +305,11 @@ class WC_Admin_Setup_Wizard {
 				<tr>
 					<th scope="row"><label for="currency_code"><?php _e( 'Which currency will your store use?', 'woocommerce' ); ?></label></th>
 					<td>
-						<select id="currency_code" name="currency_code" required style="width:100%;" data-placeholder="<?php esc_attr_e( 'Choose a currency&hellip;', 'woocommerce' ); ?>" class="wc-enhanced-select">
+						<select id="currency_code" name="currency_code" style="width:100%;" data-placeholder="<?php esc_attr_e( 'Choose a currency&hellip;', 'woocommerce' ); ?>" class="wc-enhanced-select">
 							<option value=""><?php _e( 'Choose a currency&hellip;', 'woocommerce' ); ?></option>
 							<?php
 							foreach ( get_woocommerce_currencies() as $code => $name ) {
-								echo '<option value="' . esc_attr( $code ) . '" ' . checked( $currency, $code, false ) . '>' . esc_html( $name . ' (' . get_woocommerce_currency_symbol( $code ) . ')' ) . '</option>';
+								echo '<option value="' . esc_attr( $code ) . '" ' . selected( $currency, $code, false ) . '>' . esc_html( $name . ' (' . get_woocommerce_currency_symbol( $code ) . ')' ) . '</option>';
 							}
 							?>
 						</select>
@@ -339,6 +340,12 @@ class WC_Admin_Setup_Wizard {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row"><label for="num_decimals"><?php _e( 'Number of Decimals', 'woocommerce' ); ?></label></th>
+					<td>
+						<input type="text" id="num_decimals" name="num_decimals" size="2" value="<?php echo esc_attr( $num_decimals ) ; ?>" />
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><label for="weight_unit"><?php _e( 'Which unit should be used for product weights?', 'woocommerce' ); ?></label></th>
 					<td>
 						<select id="weight_unit" name="weight_unit" class="wc-enhanced-select">
@@ -363,8 +370,8 @@ class WC_Admin_Setup_Wizard {
 				</tr>
 			</table>
 			<p class="wc-setup-actions step">
-				<input type="submit" class="button-primary button button-large" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
-				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
+				<input type="submit" class="button-primary button button-large button-next" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
+				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large button-next"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
 				<?php wp_nonce_field( 'wc-setup' ); ?>
 			</p>
 		</form>
@@ -372,7 +379,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Save Locale Settings
+	 * Save Locale Settings.
 	 */
 	public function wc_setup_locale_save() {
 		check_admin_referer( 'wc-setup' );
@@ -381,6 +388,7 @@ class WC_Admin_Setup_Wizard {
 		$currency_code  = sanitize_text_field( $_POST['currency_code'] );
 		$currency_pos   = sanitize_text_field( $_POST['currency_pos'] );
 		$decimal_sep    = sanitize_text_field( $_POST['decimal_sep'] );
+		$num_decimals   = sanitize_text_field( $_POST['num_decimals'] );
 		$thousand_sep   = sanitize_text_field( $_POST['thousand_sep'] );
 		$weight_unit    = sanitize_text_field( $_POST['weight_unit'] );
 		$dimension_unit = sanitize_text_field( $_POST['dimension_unit'] );
@@ -388,17 +396,18 @@ class WC_Admin_Setup_Wizard {
 		update_option( 'woocommerce_default_country', $store_location );
 		update_option( 'woocommerce_currency', $currency_code );
 		update_option( 'woocommerce_currency_pos', $currency_pos );
-		update_option( 'woocommerce_decimal_sep', $decimal_sep );
-		update_option( 'woocommerce_thousand_sep', $thousand_sep );
+		update_option( 'woocommerce_price_decimal_sep', $decimal_sep );
+		update_option( 'woocommerce_price_num_decimals', $num_decimals );
+		update_option( 'woocommerce_price_thousand_sep', $thousand_sep );
 		update_option( 'woocommerce_weight_unit', $weight_unit );
 		update_option( 'woocommerce_dimension_unit', $dimension_unit );
 
-		wp_redirect( $this->get_next_step_link() );
+		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
 	}
 
 	/**
-	 * Shipping and taxes
+	 * Shipping and taxes.
 	 */
 	public function wc_setup_shipping_taxes() {
 		$domestic                         = new WC_Shipping_Flat_Rate();
@@ -520,8 +529,8 @@ class WC_Admin_Setup_Wizard {
 				?>
 			</table>
 			<p class="wc-setup-actions step">
-				<input type="submit" class="button-primary button button-large" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
-				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
+				<input type="submit" class="button-primary button button-large button-next" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
+				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large button-next"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
 				<?php wp_nonce_field( 'wc-setup' ); ?>
 			</p>
 		</form>
@@ -529,7 +538,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Save shipping and tax options
+	 * Save shipping and tax options.
 	 */
 	public function wc_setup_shipping_taxes_save() {
 		check_admin_referer( 'wc-setup' );
@@ -618,12 +627,12 @@ class WC_Admin_Setup_Wizard {
 			}
 		}
 
-		wp_redirect( $this->get_next_step_link() );
+		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
 	}
 
 	/**
-	 * Payments Step
+	 * Payments Step.
 	 */
 	public function wc_setup_payments() {
 		$paypal_settings = array_filter( (array) get_option( 'woocommerce_paypal_settings', array() ) );
@@ -633,7 +642,7 @@ class WC_Admin_Setup_Wizard {
 		?>
 		<h1><?php _e( 'Payments', 'woocommerce' ); ?></h1>
 		<form method="post">
-			<p><?php printf( __( 'WooCommerce comes with some payment gateways pre-installed. %2$sAdditonal gateways%3$s can be installed later. Payment Gateways can be setup, enabled and disabled from the %1$scheckout settings%3$s screen.', 'woocommerce' ), '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout' ) . '" target="_blank">', '<a href="' . admin_url( 'admin.php?page=wc-addons&view=payment-gateways' ) . '" target="_blank">', '</a>' ); ?></p>
+			<p><?php printf( __( 'WooCommerce can accept both online and offline payments. %2$sAdditional payment methods%3$s can be installed later and managed from the %1$scheckout settings%3$s screen.', 'woocommerce' ), '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout' ) . '" target="_blank">', '<a href="' . admin_url( 'admin.php?page=wc-addons&view=payment-gateways' ) . '" target="_blank">', '</a>' ); ?></p>
 			<table class="form-table">
 				<tr class="section_title">
 					<td colspan="2">
@@ -673,8 +682,8 @@ class WC_Admin_Setup_Wizard {
 				</tr>
 			</table>
 			<p class="wc-setup-actions step">
-				<input type="submit" class="button-primary button button-large" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
-				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
+				<input type="submit" class="button-primary button button-large button-next" value="<?php esc_attr_e( 'Continue', 'woocommerce' ); ?>" name="save_step" />
+				<a href="<?php echo esc_url( $this->get_next_step_link() ); ?>" class="button button-large button-next"><?php _e( 'Skip this step', 'woocommerce' ); ?></a>
 				<?php wp_nonce_field( 'wc-setup' ); ?>
 			</p>
 		</form>
@@ -682,7 +691,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Payments Step save
+	 * Payments Step save.
 	 */
 	public function wc_setup_payments_save() {
 		check_admin_referer( 'wc-setup' );
@@ -706,12 +715,12 @@ class WC_Admin_Setup_Wizard {
 		update_option( 'woocommerce_cod_settings', $cod_settings );
 		update_option( 'woocommerce_bacs_settings', $bacs_settings );
 
-		wp_redirect( $this->get_next_step_link() );
+		wp_redirect( esc_url_raw( $this->get_next_step_link() ) );
 		exit;
 	}
 
 	/**
-	 * Actions on the final step
+	 * Actions on the final step.
 	 */
 	private function wc_setup_ready_actions() {
 		WC_Admin_Notices::remove_notice( 'install' );
@@ -726,7 +735,7 @@ class WC_Admin_Setup_Wizard {
 	}
 
 	/**
-	 * Final step
+	 * Final step.
 	 */
 	public function wc_setup_ready() {
 		$this->wc_setup_ready_actions();
@@ -757,10 +766,10 @@ class WC_Admin_Setup_Wizard {
 			<div class="wc-setup-next-steps-last">
 				<h2><?php _e( 'Learn More', 'woocommerce' ); ?></h2>
 				<ul>
-					<li class="video-walkthrough"><a href="http://docs.woothemes.com/document/woocommerce-101-video-series/?utm_source=WooCommerce&amp;utm_medium=Wizard&amp;utm_content=Videos&amp;utm_campaign=Onboarding"><?php _e( 'Watch the WC 101 video walkthroughs', 'woocommerce' ); ?></a></li>
-					<li class="newsletter"><a href="http://www.woothemes.com/woocommerce-onboarding-email/?utm_source=WooCommerce&amp;utm_medium=Wizard&amp;utm_content=Newsletter&amp;utm_campaign=Onboarding"><?php _e( 'Get eCommerce advice in your inbox', 'woocommerce' ); ?></a></li>
+					<li class="video-walkthrough"><a href="http://docs.woothemes.com/document/woocommerce-101-video-series/?utm_source=WooCommercePlugin&amp;utm_medium=Wizard&amp;utm_content=Videos&amp;utm_campaign=Onboarding"><?php _e( 'Watch the WC 101 video walkthroughs', 'woocommerce' ); ?></a></li>
+					<li class="newsletter"><a href="http://www.woothemes.com/woocommerce-onboarding-email/?utm_source=WooCommercePlugin&amp;utm_medium=Wizard&amp;utm_content=Newsletter&amp;utm_campaign=Onboarding"><?php _e( 'Get eCommerce advice in your inbox', 'woocommerce' ); ?></a></li>
 					<li class="sidekick"><a href="http://www.woothemes.com/sidekick/"><?php _e( 'Follow Sidekick interactive walkthroughs', 'woocommerce' ); ?></a></li>
-					<li class="learn-more"><a href="http://docs.woothemes.com/documentation/plugins/woocommerce/getting-started/?utm_source=WooCommerce&amp;utm_medium=Wizard&amp;utm_content=Docs&amp;utm_campaign=Onboarding"><?php _e( 'Read more about getting started', 'woocommerce' ); ?></a></li>
+					<li class="learn-more"><a href="http://docs.woothemes.com/documentation/plugins/woocommerce/getting-started/?utm_source=WooCommercePlugin&amp;utm_medium=Wizard&amp;utm_content=Docs&amp;utm_campaign=Onboarding"><?php _e( 'Read more about getting started', 'woocommerce' ); ?></a></li>
 				</ul>
 			</div>
 		</div>
