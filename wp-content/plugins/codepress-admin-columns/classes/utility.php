@@ -26,7 +26,7 @@ function cpac_admin_message( $message = '', $type = 'updated' ) {
  */
 function cpac_admin_notice() {
 
-    echo implode( $GLOBALS['cpac_messages'] );
+	echo implode( $GLOBALS['cpac_messages'] );
 }
 
 /**
@@ -39,15 +39,13 @@ function cac_is_doing_ajax() {
 		return false;
 	}
 
-	if ( ( isset( $_POST['action'] ) && 'inline-save' === $_POST['action'] ) ) {
-		return true;
-	}
-
-	if ( ( isset( $_POST['action'] ) && 'edit-comment' === $_POST['action'] ) ) {
-		return true;
-	}
-
-	if ( ( isset( $_POST['action'] ) && 'replyto-comment' === $_POST['action'] ) ) {
+	if ( in_array( filter_input( INPUT_POST, 'action' ), array(
+		'inline-save', // Quick edit
+		'add-tag', // Adding terms
+		'inline-save-tax', // Quick edit terms
+		'edit-comment', // Quick edit comment
+		'replyto-comment' // Inline reply on comment
+	) ) ) {
 		return true;
 	}
 
@@ -66,18 +64,63 @@ function cac_is_doing_ajax() {
  */
 function cpac_is_wc_version_gte( $version = '1.0' ) {
 	$wc_version = defined( 'WC_VERSION' ) && WC_VERSION ? WC_VERSION : null;
+
 	return $wc_version && version_compare( $wc_version, $version, '>=' );
 }
 
-function cpac_get_ids_from_array( $array ) {
-	$array = trim( str_replace( ' ','', $array ) );
-	$ids = array();
-	if ( strpos( $array, ',' ) !== false ) {
-		$ids = explode( ',', $array );
-		$ids = array_map( 'intval', $ids );
+function cpac_is_acf_active() {
+	return class_exists( 'acf', false );
+}
+
+function cpac_is_woocommerce_active() {
+	return class_exists( 'WooCommerce', false );
+}
+
+function cpac_is_pro_active() {
+	return class_exists( 'CAC_Addon_Pro', false );
+}
+
+/**
+ * Whether the current screen is the Admin Columns settings screen
+ *
+ * @since 2.4.8
+ *
+ * @param strong $tab Specifies a tab screen (optional)
+ *
+ * @return bool True if the current screen is the settings screen, false otherwise
+ */
+function cac_is_setting_screen( $tab = '' ) {
+	global $pagenow;
+
+	if ( ! ( 'options-general.php' === $pagenow && isset( $_GET['page'] ) && ( 'codepress-admin-columns' === $_GET['page'] ) ) ) {
+		return false;
 	}
-	elseif ( is_numeric( $array ) ) {
-		$ids[] = $array;
+
+	if ( $tab && ( empty( $_GET['tab'] ) || ( isset( $_GET['tab'] ) && $tab !== $_GET['tab'] ) ) ) {
+		return false;
 	}
-	return $ids;
+
+	return true;
+}
+
+/**
+ * Get the url where the Admin Columns website is hosted
+ *
+ * @return string
+ */
+function ac_get_site_url( $path = '' ) {
+	$url = 'https://www.admincolumns.com';
+
+	if ( ! empty( $path ) ) {
+		$url .= '/' . trim( $path, '/' ) . '/';
+	}
+
+	return $url;
+}
+
+/**
+ * @see ac_get_site_url()
+ */
+function ac_site_url( $path = '' ) {
+	echo ac_get_site_url( $path );
 }
