@@ -40,44 +40,44 @@ abstract class PMWI_Controller_Admin extends PMWI_Controller {
 		if ( ! is_a($wp_styles, 'WP_Styles'))
 			$wp_styles = new WP_Styles();
 				
-		wp_enqueue_style('pmwi-admin-style', PMWI_ROOT_URL . '/static/css/admin.css');
+		wp_enqueue_style('pmwi-admin-style', PMWI_ROOT_URL . '/static/css/admin.css', array(), PMWI_VERSION);
 		
 		if ( version_compare(get_bloginfo('version'), '3.8-RC1') >= 0 ){
 			wp_enqueue_style('pmwi-admin-style-wp-3.8', PMWI_ROOT_URL . '/static/css/admin-wp-3.8.css');
 		}
 
 		wp_enqueue_script('pmwi-script', PMWI_ROOT_URL . '/static/js/pmwi.js', array('jquery'));		
-		wp_enqueue_script('pmwi-admin-script', PMWI_ROOT_URL . '/static/js/admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-datepicker', 'jquery-ui-draggable', 'jquery-ui-droppable', 'pmxi-admin-script'));
+		wp_enqueue_script('pmwi-admin-script', PMWI_ROOT_URL . '/static/js/admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-resizable', 'jquery-ui-dialog', 'jquery-ui-datepicker', 'jquery-ui-draggable', 'jquery-ui-droppable', 'pmxi-admin-script'), PMWI_VERSION);
 		
 		global $woocommerce;
 
 		$woocommerce_witepanel_params = array(
-			'remove_item_notice' 			=> __("Remove this item? If you have previously reduced this item's stock, or this order was submitted by a customer, will need to manually restore the item's stock.", 'woocommerce'),
-			'remove_attribute'				=> __('Remove this attribute?', 'woocommerce'),
-			'name_label'					=> __('Name', 'woocommerce'),
-			'remove_label'					=> __('Remove', 'woocommerce'),
-			'click_to_toggle'				=> __('Click to toggle', 'woocommerce'),
-			'values_label'					=> __('Value(s)', 'woocommerce'),
-			'text_attribute_tip'			=> __('Enter some text, or some attributes by pipe (|) separating values.', 'woocommerce'),
-			'visible_label'					=> __('Visible on the product page', 'woocommerce'),
-			'used_for_variations_label'		=> __('Used for variations', 'woocommerce'),
-			'new_attribute_prompt'			=> __('Enter a name for the new attribute term:', 'woocommerce'),
-			'calc_totals' 					=> __("Calculate totals based on order items, discount amount, and shipping? Note, you will need to (optionally) calculate tax rows and cart discounts manually.", 'woocommerce'),
-			'calc_line_taxes' 				=> __("Calculate line taxes? This will calculate taxes based on the customers country. If no billing/shipping is set it will use the store base country.", 'woocommerce'),
-			'copy_billing' 					=> __("Copy billing information to shipping information? This will remove any currently entered shipping information.", 'woocommerce'),
-			'load_billing' 					=> __("Load the customer's billing information? This will remove any currently entered billing information.", 'woocommerce'),
-			'load_shipping' 				=> __("Load the customer's shipping information? This will remove any currently entered shipping information.", 'woocommerce'),
-			'featured_label'				=> __('Featured', 'woocommerce'),
+			'remove_item_notice' 			=> __("Remove this item? If you have previously reduced this item's stock, or this order was submitted by a customer, will need to manually restore the item's stock.", 'wpai_woocommerce_addon_plugin'),
+			'remove_attribute'				=> __('Remove this attribute?', 'wpai_woocommerce_addon_plugin'),
+			'name_label'					=> __('Name', 'wpai_woocommerce_addon_plugin'),
+			'remove_label'					=> __('Remove', 'wpai_woocommerce_addon_plugin'),
+			'click_to_toggle'				=> __('Click to toggle', 'wpai_woocommerce_addon_plugin'),
+			'values_label'					=> __('Value(s)', 'wpai_woocommerce_addon_plugin'),
+			'text_attribute_tip'			=> __('Enter some text, or some attributes by pipe (|) separating values.', 'wpai_woocommerce_addon_plugin'),
+			'visible_label'					=> __('Visible on the product page', 'wpai_woocommerce_addon_plugin'),
+			'used_for_variations_label'		=> __('Used for variations', 'wpai_woocommerce_addon_plugin'),
+			'new_attribute_prompt'			=> __('Enter a name for the new attribute term:', 'wpai_woocommerce_addon_plugin'),
+			'calc_totals' 					=> __("Calculate totals based on order items, discount amount, and shipping? Note, you will need to (optionally) calculate tax rows and cart discounts manually.", 'wpai_woocommerce_addon_plugin'),
+			'calc_line_taxes' 				=> __("Calculate line taxes? This will calculate taxes based on the customers country. If no billing/shipping is set it will use the store base country.", 'wpai_woocommerce_addon_plugin'),
+			'copy_billing' 					=> __("Copy billing information to shipping information? This will remove any currently entered shipping information.", 'wpai_woocommerce_addon_plugin'),
+			'load_billing' 					=> __("Load the customer's billing information? This will remove any currently entered billing information.", 'wpai_woocommerce_addon_plugin'),
+			'load_shipping' 				=> __("Load the customer's shipping information? This will remove any currently entered shipping information.", 'wpai_woocommerce_addon_plugin'),
+			'featured_label'				=> __('Featured', 'wpai_woocommerce_addon_plugin'),
 			'tax_or_vat'					=> $woocommerce->countries->tax_or_vat(),
 			'prices_include_tax' 			=> get_option('woocommerce_prices_include_tax'),
 			'round_at_subtotal'				=> get_option( 'woocommerce_tax_round_at_subtotal' ),
-			'meta_name'						=> __('Meta Name', 'woocommerce'),
-			'meta_value'					=> __('Meta Value', 'woocommerce'),
-			'no_customer_selected'			=> __('No customer selected', 'woocommerce'),
-			'tax_label'						=> __('Tax Label:', 'woocommerce'),
-			'compound_label'				=> __('Compound:', 'woocommerce'),
-			'cart_tax_label'				=> __('Cart Tax:', 'woocommerce'),
-			'shipping_tax_label'			=> __('Shipping Tax:', 'woocommerce'),
+			'meta_name'						=> __('Meta Name', 'wpai_woocommerce_addon_plugin'),
+			'meta_value'					=> __('Meta Value', 'wpai_woocommerce_addon_plugin'),
+			'no_customer_selected'			=> __('No customer selected', 'wpai_woocommerce_addon_plugin'),
+			'tax_label'						=> __('Tax Label:', 'wpai_woocommerce_addon_plugin'),
+			'compound_label'				=> __('Compound:', 'wpai_woocommerce_addon_plugin'),
+			'cart_tax_label'				=> __('Cart Tax:', 'wpai_woocommerce_addon_plugin'),
+			'shipping_tax_label'			=> __('Shipping Tax:', 'wpai_woocommerce_addon_plugin'),
 			'plugin_url' 					=> $woocommerce->plugin_url(),
 			'ajax_url' 						=> admin_url('admin-ajax.php'),
 			'add_order_item_nonce' 			=> wp_create_nonce("add-order-item"),
