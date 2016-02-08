@@ -1,9 +1,9 @@
 === WooCommerce ===
 Contributors: automattic, mikejolley, jameskoster, claudiosanches, royho, woothemes
-Tags: ecommerce, e-commerce, store, sales, sell, shop, cart, checkout, downloadable, downloads, paypal, shipping, storefront
+Tags: ecommerce, e-commerce, store, sales, sell, shop, cart, checkout, downloadable, downloads, paypal, storefront
 Requires at least: 4.1
 Tested up to: 4.4
-Stable tag: 2.5.0
+Stable tag: 2.5.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -55,22 +55,22 @@ We also support WooCommerce and all its extensions with comprehensive, easily-ac
 
 WordPress.org is home to some amazing extensions for WooCommerce, including:
 
-[Google Analytics](https://wordpress.org/plugins/woocommerce-google-analytics-integration/)
-[Delivery Notes](https://wordpress.org/plugins/woocommerce-delivery-notes/)
-[PDF Invoices and Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/)
-[Affiliates Integration Light](https://wordpress.org/plugins/affiliates-woocommerce-light/)
-[New Product Badges](https://wordpress.org/plugins/woocommerce-new-product-badge/)
+- [Google Analytics](https://wordpress.org/plugins/woocommerce-google-analytics-integration/)
+- [Delivery Notes](https://wordpress.org/plugins/woocommerce-delivery-notes/)
+- [PDF Invoices and Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/)
+- [Affiliates Integration Light](https://wordpress.org/plugins/affiliates-woocommerce-light/)
+- [New Product Badges](https://wordpress.org/plugins/woocommerce-new-product-badge/)
 
 Keen to see them all? Search WordPress.org for ‘WooCommerce’ to dive in.
 
 If you’re looking for something endorsed and maintained by the developers who built WooCommerce, there are a plethora of premium eCommerce extensions, the most popular of which include:
 
-[WooCommerce Subscriptions](http://www.woothemes.com/products/woocommerce-subscriptions/)
-[WooCommerce Memberships](http://www.woothemes.com/products/woocommerce-memberships/)
-[WooCommerce Bookings](http://www.woothemes.com/products/woocommerce-bookings/)
-[Dynamic Pricing](http://www.woothemes.com/products/dynamic-pricing/)
-[Table Rate Shipping](http://www.woothemes.com/products/table-rate-shipping/)
-[Product CSV Import Suite](http://www.woothemes.com/products/product-csv-import-suite/)
+- [WooCommerce Subscriptions](http://www.woothemes.com/products/woocommerce-subscriptions/)
+- [WooCommerce Memberships](http://www.woothemes.com/products/woocommerce-memberships/)
+- [WooCommerce Bookings](http://www.woothemes.com/products/woocommerce-bookings/)
+- [Dynamic Pricing](http://www.woothemes.com/products/dynamic-pricing/)
+- [Table Rate Shipping](http://www.woothemes.com/products/table-rate-shipping/)
+- [Product CSV Import Suite](http://www.woothemes.com/products/product-csv-import-suite/)
 
 And there’s plenty more where they came from. Visit our [extensions page](http://www.woothemes.com/product-category/woocommerce-extensions/) to find out everything you’re capable of and all that's possible with premium WooCommerce extensions.
 
@@ -157,6 +157,50 @@ Yes you can! Join in on our [GitHub repository](http://github.com/woothemes/wooc
 6. A product archive (grid).
 
 == Changelog ==
+
+= 2.5.2 - 01/02/2016 =
+* Fix - Compatibility with w3 total cache inline minification.
+* Fix - Remove stock bw compat code which was preventing manage stock being disabled at variation level.
+* Fix - When calculating shipping total, force rounding.
+* Fix - Make save button clickable in tax rate table after using autocomplete field.
+* Fix - Fix passed image_size variable in email templates.
+* Fix - Don't show purchase note to admin in emails.
+* Fix - Fix 'hide empty' setting in category widget .
+* Fix - Prevent notice in get_allowed_countries.
+* Fix - Prevent add-to-cart querystring in pagination links.
+* Tweak - Allow propagation in variation script.
+* Tweak - Product image alt text.
+* Tweak - Remove notice and add styling for add payment page.
+* Tweak - Set input margin and label display for compatibility with themes using bootstrap CSS.
+* Tweak - Add context to category term localization.
+* Tweak - Moved cart URL functions to core-functions file to make them available in admin area.
+* Tweak - Added password hint text and error messages when showing the password strength meter in forms.
+* Tweak - Added Saudi Riyal currency.
+* Tweak - Added Russian Ruble symbol.
+* Tweak - When COOKIEPATH is an empty string, set to '/' so cookies work across all pages.
+* Dev - Template - Pass $category into wc_product_cat_class() in content-product_cat.php
+
+= 2.5.1 - 25/01/2016 =
+* Fix - Remove usage of get_currentuserinfo() which is deprecated in WordPress 4.5.
+* Fix - Fix responsive product sizes when the columns class is missing.
+* Fix - Fix function exists check for woocommerce_template_loop_category_title.
+* Fix - check_version on all requests so that the installer runs after remote plugin updates.
+* Fix - Only show the "add payment method" button when needed, and check for required fields on the add payment method page.
+* Fix - Correctly block UI to prevent attribute issues in backend when adding multiple attributes in quick succession.
+* Fix - Show SKU in admin emails.
+* Fix - Don't show downloads in admin emails.
+* Fix - Fix query/missing variable in validate_user_usage_limit function.
+* Fix - Prevent endless loading on checkout when reload_checkout session variable was used.
+* Fix - Correctly display html entities in tax screen autocomplete.
+* Fix - Do sales reports based on refund line items rather than fully refunded orders to prevent double refunds being reported.
+* Fix - Qty button can be hidden for variable products sold individually.
+* Fix - Show the taxable country rather than base country in "estimated for" text during checkout.
+* Fix - Prevent select2 gaining focus on IOS7 scroll.
+* Fix - API - Fix indexes on decimal and thousand values.
+* Tweak - Clear cron jobs on uninstall .
+* Tweak - Don't disable place order button on checkout if a weak password is used.
+* Tweak - Added password strength meter in lost password and edit accout pages.
+* Tweak - Pass $args to woocommerce_dropdown_variation_attribute_options_html hook.
 
 = 2.5.0 - 18/01/2016 =
 * Feature - New default session handler. Uses custom table to store data rather than the options table for performance and scalability reasons. https://woocommerce.wordpress.com/2015/10/07/new-session-handler-in-2-5/
