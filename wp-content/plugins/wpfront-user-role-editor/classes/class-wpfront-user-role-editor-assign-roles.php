@@ -63,7 +63,9 @@ if (!class_exists('WPFront_User_Role_Editor_Assign_Roles')) {
         }
 
         public function manage_users_columns($columns) {
-            $columns[self::SECONDARY_ROLE_COLUMN_KEY] = $this->__('Secondary Roles');
+            if (!WPFront_Static_URE::WP_Version('4.4')) {
+                $columns[self::SECONDARY_ROLE_COLUMN_KEY] = $this->__('Secondary Roles');
+            }
 
             return $columns;
         }

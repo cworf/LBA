@@ -91,6 +91,9 @@ if (!defined('ABSPATH')) {
                                             break;
                                         case 'invalid':
                                             echo $this->__('Invalid');
+                                            if(!empty($this->license_home_url)) {
+                                                echo ' [' . $this->license_home_url . ']';
+                                            }
                                             break;
                                     }
                                     ?>
@@ -101,7 +104,13 @@ if (!defined('ABSPATH')) {
                                     <?php echo $this->__('License Expires'); ?>
                                 </th>
                                 <td class="<?php echo $this->license_expired ? 'expired' : ''; ?>">
-                                    <?php echo $this->license_expires; ?>
+                                    <?php
+                                    echo $this->license_expires;
+
+                                    if ($this->license_status != 'invalid' && !empty($this->renew_url)) {
+                                        echo sprintf('<a class="add-new-h2 post-title-action" href="%s" target="_blank">%s</a>', $this->renew_url, $this->__('Renew'));
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -113,7 +122,21 @@ if (!defined('ABSPATH')) {
         <script type="text/javascript">
             (function ($) {
                 var noblock = false;
-                var $form = $('#license-form').submit(function () {
+                
+                function formSubmit() {
+                    noblock = true;
+                    var $form = $('#license-form');
+                    $form.find("input").prop('disabled', false);
+                    $form.find("input").removeAttr('disabled');
+                    $form.find("input[type='submit']").click();
+                    setTimeout(function () {
+                        $form.find("input[type='submit']").click();
+                    }, 500);
+                }
+                
+                $('#license-form').submit(function () {
+                    setTimeout(formSubmit, 30000);
+                    
                     if (noblock)
                         return;
 
@@ -130,14 +153,7 @@ if (!defined('ABSPATH')) {
                         if (response)
                             window.location.replace(window.location.href);
                         else {
-                            noblock = true;
-                            var $form = $('#license-form');
-                            $form.find("input").prop('disabled', false);
-                            $form.find("input").removeAttr('disabled');
-                            $form.find("input[type='submit']").click();
-                            setTimeout(function () {
-                                $form.find("input[type='submit']").click();
-                            }, 500);
+                            formSubmit();
                         }
                     }, 'json');
 

@@ -80,7 +80,7 @@ if (!class_exists('WPFront_Base_Menu')) {
                 if ($_GET['action'] == 'activate') {
                     if (isset($_GET['plugin'])) {
                         activate_plugin($_GET['plugin'] . '/' . $_GET['plugin'] . '.php');
-//                        echo '<script type="text/javascript">window.location="' . WPFront_Static::self_admin_url('admin.php?page=' . self::MENU_SLUG) . '";</script>';
+//                        echo '<script type="text/javascript">window.location="' . WPFront_Static_URE::self_admin_url('admin.php?page=' . self::MENU_SLUG) . '";</script>';
 //                        wp_die();
 //                        return;
                     }
@@ -153,7 +153,7 @@ if (!class_exists('WPFront_Base_Menu')) {
                 $author = wp_kses($author, $plugins_allowedtags);
 
                 $action_links = array();
-                $action_links[] = '<a href="' . WPFront_Static::self_admin_url('plugin-install.php?tab=plugin-information&amp;plugin=' . $plugin['slug'] .
+                $action_links[] = '<a href="' . WPFront_Static_URE::self_admin_url('plugin-install.php?tab=plugin-information&amp;plugin=' . $plugin['slug'] .
                                 '&amp;TB_iframe=true&amp;width=600&amp;height=550') . '" class="thickbox" title="' .
                         esc_attr(sprintf($this->__('More information about %s'), $name)) . '">' . $this->__('Details') . '</a>';
 
@@ -176,9 +176,9 @@ if (!class_exists('WPFront_Base_Menu')) {
                         case 'newer_installed':
                             $action_links[] = '<span title="' . esc_attr__($this->__('This plugin is already installed and is up to date')) . ' ">' . $this->__('Installed') . '</span>';
                             if (is_plugin_active($plugin['slug'] . '/' . $plugin['slug'] . '.php'))
-                                $action_links[] = '<a href="' . WPFront_Static::self_admin_url('admin.php?page=' . $plugin['slug']) . '">' . $this->__('Settings') . '</a>';
+                                $action_links[] = '<a href="' . WPFront_Static_URE::self_admin_url('admin.php?page=' . $plugin['slug']) . '">' . $this->__('Settings') . '</a>';
                             else
-                                $action_links[] = '<a href="' . WPFront_Static::self_admin_url('admin.php?page=' . self::MENU_SLUG . '&action=activate&plugin=' . $plugin['slug']) . '">' . $this->__('Activate') . '</a>';
+                                $action_links[] = '<a href="' . WPFront_Static_URE::self_admin_url('admin.php?page=' . self::MENU_SLUG . '&action=activate&plugin=' . $plugin['slug']) . '">' . $this->__('Activate') . '</a>';
                             break;
                     }
                 }

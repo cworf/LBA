@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
     exit();
 }
 
-if (!class_exists('WPFront_Static')) {
+if (!class_exists('WPFront_Static_URE')) {
 
     /**
      * Plugin framework static helpers
@@ -34,7 +34,7 @@ if (!class_exists('WPFront_Static')) {
      * @author Syam Mohan <syam@wpfront.com>
      * @copyright 2013 WPFront.com
      */
-    class WPFront_Static {
+    class WPFront_Static_URE {
 
         public static function is_admin_bar_showing() {
             if (function_exists('is_admin_bar_showing')) {
@@ -65,6 +65,12 @@ if (!class_exists('WPFront_Static')) {
             }
 
             return FALSE;
+        }
+
+        public static function WP_Version($version) {
+            global $wp_version;
+            
+            return version_compare($wp_version, $version, '>=');
         }
 
     }

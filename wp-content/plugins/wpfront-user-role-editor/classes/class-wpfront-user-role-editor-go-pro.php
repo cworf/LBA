@@ -47,12 +47,15 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
         private $license_key = NULL;
         private $license_key_k = NULL;
         private $license_expires = NULL;
+        private $download_id = NULL;
         private $license_expired = FALSE;
         private $product = NULL;
         private $slug = NULL;
         private $error = NULL;
         private $plugin_updater = NULL;
         private $mail_objects = array();
+        private $renew_url = NULL;
+        private $license_home_url = NULL;
 
         public function __construct($main) {
             parent::__construct($main);
@@ -126,25 +129,30 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
             $entity = new WPFront_User_Role_Editor_Entity_Options();
             $this->license_key = $entity->get_option($this->license_key_k);
             if ($this->license_key !== NULL) {
+                $invalid_count = $entity->get_option($this->license_key_k . '-invalid-count');
+                if (empty($invalid_count)) {
+                    $invalid_count = 0;
+                }
+
                 $last_checked = $entity->get_option($this->license_key_k . '-last-checked');
-                if ($last_checked < time() - 24 * 3600) {
+                if (($invalid_count > 0 || is_admin()) && !WPFront_Static_URE::doing_ajax() && $last_checked < time() - 24 * 3600) {
                     $entity->update_option($this->license_key_k . '-last-checked', time());
                     $result = $this->remote_get('check_license', $this->license_key);
+                    $api_params = $result[1];
+                    $result = $result[0];
                     if (!empty($result)) {
                         if (($result->activations_left === 'unlimited' || $result->activations_left >= 0) && ($result->license === 'valid' || $result->license === 'expired')) {
                             $entity->update_option($this->license_key_k . '-status', $result->license);
                             $entity->update_option($this->license_key_k . '-expires', $result->expires);
+                            $entity->update_option($this->license_key_k . '-download-id', $result->download_id);
                             $entity->update_option($this->license_key_k . '-invalid-count', 0);
                         } else {
-                            $invalid_count = $entity->get_option($this->license_key_k . '-invalid-count');
-                            if (empty($invalid_count)) {
-                                $invalid_count = 0;
-                            }
                             $invalid_count = $invalid_count + 1;
                             $entity->update_option($this->license_key_k . '-invalid-count', $invalid_count);
+                            $entity->update_option($this->license_key_k . '-home-url', $api_params['url']);
                             $this->license_status = 'invalid';
                             if ($invalid_count === 1) {
-                                $this->send_mail('invalid', $result, 'wpfront.com');
+                                $this->send_mail('invalid', $result, 'wpfront.com', $api_params);
                             } else if ($invalid_count > 7) {
                                 $this->deactivate_license(TRUE);
                                 $this->send_mail('deactivated', $result, 'wpfront.com');
@@ -153,13 +161,19 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
                         }
                     }
                 }
+                
                 $this->has_license = TRUE;
                 $this->license_expired = $entity->get_option($this->license_key_k . '-status') === 'expired';
                 $this->license_expires = date('F d, Y', strtotime($entity->get_option($this->license_key_k . '-expires')));
+                $this->download_id = $entity->get_option($this->license_key_k . '-download-id');
+                if (!empty($this->download_id)) {
+                    $this->renew_url = sprintf('https://wpfront.com/checkout/?edd_license_key=%s&download_id=%d', $this->license_key, $this->download_id);
+                }
 
-                $invalid_count = $entity->get_option($this->license_key_k . '-invalid-count');
+                //$invalid_count = $entity->get_option($this->license_key_k . '-invalid-count');
                 if ($invalid_count > 0) {
                     $this->license_status = 'invalid';
+                    $this->license_home_url = $entity->get_option($this->license_key_k . '-home-url');
                 }
 
                 if ($this->license_status === NULL) {
@@ -196,6 +210,8 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
             if ($result === NULL)
                 return;
 
+            $result = $result[0];
+
             $entity = new WPFront_User_Role_Editor_Entity_Options();
             $entity->delete_option($this->license_key_k);
             $entity->delete_option($this->license_key_k . '-expires');
@@ -223,9 +239,14 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
             $entity = new WPFront_User_Role_Editor_Entity_Options();
             $this->license_key = $entity->get_option($this->license_key_k);
 
+            if (empty($this->license_key))
+                return;
+
             $result = $this->remote_get('deactivate_license', $this->license_key);
             if ($result === NULL)
                 return;
+
+            $result = $result[0];
 
             if ($result->license === 'deactivated' || $forced) {
                 $entity->delete_option($this->license_key_k);
@@ -236,7 +257,7 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
                     $this->send_mail('deactivate', $result, 'user');
                 }
             } else {
-                $this->error = $this->__('ERROR') . ': ' . $this->__('Unable to deactivate, expired license?');
+                $this->error = $this->__('ERROR') . ': ' . $this->__('Unable to deactivate');
             }
 
             $this->set_license();
@@ -275,7 +296,11 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
                 return NULL;
             }
 
-            return $result;
+            $api_params['license'] = urldecode($api_params['license']);
+            $api_params['item_name'] = urldecode($api_params['item_name']);
+            $api_params['url'] = urldecode($api_params['url']);
+
+            return array($result, $api_params);
         }
 
         public function edd_plugin_update() {
@@ -326,7 +351,7 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
             return TRUE;
         }
 
-        private function send_mail($action, $result, $source) {
+        private function send_mail($action, $result, $source, $params = NULL) {
             $admin_email = get_site_option('admin_email');
             $blog_name = is_multisite() ? get_site_option('site_name') : get_option('blogname');
 
@@ -361,6 +386,7 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
                 case 'invalid':
                     $message = $this->__('Your WPFront User Role Editor Pro license is invalid on the following site. Please activate a valid license immediately for the plugin to continue working.');
                     $subject = '[' . $blog_name . '] ' . $this->__('WPFront User Role Editor Pro Invalid License');
+                    $body .= '<tr><td>' . $this->__('Invalid URL') . ':</td><td>' . $params['url'] . '</td></tr>';
                     break;
                 case 'deactivated':
                     $message = $this->__('Your invalid WPFront User Role Editor Pro license was deactivated on the following site. Please activate a valid license immediately for the plugin to continue working.');
@@ -371,8 +397,8 @@ if (!class_exists('WPFront_User_Role_Editor_Go_Pro')) {
 
             $body = $message
                     . '<br /><br />'
-                    . '<table>' 
-                    . $body 
+                    . '<table>'
+                    . $body
                     . '</table>';
 
             if (function_exists('wp_mail')) {
