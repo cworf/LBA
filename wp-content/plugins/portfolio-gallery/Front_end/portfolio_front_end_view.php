@@ -1449,6 +1449,9 @@ $paramssld["ht_view6_cat_all"] = "All";
 
 }
 @media screen and (max-width: 480px) {
+#huge_it_portfolio_container_<?php echo $portfolioID; ?>{
+    width:100%;
+}
 #huge_it_portfolio_content_<?php echo $portfolioID; ?> #huge_it_portfolio_options_<?php echo $portfolioID; ?> {
 	float: left;
 }

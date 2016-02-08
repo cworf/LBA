@@ -1,10 +1,10 @@
 ﻿=== Portfolio Gallery ===
 Contributors: Huge-IT
 Donate link: http://huge-it.com/portfolio-gallery/
-Tags: Portfolio Gallery, portfolio, portfolio plugin, portfolios, picture, pictures, album, custom fields, image display, image-size, images gallery, gallery, labels, visual items, thumbnails, image gallery, wordpress FAQ, grid, slider, sliders, wordpress slider, wordpress slideshow, wp slider, slide, slide show, slider, slider plugin, slider widget, slides, slideshow, slideshow manager, gallery description, slideshow plugin, gallery slider, galeri, galerie, widget slider, widget slideshow, foto, responsive, responsive slider, responsive slideshow, Photo Slider, plugin, Image Rotator, carousel, wordpress gallery, wordpress gallery plugin, banner rotator, best gallery, best gallery plugin, image album, image gallery plugin, images gallery, photo album, photo albums, photo gallery, photoset, Simple gallery, website gallery, widget gallery, wp gallery plugins, wp gallery plugin, wp gallery, photoalbum, view images, multiple pictures, lightbox, lightbox photo, image lightbox, gallery lightbox, content slider, wordpress portfolio, galleries, galleria, wordpress portfolio plugin, project, photography, filterable gallery, filterable portfolio, jquery portfolio, jquery gallery, sortable portfolio, prettyphoto, picture gallery, picture portfolio,  fullscreen, thumbnail, iphone gallery, free photo gallery, widget portfolio, fullscreen photo, free gallery, best portfolio plugin, free gallery, fullscreen slider, gallery shortcode, pretty photo, free slider, showcase, nextcellent, wordpress responsive gallery, filterable, masonry, Responsive Portfolio, image-portfolio, photographs, fullscreen gallery, thumbnail view, image description, simple portfolio, faq, video, video gallery, youtube, youtube gallery, vimeo, vimeo gallery, galleri, easy media gallery, gallery decription, Gallery Plugin, grid gallery, multi categories gallery, pagination gallery, photogallery, plugin gallery, responsive gallery, responsive wordpress photo gallery, sortable gallery, wordpress photo gallery plugin, gallery free, gallery wp, job, watermarks, watermarking,
+Tags: Portfolio Gallery, portfolio, portfolio plugin, portfolios, picture, pictures, album, custom fields, image display, image-size, images gallery, gallery, labels, visual items, thumbnails, image gallery, wordpress FAQ, grid, slider, sliders, wordpress slider, wordpress slideshow, wp slider, slide, slide show, slider, slider plugin, slider widget, slides, slideshow, slideshow manager, gallery description, slideshow plugin, gallery slider, galeri, galerie, widget slider, widget slideshow, foto, responsive, responsive slider, responsive slideshow, Photo Slider, plugin, Image Rotator, carousel, wordpress gallery, wordpress gallery plugin, banner rotator, best gallery, best gallery plugin, image album, image gallery plugin, images gallery, photo album, photo albums, photo gallery, photoset, Simple gallery, website gallery, widget gallery, wp gallery plugins, wp gallery plugin, wp gallery, photoalbum, view images, multiple pictures, lightbox, lightbox photo, image lightbox, gallery lightbox, content slider, wordpress portfolio, galleries, galleria, wordpress portfolio plugin, project, photography, filterable gallery, filterable portfolio, jquery portfolio, jquery gallery, sortable portfolio, prettyphoto, picture gallery, picture portfolio,  fullscreen, thumbnail, iphone gallery, free photo gallery, widget portfolio, fullscreen photo, free gallery, best portfolio plugin, free gallery, fullscreen slider, gallery shortcode, pretty photo, free slider, showcase, nextcellent, wordpress responsive gallery, filterable, masonry, Responsive Portfolio, image-portfolio, photographs, fullscreen gallery, thumbnail view, image description, simple portfolio, faq, video, video gallery, youtube, youtube gallery, vimeo, vimeo gallery, galleri, easy media gallery, gallery decription, Gallery Plugin, grid gallery, multi categories gallery, pagination gallery, photogallery, plugin gallery, responsive gallery, responsive wordpress photo gallery, sortable gallery, wordpress photo gallery plugin, gallery free, gallery wp, job, watermarks, watermarking, add gallery, add image, add images, add photo, add picture, add pictures, add album, fotoalbum, image album,
 Requires at least: 3.0.1
-Tested up to: 4.4.1
-Stable tag: 1.8.5
+Tested up to: 4.4.2
+Stable tag: 1.8.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,7 +46,7 @@ Plus to the most of these view we give free lightbox tool.
 Lightbox - Portfolio gallery
 
 Portfolio gallery - So totally you get Slider, Video gallery, Image Gallery, Lightbox plugins in ONE Portfolio Gallery plugin.
-Over 369,326 our users who tried Portfolio Gallery, can prove it's great functionality and utility. 
+Over 385,230 our users who tried Portfolio Gallery, can prove it's great functionality and utility. 
 
 Portfolio Gallery plugin has prepared one more present. Saying “Portfolio Gallery” you may imagine only photos, but now you see how many things you get with it. 
 
@@ -161,6 +161,29 @@ We included Category Buttons, which can be used to sort and group content into d
 
 Portfolio Gallery can be used with the most popular video site -YouTube, Simply copy the link and add it to the project, Portfolio Gallery will bring the video in it.
 
+### Vimeo Posts
+
+The other source of adding videos in Portfolio Gallery is Vimeo. Attach the videos with your projects to make them more and more professional. As Youtube just insert the link into project.
+
+### Lightbox Popup With Many Options
+
+Some of the views use our popular Lightbox tool. Images are opened using the Lightbox, or sometimes we say Popup. The idea of the Lightbox is to make image larger, ability to slide through all images withing the the gallery. And make some design customization on it, using varioty of Lightbox Options.
+
+### Demo 1 Block Toggle Up/Down
+
+Quite an interesting view for portfolio. All images/videos with its title and “down-arrow” are at the bottom. When you click on the arrow, smoothly opens the text to the image/video, as well as other images/videos that you have added further. The all images/videos become large and open with popup.
+
+### Demo 2 Full Height Block
+
+This view is a tape of images/videos let to see the text and other images/videos under the main image/video with its title. All additional images/videos become large when clicking on them, and open with popup. It has “View more” button at the bottom of the text.
+
+### Demo 3 Gallery/Content Popup
+
+This type of view has the following characteristics: It opens each photo from your tape increasing them as popup, with the text and other images/videos inside, next to the main image/video. There is also a button “View more” inside, which allows opening more information about the content. The “cross” button in the upper right corner closes the popup going back to the tape.
+
+### Demo 4 Full-Width Block
+
+This type of view looks like already opened popup. It allows to see your main image with its additional images under it and the text disposed next to the image. The title is above the text and “View more” button is at the bottom of the text. All the images opens and becomes larger with lightbox.
 
 Upgrade to [WordPress Portfolio Gallery Pro](http://huge-it.com/portfolio-gallery) to Customizable Styles and Colors.
 
@@ -188,7 +211,7 @@ Upgrade to [WordPress Portfolio Gallery Pro](http://huge-it.com/portfolio-galler
 
 Upgrade to [WordPress Portfolio / Gallery Pro](http://huge-it.com/portfolio-gallery) to Customizable Styles and Colors.
 
-### If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com)
+If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com)
 
 
 ### Wordpress Portfolio Gallery
@@ -294,12 +317,24 @@ In General Options you may see filtering buttons position make it TOP.
 **I have multy sites, and the plugin works only on one, but not other sites, why?**
 If you use multi site (have number of sites) when you install a plugin in main site, it will not work on other sites. In order it could work there too, you should. 1) deactivate the plugin from main site 2) go to the other sites and activate it there one by one 3) after all will be activated, go back to your main site and activate it.
 
+**How to make bullets, paragraphs and other styles in description?**
+Our Portfolio gallery supports HTML in description, using it you may add many different tags and make text look as you need
 
-### If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com).
+
+If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com).
 
 ### Wordpress Portfolio Gallery
 
 == Changelog ==
+
+= 1.8.8 =
+*  Front end bug fixed in Portfolio Gallery.
+
+= 1.8.7 =
+*  Bug fixed in Portfolio Gallery.
+
+= 1.8.6 =
+*  Mirror bug fixed in Portfolio Gallery.
 
 = 1.8.5 =
 *  Spelling errors fixed in Portfolio Gallery.
