@@ -1463,7 +1463,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 
 												$attch = null;																										
 
-												$url = str_replace(" ", "%20", trim($img_url));
+												$url = trim($img_url);
 												$bn  = wp_all_import_sanitize_filename(basename($url));
 												
 												if ( "yes" == $this->options[$option_slug . 'download_images'] and ! empty($auto_extensions_bundle[$slug][$i]) and preg_match('%^(jpg|jpeg|png|gif)$%i', $auto_extensions_bundle[$slug][$i])){
@@ -1628,7 +1628,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 															
 															if ( ! $create_image ){
 
-																$url = str_replace(" ", "%20", trim(pmxi_convert_encoding($img_url)));
+																$url = trim(pmxi_convert_encoding($img_url));
 																
 																$request = get_file_curl($url, $image_filepath);
 
