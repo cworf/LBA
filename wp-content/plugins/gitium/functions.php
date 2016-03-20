@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2014-2015 Presslabs SRL <ping@presslabs.com>
+/*  Copyright 2014-2016 Presslabs SRL <ping@presslabs.com>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -130,7 +130,7 @@ function _gitium_module_by_path( $path ) {
 			} else {
 				$plugin_base_path = 'wp-content/plugins/' . dirname( $plugin );
 			}
-			if ( 0 === strpos( $path, $plugin_base_path ) ) {
+			if ( ( dirname( $path ) === $plugin_base_path ) || ( $path === $plugin_base_path ) ) {
 				$module['base_path'] = $plugin_base_path;
 				$module['name']      = $data['name'];
 				$module['version']   = $data['version'];
@@ -304,10 +304,6 @@ function gitium_get_webhook() {
 	$key = gitium_get_webhook_key();
 	$url = add_query_arg( 'key', $key, plugins_url( 'gitium-webhook.php', __FILE__ ) );
 	return apply_filters( 'gitium_webhook_url', $url, $key );
-}
-
-function gitium_has_the_minimum_version() {
-	return '1.7' <= substr( get_transient( 'gitium_git_version' ), 0, 3 );
 }
 
 function gitium_admin_init() {
