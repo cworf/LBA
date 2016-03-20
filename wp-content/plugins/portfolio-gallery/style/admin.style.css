@@ -489,7 +489,7 @@
 }
 
 
-#images-list .image-options .options-container textarea {resize:none;}
+#images-list .image-options .options-container textarea {resize:vertical !important;}
 
 
 

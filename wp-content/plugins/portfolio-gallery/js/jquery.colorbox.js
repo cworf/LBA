@@ -94,8 +94,8 @@ if(typeof lightbox_html != 'undefined') {
 	},
 
 	// Abstracting the HTML and event identifiers for easy rebranding
-	colorbox = 'colorbox',
-	prefix = 'cbox',
+	colorbox = 'pcolorbox',
+	prefix = 'pcbox',
 	boxElement = prefix + 'Element',
 	
 	// Events

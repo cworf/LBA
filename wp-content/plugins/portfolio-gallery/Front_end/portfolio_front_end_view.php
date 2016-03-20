@@ -975,9 +975,9 @@ $paramssld["ht_view6_cat_all"] = "All";
                                     group_count++;
                                 });
                                 for(var i = 1; i <= group_count; i++){
-                                    jQuery(".portfolio-group" + i+"-"+groups).colorbox({rel:'portfolio-group' + i+"-"+groups});
+                                    jQuery(".portfolio-group" + i+"-"+groups).pcolorbox({rel:'portfolio-group' + i+"-"+groups});
                                 }
-									jQuery(".portfolio-lightbox-group"+groups).colorbox({rel:"portfolio-lightbox-group"+groups});
+									jQuery(".portfolio-lightbox-group"+groups).pcolorbox({rel:"portfolio-lightbox-group"+groups});
 									jQuery(".portfolio-lightbox a[href$='.png'],.portfolio-lightbox a[href$='.jpg'],.portfolio-lightbox a[href$='.gif'],.portfolio-lightbox a[href$='.jpeg']").addClass("portfolio-lightbox-group");
 											var groups = <?php echo $portfolioID; ?>;
 											var group_count_slider = 0;					 
@@ -985,25 +985,25 @@ $paramssld["ht_view6_cat_all"] = "All";
                                     group_count_slider++;
                                 });
 								var group_count_slider_clone = 0;
-								jQuery(".portfolio-group-slider"+i).colorbox({rel:'portfolio-group-slider'+i});
-								//jQuery(".group1").colorbox({rel:'group1'});
+								jQuery(".portfolio-group-slider"+i).pcolorbox({rel:'portfolio-group-slider'+i});
+								//jQuery(".group1").pcolorbox({rel:'group1'});
 								for(var i = 1; i <= group_count_slider; i++){                                    
-													jQuery(".portfolio-group-slider_"+groups+"_"+i).colorbox({rel:'portfolio-group-slider_'+groups+"_"+i});
+													jQuery(".portfolio-group-slider_"+groups+"_"+i).pcolorbox({rel:'portfolio-group-slider_'+groups+"_"+i});
 													jQuery("#main-slider_<?php echo $portfolioID; ?> .clone  a").removeClass();
 
 								}
-				jQuery(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
-				jQuery(".vimeo").colorbox({iframe:true, innerWidth:640, innerHeight:390});
-				jQuery(".callbacks").colorbox({
-					onOpen:function(){ alert('onOpen: colorbox is about to open'); },
-					onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
-					onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
-					onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
-					onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+				jQuery(".pyoutube").pcolorbox({iframe:true, innerWidth:640, innerHeight:390});
+				jQuery(".pvimeo").pcolorbox({iframe:true, innerWidth:640, innerHeight:390});
+				jQuery(".callbacks").pcolorbox({
+					onOpen:function(){ alert('onOpen: pcolorbox is about to open'); },
+					onLoad:function(){ alert('onLoad: pcolorbox has started to load the targeted content'); },
+					onComplete:function(){ alert('onComplete: pcolorbox has displayed the loaded content'); },
+					onCleanup:function(){ alert('onCleanup: pcolorbox has begun the close process'); },
+					onClosed:function(){ alert('onClosed: pcolorbox has completely closed'); }
 				});
 
-				jQuery('.non-retina').colorbox({rel:'group5', transition:'none'})
-				jQuery('.retina').colorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
+				jQuery('.non-retina').pcolorbox({rel:'group5', transition:'none'})
+				jQuery('.retina').pcolorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
 				
 
 				jQuery("#click").click(function(){ 
@@ -1557,7 +1557,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 					  $imgurl=explode(";",$row->image_url);
 					  $lighboxable = (count($imgurl) == 2)?"lighboxable":"dropdownable"; 
                       ?>
-                      <div class="portelement_<?php echo $portfolioID; ?> colorbox_grouping <?php foreach ($catForFilter as $catForFilterValue) { echo str_replace(" ","-",$catForFilterValue)." ";} ?>" data-symbol="<?php echo $row->name; ?>" data-category="alkaline-earth">
+                      <div class="portelement_<?php echo $portfolioID; ?> pcolorbox_grouping <?php foreach ($catForFilter as $catForFilterValue) { echo str_replace(" ","-",$catForFilterValue)." ";} ?>" data-symbol="<?php echo $row->name; ?>" data-category="alkaline-earth">
                               <div class="default-block_<?php echo $portfolioID; ?> <?php echo $lighboxable; ?>">
                                       <div class="image-block_<?php echo $portfolioID; ?>  add-H-relative">
                                               <?php $imgurl=explode(";",$row->image_url); ?>
@@ -1572,7 +1572,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 														break;
 														case 'youtube':
 														$videourl=get_video_id_from_url_portfolio($imgurl[0]);?>
-														<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php if( $lighboxable == "lighboxable")  echo $group_key;?> "  title = "<?php echo $row->name;?>">
+														<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php if( $lighboxable == "lighboxable")  echo $group_key;?> "  title = "<?php echo $row->name;?>">
 														<img alt="<?php echo $row->name; ?>" id="wd-cl-img<?php echo $key; ?>"  src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"  />
 														<div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 														</a>
@@ -1583,7 +1583,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 														$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 														$imgsrc=$hash[0]['thumbnail_large'];
 													?>
-														<a href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" class="huge_it_portfolio_item vimeo portfolio-group<?php if( $lighboxable == "lighboxable")  echo $group_key;?> "  title = "<?php echo $row->name;?>">
+														<a href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" class="huge_it_portfolio_item pvimeo portfolio-group<?php if( $lighboxable == "lighboxable")  echo $group_key;?> "  title = "<?php echo $row->name;?>">
 														<img alt="<?php echo $row->name; ?>" src="<?php echo $imgsrc; ?>"  />
 														<div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 														</a>
@@ -1625,7 +1625,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 																break;
 																case 'youtube':
 																	$videourl=get_video_id_from_url_portfolio($img);?>
-                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?> "  title = "<?php echo $row->name; ?>" style="position:relative">
+                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?> "  title = "<?php echo $row->name; ?>" style="position:relative">
 																	<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon youtube-icon"></div></a>
 																	
 															  <?php 
@@ -1634,7 +1634,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 																	$videourl=get_video_id_from_url_portfolio($img);
 																	$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 																	$imgsrc=$hash[0]['thumbnail_large'];?>
-																	<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
+																	<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
 																	<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon vimeo-icon"></div>
 																	</a>
 																<?php	
@@ -1672,7 +1672,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 																break;
 																case 'youtube':
 																	$videourl=get_video_id_from_url_portfolio($img);?>
-                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?> "  title = "<?php echo $row->name; ?>" style="position:relative">
+                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?> "  title = "<?php echo $row->name; ?>" style="position:relative">
 																	<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon youtube-icon"></div></a>
 																	
 															  <?php 
@@ -1681,7 +1681,7 @@ $paramssld["ht_view6_cat_all"] = "All";
 																	$videourl=get_video_id_from_url_portfolio($img);
 																	$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 																	$imgsrc=$hash[0]['thumbnail_large'];?>
-																	<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
+																	<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
 																	<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon vimeo-icon"></div>
 																	</a>
 																<?php	
@@ -2389,7 +2389,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
                       $result = substr($descnohtml, 0, 50);
                       $catForFilter = explode(",", $row->category);
                       ?>
-                      <div class="portelement_<?php echo $portfolioID; ?> colorbox_grouping <?php foreach ($catForFilter as $catForFilterValue) { echo str_replace(" ","-",$catForFilterValue)." ";} ?>" data-symbol="<?php echo $row->name; ?>" data-category="alkaline-earth">
+                      <div class="portelement_<?php echo $portfolioID; ?> pcolorbox_grouping <?php foreach ($catForFilter as $catForFilterValue) { echo str_replace(" ","-",$catForFilterValue)." ";} ?>" data-symbol="<?php echo $row->name; ?>" data-category="alkaline-earth">
                               <div class="default-block_<?php echo $portfolioID; ?>">
                                       <div class="image-block_<?php echo $portfolioID; ?> add-H-relative" >
                                               <?php $imgurl=explode(";",$row->image_url); ?>
@@ -2404,7 +2404,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
 														break;
 														case 'youtube':
 														$videourl=get_video_id_from_url_portfolio($imgurl[0]);?>
-                                                        <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?>" title="<?php echo $row->name;?>">
+                                                        <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?>" title="<?php echo $row->name;?>">
 															<img alt="<?php echo $row->name; ?>" id="wd-cl-img<?php echo $key; ?>"  src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"  />
 															<div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 														</a>	
@@ -2415,7 +2415,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
 														$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 														$imgsrc=$hash[0]['thumbnail_large'];
 													?>
-														<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
+														<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
 															<img alt="<?php echo $row->name; ?>" src="<?php echo $imgsrc; ?>"  />
 															<div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 														</a>	
@@ -2454,7 +2454,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
 																break;
 																case 'youtube':
 																	$videourl=get_video_id_from_url_portfolio($img);?>
-                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?> "  title="<?php echo $row->name; ?>" style="position:relative">
+                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?> "  title="<?php echo $row->name; ?>" style="position:relative">
 																	<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon youtube-icon"></div></a>
 																	
 															  <?php 
@@ -2463,7 +2463,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
 																	$videourl=get_video_id_from_url_portfolio($img);
 																	$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 																	$imgsrc=$hash[0]['thumbnail_large'];?>
-																	<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
+																	<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
 																	<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon vimeo-icon"></div>
 																	</a>
 																<?php	
@@ -2500,7 +2500,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
 																break;
 																case 'youtube':
 																	$videourl=get_video_id_from_url_portfolio($img);?>
-                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?> "  title="<?php echo $row->name; ?>" style="position:relative">
+                                                                    <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?> "  title="<?php echo $row->name; ?>" style="position:relative">
 																	<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon youtube-icon"></div></a>
 																	
 															  <?php 
@@ -2509,7 +2509,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view0_block_width']; ?>;
 																	$videourl=get_video_id_from_url_portfolio($img);
 																	$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 																	$imgsrc=$hash[0]['thumbnail_large'];?>
-																	<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
+																	<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?> " href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>"  style="position:relative">
 																	<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon vimeo-icon"></div>
 																	</a>
 																<?php	
@@ -3215,7 +3215,6 @@ jQuery(function(){
 
 
 #huge_it_portfolio_popup_list_<?php echo $portfolioID; ?> li.pupup-element .popup-wrapper_<?php echo $portfolioID; ?> {
-	overflow-y:scroll;
 	position:relative;
 	width:96%;
 	height:98%;
@@ -3224,13 +3223,13 @@ jQuery(function(){
 
 #huge_it_portfolio_popup_list_<?php echo $portfolioID; ?> .popup-wrapper_<?php echo $portfolioID; ?> .image-block_<?php echo $portfolioID; ?> {
 	width:60%;
-        <?php if($paramssld['ht_view2_popup_full_width'] == 'off') { echo "height:100%;"; } ?>
+        <?php if($paramssld['ht_view2_popup_full_width'] == 'off') { echo "height:100%;"; } else {echo "height:100%; overflow-y:scroll;";} ?>
 	position:relative;
-	height: 60%;
 	float:left;
 	margin-right:2%;
 	border-right:1px solid #ccc;
 	min-width:200px;
+        min-height:100%;
 }
 
 #huge_it_portfolio_popup_list_<?php echo $portfolioID; ?> .popup-wrapper_<?php echo $portfolioID; ?> .image-block_<?php echo $portfolioID; ?> img {
@@ -3244,6 +3243,8 @@ jQuery(function(){
 
 #huge_it_portfolio_popup_list_<?php echo $portfolioID; ?> .popup-wrapper_<?php echo $portfolioID; ?> .right-block {
 	width:37%;
+	overflow-y:scroll;
+	height: 100%;
 	position:relative;
 	float:left;
 }
@@ -3333,7 +3334,7 @@ jQuery(function(){
 	width:100% !important;
 	height:100%;
 	display:block;
-
+        min-height:325px;
 }
 /**/
 #huge_it_portfolio_popup_list_<?php echo $portfolioID; ?> .heading-navigation_<?php echo $portfolioID; ?> .left-change, #huge_it_portfolio_popup_list_<?php echo $portfolioID; ?> .heading-navigation_<?php echo $portfolioID; ?> .right-change{
@@ -3588,14 +3589,8 @@ jQuery(function(){
 }
 
 #huge_it_portfolio_content_<?php echo $portfolioID; ?> #huge_it_portfolio_container_<?php echo $portfolioID; ?> {
-<?php if($paramssld["ht_view2_sorting_float"] == "left" && $paramssld["ht_view2_filtering_float"] == "right" ||
-         $paramssld["ht_view2_sorting_float"] == "right" && $paramssld["ht_view2_filtering_float"] == "left")
-       { echo "margin: 0px auto;"; }
-       if((($paramssld["ht_view2_filtering_float"] == "left" || $paramssld["ht_view2_filtering_float"] == "right" && $paramssld["ht_view2_sorting_float"] == "top") || ($paramssld["ht_view2_sorting_float"] == "left" || $paramssld["ht_view2_sorting_float"] == "right" && $paramssld["ht_view2_filting_float"] == "top")) && $portfolioShowFiltering == "on" && $portfolioShowSorting == "on")
-       {
-?>
-        width: <?php echo $width_middle; ?> !important;
- <?php } ?>
+        width: 100% !important;
+ 
 }
 @media screen and (max-width: 768px) {
 	
@@ -3610,6 +3605,9 @@ jQuery(function(){
 
 }
 @media screen and (max-width: 480px) {
+#huge_it_portfolio_content_<?php echo $portfolioID; ?> #huge_it_portfolio_container_<?php echo $portfolioID; ?> {
+        width: 100% !important;
+}
 #huge_it_portfolio_content_<?php echo $portfolioID; ?> #huge_it_portfolio_options_<?php echo $portfolioID; ?> {
 	float: left;
 }
@@ -4303,7 +4301,7 @@ jQuery(function(){
                       $link = $row->sl_url;
                       $catForFilter = explode(",", $row->category);
                       ?>
-                      <div class="portelement_<?php echo $portfolioID; ?> colorbox_grouping  <?php foreach ($catForFilter as $catForFilterValue) { echo str_replace(" ","-",$catForFilterValue)." ";} ?>" data-symbol="<?php echo $row->name; ?>" data-category="alkaline-earth">
+                      <div class="portelement_<?php echo $portfolioID; ?> pcolorbox_grouping  <?php foreach ($catForFilter as $catForFilterValue) { echo str_replace(" ","-",$catForFilterValue)." ";} ?>" data-symbol="<?php echo $row->name; ?>" data-category="alkaline-earth">
                               <div class="left-block_<?php echo $portfolioID; ?>">
                                       <div class="main-image-block_<?php echo $portfolioID; ?> add-H-relative" >
                                               <?php $imgurl=explode(";",$row->image_url); ?>
@@ -4318,7 +4316,7 @@ jQuery(function(){
 													break;
 													case 'youtube':
 													$videourl=get_video_id_from_url_portfolio($imgurl[0]);?>
-														<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?> add-H-block"  title="<?php echo $row->name; ?>"  >
+														<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?> add-H-block"  title="<?php echo $row->name; ?>"  >
 														<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon <?php echo $videourl[1];?>-icon"></div></a>
 																			
 											  <?php break;
@@ -4326,7 +4324,7 @@ jQuery(function(){
 													$videourl=get_video_id_from_url_portfolio($imgurl[0]);
 													$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 													$imgsrc=$hash[0]['thumbnail_large'];?>
-													<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?> add-H-block" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?> " title="<?php echo $row->name; ?>" >
+													<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?> add-H-block" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?> " title="<?php echo $row->name; ?>" >
 														<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 													</a>
 											  <?php
@@ -4358,7 +4356,7 @@ jQuery(function(){
                                                       <?php   break;
 															  case 'youtube':
 																	 $videourl=get_video_id_from_url_portfolio($img);?>
-																	  <li><a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group<?php echo $group_key;?>  add-H-relative"  title="<?php echo $row->name; ?>" >
+																	  <li><a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group<?php echo $group_key;?>  add-H-relative"  title="<?php echo $row->name; ?>" >
 																	  <img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon <?php echo $videourl[1];?>-icon"></div></a>
 																	  </li>
 														  <?php
@@ -4368,7 +4366,7 @@ jQuery(function(){
 																   $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 																	$imgsrc=$hash[0]['thumbnail_large'];?>
 																	<li>
-																	<a class="huge_it_portfolio_item vimeo portfolio-group<?php echo $group_key;?>  add-H-relative" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
+																	<a class="huge_it_portfolio_item pvimeo portfolio-group<?php echo $group_key;?>  add-H-relative" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
 																		<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 																	</a>
 																	</li>																	
@@ -5490,7 +5488,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view4_block_width']; ?>;
 							break;
 							case 'youtube':
 							$videourl=get_video_id_from_url_portfolio($imgurl[0]);?>
-								<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?> add-H-relative add-H-block"  title="<?php echo $row->name; ?>"">
+								<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?> add-H-relative add-H-block"  title="<?php echo $row->name; ?>"">
 									<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 								</a> 	
 						<?php
@@ -5500,7 +5498,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view4_block_width']; ?>;
 							$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 							$imgsrc=$hash[0]['thumbnail_large'];
 							?>
-							<a class="huge_it_portfolio_item vimeo portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?>   add-H-relative add-H-block" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
+							<a class="huge_it_portfolio_item pvimeo portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?>   add-H-relative add-H-block" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
 								<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 							</a>
 					<?php	break;	
@@ -5527,7 +5525,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view4_block_width']; ?>;
 										case 'youtube':
 										$videourl=get_video_id_from_url_portfolio($img);?>
 										<li>
-										<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?>  add-H-relative"  title = "<?php echo $row->name; ?>">
+										<a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?>  add-H-relative"  title = "<?php echo $row->name; ?>">
 											<img src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"><div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 										</a>
 										</li>	
@@ -5538,7 +5536,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view4_block_width']; ?>;
 										$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 										$imgsrc=$hash[0]['thumbnail_large'];?>
 										<li>
-										<a class="huge_it_portfolio_item vimeo portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?>  add-H-relative" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?> " title="<?php echo $row->name; ?>"  style="position:relative">
+										<a class="huge_it_portfolio_item pvimeo portfolio-group-slider_<?php echo $portfolioID;?>_<?php  echo $group_key1; ?>  add-H-relative" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?> " title="<?php echo $row->name; ?>"  style="position:relative">
 											<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 										</a>
 										</li>
@@ -5984,7 +5982,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view4_block_width']; ?>;
 													case 'youtube':
 
 														$videourl=get_video_id_from_url_portfolio($imgurl[0]);?>
-														 <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item youtube portfolio-lightbox-group<?php echo $portfolioID; ?>"  title = "<?php echo $row->name;?>">
+														 <a href="https://www.youtube.com/embed/<?php echo $videourl[0];?>" class="huge_it_portfolio_item pyoutube portfolio-lightbox-group<?php echo $portfolioID; ?>"  title = "<?php echo $row->name;?>">
 															<img alt="<?php echo $row->name; ?>" id="wd-cl-img<?php echo $key; ?>"  src="//img.youtube.com/vi/<?php echo $videourl[0]; ?>/mqdefault.jpg"  />
 															<div class="play-icon <?php echo $videourl[1];?>-icon"></div>
 														</a>
@@ -5994,7 +5992,7 @@ var defaultBlockWidth=<?php echo $paramssld['ht_view4_block_width']; ?>;
 														$videourl=get_video_id_from_url_portfolio($imgurl[0]);
 														$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$videourl[0].".php"));
 														$imgsrc=$hash[0]['thumbnail_large'];?>
-														<a class="huge_it_portfolio_item vimeo portfolio-lightbox-group<?php echo $portfolioID; ?>" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
+														<a class="huge_it_portfolio_item pvimeo portfolio-lightbox-group<?php echo $portfolioID; ?>" href="http://player.vimeo.com/video/<?php echo $videourl[0]; ?>" title="<?php echo $row->name; ?>">
 															<img src="<?php echo $imgsrc; ?>" alt="<?php echo $row->name; ?>" /><div class="play-icon vimeo-icon"></div>
 														</a>
 													<?php

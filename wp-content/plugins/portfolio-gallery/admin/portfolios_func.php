@@ -441,7 +441,7 @@ function apply_cat($id)
 				//var_dump($imgDescription);
 				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  ordering = '".$_POST["order_by_".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
 				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  link_target = '".$_POST["sl_link_target".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
-				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  sl_url = '".$_POST["sl_url".$rowimages->id.""]."' WHERE ID = %d ", $rowimages->id));
+				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  sl_url = '%s' WHERE ID = %d ",$_POST["sl_url".$rowimages->id.""], $rowimages->id));
 				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  name = '".$imgTitle."'  WHERE ID = %d ", $rowimages->id));
 				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  description = '".$imgDescription."'  WHERE ID = %d ", $rowimages->id));
 				$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->prefix."huge_itportfolio_images SET  image_url = '".$_POST["imagess".$rowimages->id.""]."'  WHERE ID = %d ", $rowimages->id));
