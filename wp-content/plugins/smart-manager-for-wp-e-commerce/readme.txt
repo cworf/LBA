@@ -1,11 +1,11 @@
 === Smart Manager for WooCommerce & WPeC ===
-Contributors: storeapps, niravmehta, ratnakar.dubey, Tarun.Parswani
+Contributors: storeapps, niravmehta, ratnakar.dubey, Tarun.Parswani, akash123dhawade
 Donate link: http://www.storeapps.org/
 Tags: administration, wp e-commerce, woo commerce, woocommerce, wpec, wpsc, jigoshop, ecommerce, management, batch update, bulk edit, mass update, wp ecommerce, productivity, products, variations, orders, customers, manager, pro, manager pro, pro manager, extension, premium, free, download, woocommerce customer management,
 woocommerce manager, woocommerce order management, woocommerce product management, woocommerce smart manager, woocommerce store management
 Requires at least: 2.0.2
-Tested up to: 4.4.1
-Stable tag: 3.9.13
+Tested up to: 4.4.2
+Stable tag: 3.9.14
 License: GPLv3
 
 The most popular store admin plugin for WooCommerce. 10x faster, inline updates. Price, inventory, variations management. 200+ features. 
@@ -138,6 +138,16 @@ It also gives the warm feeling of supporting further development of the plugin.
 4. Batch Update (only in paid version)
 
 == Changelog ==
+
+= 3.9.14 =
+* New: View & Manage Privately Published products (WooCommerce)
+* Update: Improved advanced search for categories to show all child categories on search of parent category (WooCommerce)
+* Fix: Search for blank values for product attributes and categories using advanced search (WooCommerce)
+* Fix: Advanced search returnning blank results after deleting conditions (WooCommerce)
+* Fix: Decimal values not appearing for custom fields having numeric values (WooCommerce)
+* Fix: Order notes not getting updated (WPeC)
+* Fix: Important security fixes
+* Fix: Some minor fixes
 
 = 3.9.13 =
 * New: Inline editing for customer provided order notes (WooCommerce)
@@ -633,6 +643,9 @@ It also gives the warm feeling of supporting further development of the plugin.
 * Product administration features
 
 == Upgrade Notice ==
+
+= 3.9.14 =
+New feature of handling privately published products, improved advanced search and important security fixes along with other important fixes. Recommended upgrade.
 
 = 3.9.13 =
 New feature of inline editing customer provided notes for order, fixes related to billing and shipping address along with other important fixes. Recommended upgrade.

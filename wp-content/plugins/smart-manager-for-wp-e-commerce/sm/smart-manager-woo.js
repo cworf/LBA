@@ -1033,7 +1033,7 @@ Ext.onReady(function () {
 		store: new Ext.data.ArrayStore({
 			id: 0,
 			fields: ['value','name'],
-			data: [['publish', 'Published'], ['pending', 'Pending Review'], ['draft', 'Draft'],['inherit', 'Inherit']]
+			data: [['publish', 'Published'], ['pending', 'Pending Review'], ['draft', 'Draft'],['inherit', 'Inherit'],['private', 'Privately Published']]
 		}),
 		valueField: 'value',
 		displayField: 'name'
@@ -1050,7 +1050,7 @@ Ext.onReady(function () {
 		store: new Ext.data.ArrayStore({
 			id: 0,
 			fields: ['value','name'],
-			data: [['publish', 'Published'], ['pending', 'Pending Review'], ['draft', 'Draft']]			
+			data: [['publish', 'Published'], ['pending', 'Pending Review'], ['draft', 'Draft'],['private', 'Privately Published']]			
 		}),
 		valueField: 'value',
 		displayField: 'name'
@@ -2623,7 +2623,8 @@ var postStatusStoreData = new Array();
     postStatusStoreData = [
                             ['publish', getText('Publish')],
                             ['pending', getText('Pending Review')],
-                            ['draft', getText('Draft')]
+                            ['draft', getText('Draft')],
+                            ['private', getText('Private')]
                           ];
 
 
@@ -4599,7 +4600,7 @@ var showCustomerDetails = function(record,rowIndex){
 	store: productsStore,
 	cm: productsColumnModel,
 	renderTo: 'editor-grid',
-        width : wWidth,
+    width : wWidth,
 	height: 700,
 	stripeRows: true,
 	frame: true,

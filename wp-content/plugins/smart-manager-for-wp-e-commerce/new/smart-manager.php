@@ -246,6 +246,8 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 						$sm_old = '<a href="'. admin_url('edit.php?post_type='.$_GET['post_type'].'&page='.$_GET['page']) .'" title="'. __( 'Switch back to Smart Manager', self::$text_domain ) .'"> ' . __( 'Switch back to Smart Manager', self::$text_domain ) .'</a> | ';
 		            }       
 
+	                $before_plug_page = '<a href="'. esc_url( add_query_arg( array( 'landing-page' => 'sm-faqs' ) ) ) .'" title="Support" id="support_link">Need Help?</a> | ';
+                    
                     if ( SMPRO === true ) {
 	                    if ( !wp_script_is( 'thickbox' ) ) {
 	                        if ( !function_exists( 'add_thickbox' ) ) {
@@ -253,13 +255,13 @@ if ( ! class_exists( 'Smart_Manager' ) ) {
 	                        }
 	                        add_thickbox();
 	                    }
-	                    $before_plug_page = '<a href="edit.php#TB_inline?max-height=420px&inlineId=smart_manager_post_query_form" title="Send your query" class="thickbox" id="support_link">Need Help?</a> | ';
 	                    $before_plug_page = apply_filters( 'sm_before_plug_page', $before_plug_page );
 	                    if (is_super_admin()) {
 	                        $before_plug_page .= '<a href="options-general.php?page=smart-manager-settings">Settings</a> | ';
 	                    }
 	                    
 	                }
+
 						//			printf ( __ ( '%1s%2s%3s<a href="%4s" target=_storeapps>Docs</a>' , self::$text_domain), $before_plug_page, $plug_page, $after_plug_page, "http://www.storeapps.org/support/documentation/" );
 							printf ( __ ( '%1s%2s<a href="%3s" target="_blank">Docs</a>' , self::$text_domain), $sm_old, $before_plug_page, "http://www.storeapps.org/support/documentation/smart-manager" );
 							?>

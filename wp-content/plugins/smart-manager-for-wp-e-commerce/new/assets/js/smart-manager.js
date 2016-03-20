@@ -1074,6 +1074,7 @@ $(document).on('sm_on_cell_click',function(e,rowid, celname, value, iRow, iCol){
             if (columns[i].hasOwnProperty('type') === false || columns[i].type != 'multilist' || columns[i].hasOwnProperty('values') === false) return;
 
             actual_value = columns[i].values;
+
             var multiselect_data = [];
 
             for (var index in actual_value) {
@@ -1112,6 +1113,7 @@ $(document).on('sm_on_cell_click',function(e,rowid, celname, value, iRow, iCol){
                     if (multiselect_data[actual_value[index]['parent']].hasOwnProperty('child') === false) {
                         multiselect_data[actual_value[index]['parent']].child = {};
                     }
+                    multiselect_data[actual_value[index]['parent']].term = actual_value[actual_value[index]['parent']].term;
                     multiselect_data[actual_value[index]['parent']].child[index] = actual_value[index].term;
                 }
 

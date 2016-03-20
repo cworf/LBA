@@ -16,6 +16,16 @@
 	width: 100%;
 }
 
+#sm_promo_valid_msg {
+    text-align: center;
+    padding-left: 0.5em;
+    font-size: 0.8em;
+    float: left;
+    padding-top: 0.25em;
+    font-style: italic;
+    color: #E34F4C;
+}
+
 /*Added for WP4.4*/
 .sm-h2 {
     font-size: 23px;

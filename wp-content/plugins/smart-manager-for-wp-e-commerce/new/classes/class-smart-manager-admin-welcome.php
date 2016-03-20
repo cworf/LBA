@@ -70,17 +70,17 @@ class Smart_Manager_Admin_Welcome {
 
 			<style type="text/css">
 				/*<![CDATA[*/
-				.about-wrap h3 {
+				.sm-welcome.about-wrap h3 {
 					margin-top: 1em;
 					margin-right: 0em;
 					margin-bottom: 0.1em;
 					font-size: 1.25em;
 					line-height: 1.3em;
 				}
-				.about-wrap .button-primary {
+				.sm-welcome.about-wrap .button-primary {
 					margin-top: 18px;
 				}
-				.about-wrap .button-hero {
+				.sm-welcome.about-wrap .button-hero {
 					color: #FFF!important;
 					border-color: #03a025!important;
 					background: #03a025 !important;
@@ -88,23 +88,41 @@ class Smart_Manager_Admin_Welcome {
 					font-size: 1em;
 					font-weight: bold;
 				}
-				.about-wrap .button-hero:hover {
+				.sm-welcome.about-wrap .button-hero:hover {
 					color: #FFF!important;
 					background: #0AAB2E!important;
 					border-color: #0AAB2E!important;
 				}
-				.about-wrap p {
+				.sm-welcome.about-wrap p {
 					margin-top: 0.6em;
 					margin-bottom: 0.8em;
 					line-height: 1.6em;
 					font-size: 14px;
 				}
-				.about-wrap .feature-section {
+				.sm-welcome.about-wrap .feature-section {
 					padding-bottom: 5px;
+				}
+				#sm_promo_valid_msg {
+					text-align: center;
+					padding-left: 0.5em;
+					font-size: 0.8em;
+					float: left;
+					padding-top: 0.25em;
+					font-style: italic;
+					color: #E34F4C;
 				}
 				/*]]>*/
 			</style>
 		
+			<script type="text/javascript">
+				jQuery(function($) {
+					$(document).ready(function() {
+						$('#sm_promo_msg').insertBefore('.sm-welcome');
+					});
+				});
+
+			</script>
+
 		<?php
 	}
 
@@ -125,7 +143,7 @@ class Smart_Manager_Admin_Welcome {
 
 		<div style="margin-top:0.3em;"><?php _e("Thanks for installing! We hope you enjoy using Smart Manager.", self::$text_domain); ?></div>
 
-		<div class="feature-section col two-col" style="margin-bottom:30px!important;">
+		<div id="sm_welcome_feature_section" class="feature-section col two-col" style="margin-bottom:30px!important;">
 			<div class="col">
 				<!-- <p class="woocommerce-actions"> -->
 					<a href="<?php echo $this->sm_redirect_url; ?>" class="button button-hero"><?php _e( 'Go To Smart Manager', self::$text_domain ); ?></a>
@@ -149,11 +167,16 @@ class Smart_Manager_Admin_Welcome {
 	                    }
 						echo __( 'Questions? Need Help?', self::$text_domain ); 
 					?><br>
-					<a href="options-general.php?page=smart-manager-settings" target="_blank"><?php _e( 'Settings', self::$text_domain ); ?></a> | 
-					<a href="http://www.storeapps.org/support/documentation/smart-manager" target="_blank"><?php _e( 'Docs', self::$text_domain ); ?></a> | 
-		            <a href="edit.php#TB_inline?max-height=420px&inlineId=smart_manager_post_query_form" title="Send your query" class="thickbox sm_support_link" id="support_link">
-		          		<?php echo __( 'Contact Us', self::$text_domain ); ?>
-		            </a>
+
+					<?php if (SMPRO === true) { ?>
+						<a href="options-general.php?page=smart-manager-settings" target="_blank"><?php _e( 'Settings', self::$text_domain ); ?></a> | 
+					<?php } ?>
+					<a href="http://www.storeapps.org/support/documentation/smart-manager" target="_blank"><?php _e( 'Docs', self::$text_domain ); ?></a>
+					<?php if (SMPRO === true) { ?>
+		            	 | <a href="edit.php#TB_inline?max-height=420px&inlineId=smart_manager_post_query_form" title="Send your query" class="thickbox sm_support_link" id="support_link">
+		          			<?php echo __( 'Contact Us', self::$text_domain ); ?>
+			            </a>
+			        <?php } ?>
 
 				</p>
 			</div>
@@ -179,7 +202,7 @@ class Smart_Manager_Admin_Welcome {
 	 */
 	public function about_screen() {
 		?>
-		<div class="wrap about-wrap">
+		<div class="wrap sm-welcome about-wrap">
 
 			<?php $this->intro();?>
 			<div>
@@ -257,7 +280,7 @@ class Smart_Manager_Admin_Welcome {
 			</div>
 			<div class="changelog" align="center">
 				<h4><?php _e( 'Do check out Some of our other products!', self::$text_domain ); ?></h4>
-				<p><a target="_blank" href="<?php echo esc_url('http://www.storeapps.org/shop/'); ?>"><?php _e('Let me take to product catalog', self::$text_domain); ?></a></p>
+				<p><a target="_blank" href="<?php echo esc_url('http://www.storeapps.org/shop/'); ?>"><?php _e('Let me take you to product catalog', self::$text_domain); ?></a></p>
 			</div>
 		</div>
 
@@ -269,7 +292,7 @@ class Smart_Manager_Admin_Welcome {
 	 */
 	public function sm_beta_screen() {
 		?>
-		<div class="wrap about-wrap">
+		<div class="wrap sm-welcome about-wrap">
 
 		<?php $this->intro(); ?>
 
@@ -313,7 +336,7 @@ class Smart_Manager_Admin_Welcome {
 	 */
 	public function faqs_screen() {
 		?>
-		<div class="wrap about-wrap">
+		<div class="wrap sm-welcome about-wrap">
 
 			<?php $this->intro(); ?>
         

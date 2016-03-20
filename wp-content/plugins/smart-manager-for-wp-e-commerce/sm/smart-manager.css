@@ -44,6 +44,16 @@
 	z-index: 20000;
 }
 
+#sm_promo_valid_msg {
+	text-align: center;
+	padding-left: 0.5em;
+	font-size: 0.8em;
+	float: left;
+	padding-top: 0.25em;
+	font-style: italic;
+	color: #E34F4C;
+}
+
 /* Ext JS CSS Customizations */
 .x-panel-ml {
 	background-color: transparent;

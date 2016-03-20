@@ -785,7 +785,7 @@ Ext.onReady(function () {
 		store: new Ext.data.ArrayStore({
 			id: 0,
 			fields: ['value','name'],
-			data: [['publish', 'Published'], ['draft', 'Draft'],['inherit', 'Inherit']]
+			data: [['publish', 'Published'], ['draft', 'Draft'],['inherit', 'Inherit'],['private', 'Privately Published']]
 		}),
 		valueField: 'value',
 		displayField: 'name'
@@ -802,7 +802,7 @@ Ext.onReady(function () {
 		store: new Ext.data.ArrayStore({
 			id: 0,
 			fields: ['value','name'],
-			data: [['publish', 'Published'], ['draft', 'Draft']]			
+			data: [['publish', 'Published'], ['draft', 'Draft'],['private', 'Privately Published']]			
 		}),
 		valueField: 'value',
 		displayField: 'name'
@@ -1730,6 +1730,7 @@ var pagingActivePage = pagingToolbar.getPageData().activePage;
             firstToolbar.items.items[11].hide();
 
             firstToolbar.items.items[13].hide();
+            firstToolbar.items.items[15].hide();
             firstToolbar.items.items[2].show(); // As the same is hidden if the Image functionality not available
             
             //Code for reseting the Image button icon
@@ -3026,7 +3027,9 @@ var postStatusStoreData = new Array();
     postStatusStoreData = [
                             ['publish', getText('Publish')],
                             ['pending', getText('Pending Review')],
-                            ['draft', getText('Draft')]
+                            ['draft', getText('Draft')],
+                            ['private', getText('Private')]
+
                           ];
 
 //store to populate weightUnits in fifth combobox(weightUnits combobox) on selecting 'weight' from first combobox(field combobox)
@@ -3081,7 +3084,8 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 						else
 							var field_type = this.store.reader.jsonData.items[selectedFieldIndex].type;
 						var field_name = this.store.reader.jsonData.items[selectedFieldIndex].name;
-                                                
+
+						var actionType = '';                                                
 						var actionsData = new Array();
 						var toolbarParent = this.findParentByType(batchUpdateToolbarInstance, true);
 						var comboCategoriesActionCmp = toolbarParent.get(4);
@@ -3089,13 +3093,14 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 						var comboActionCmp = toolbarParent.get(2);
 						var comboWeightUnitCmp = toolbarParent.get(7);						
 						var comboRegionCmp = toolbarParent.get(9);
-                                                var textState = toolbarParent.get(11);
-                                                var lblImg = toolbarParent.get(13);
-                                                var comboFieldCmp = toolbarParent.get(0);
+                        var textState = toolbarParent.get(11);
+                        var lblImg = toolbarParent.get(13);
+                        var textArea = toolbarParent.get(15);
+                        var comboFieldCmp = toolbarParent.get(0);
+                        
+                        comboActionCmp.show(); // As the same is hidden if the Image functionality not available
                                                 
-                                                comboActionCmp.show(); // As the same is hidden if the Image functionality not available
-                                                
-                                                objRegExp = /(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;;
+                        objRegExp = /(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;;
 						regexError = getText('Only numbers are allowed'); 
                                                 
 							if(SM['productsCols'][this.value] != undefined ){
@@ -3103,28 +3108,38 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 							}							
 							if (field_type == 'category' || categoryActionType == 'category_actions' || field_name == 'Publish') {
 								setTextfield.hide();
+                                textArea.hide();
 								comboWeightUnitCmp.hide();
-                                                                comboCategoriesActionCmp.show();
+								comboCategoriesActionCmp.show();
 								comboCategoriesActionCmp.reset();
-                                                                lblImg.hide();
+                                lblImg.hide();
+							}else if (field_name == 'Notes') {
+								setTextfield.hide();
+								comboWeightUnitCmp.hide();
+								comboCategoriesActionCmp.hide();
+                                lblImg.hide();
+                                textArea.show();
 							}else if (field_type == 'string') {
 								setTextfield.hide();
+                            	textArea.hide();
 								comboWeightUnitCmp.hide();
 								comboCategoriesActionCmp.hide();
-                                                                lblImg.hide();
+                            	lblImg.hide();
 							}else if (field_name == 'Stock: Quantity Limited' || field_name == 'Stock: Inform When Out Of Stock' || field_name == 'Disregard Shipping' || actionType == 'YesNoActions') {								
 								setTextfield.hide();
+                                textArea.hide();
 								comboWeightUnitCmp.hide();
 								comboCategoriesActionCmp.hide();
-                                                                lblImg.hide();
+                                lblImg.hide();
 							}else if (field_name == 'Weight' || field_name == 'Variations: Weight' || field_name == 'Height' || field_name == 'Width' || field_name == 'Length' ) {
 								comboWeightUnitCmp.hide();
+                                textArea.hide();
 								setTextfield.show();
 								comboCategoriesActionCmp.hide();
                                 lblImg.hide();
 							}else if(field_name == 'Orders Status' || field_name.indexOf('Country') != -1){
 								if(field_name.indexOf('Country') != -1) {
-                                                                        textState.emptyText="Enter State/Region...";
+                                    textState.emptyText="Enter State/Region...";
 									actions_index = 'bigint';
 									weightUnitStore.loadData(countries);
 								}else{
@@ -3132,29 +3147,34 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 									actions_index = field_type;
 								}
 								setTextfield.hide();
+                                textArea.hide();
 								comboWeightUnitCmp.show();
-                                                                lblImg.hide();
+                                lblImg.hide();
+
 							}else if(field_type == 'YesNoActions'){
 								setTextfield.hide();
-                                                                lblImg.hide();
+                                textArea.hide();
+                                lblImg.hide();
 							}else if(field_name == 'Image'){
+                                textArea.hide();
 								if (IS_WP35) {
-                                                                    setTextfield.hide();
-                                                                    comboWeightUnitCmp.hide();
-                                                                    comboCategoriesActionCmp.hide();
-                                                                    lblImg.show();
-                                                                }
-                                                                else {
-                                                                    comboFieldCmp.setValue(getText('Select a field') + '...');
-                                                                    comboActionCmp.hide();
-                                                                    setTextfield.hide();
-                                                                    comboWeightUnitCmp.hide();
-                                                                    comboCategoriesActionCmp.hide();
-                                                                    Ext.notification.msg('Note', 'This feature is available from Wordpress 3.5 onwards');
-                                                                }
+                                    setTextfield.hide();
+                                    comboWeightUnitCmp.hide();
+                                    comboCategoriesActionCmp.hide();
+                                    lblImg.show();
+                                }
+                                else {
+                                    comboFieldCmp.setValue(getText('Select a field') + '...');
+                                    comboActionCmp.hide();
+                                    setTextfield.hide();
+                                    comboWeightUnitCmp.hide();
+                                    comboCategoriesActionCmp.hide();
+                                    Ext.notification.msg('Note', 'This feature is available from Wordpress 3.5 onwards');
+                                }
 							}else if (isWPSC3814 == '1' && field_name == 'Dimensions Unit') {
 								weightUnitStore.loadData(dimensionUnits);
 								setTextfield.hide();
+                                textArea.hide();
 								comboWeightUnitCmp.show();
 								comboCategoriesActionCmp.hide();
                                 lblImg.hide();
@@ -3167,18 +3187,19 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 								comboWeightUnitCmp.hide();
 								comboCategoriesActionCmp.hide();
 								actions_index = field_type;
-                                                                lblImg.hide();
+                                lblImg.hide();
+                                textArea.hide();
 							}
                                                         
-                                                var field_val = getText('Select a field') + '...';
+                        var field_val = getText('Select a field') + '...';
                                                 
 						if(SM.activeModule == 'Orders' || SM.activeModule == 'Customers'){
-                                                        for (j = 0; j < actions[actions_index].length; j++) {
-                                                                actionsData[j] = new Array();
-                                                                actionsData[j][0] = actions[actions_index][j].id;
-                                                                actionsData[j][1] = actions[actions_index][j].name;
-                                                                actionsData[j][2] = actions[actions_index][j].value;
-                                                        }
+	                        for (j = 0; j < actions[actions_index].length; j++) {
+	                                actionsData[j] = new Array();
+	                                actionsData[j][0] = actions[actions_index][j].id;
+	                                actionsData[j][1] = actions[actions_index][j].name;
+	                                actionsData[j][2] = actions[actions_index][j].value;
+                            }
 						actionStore.loadData(actionsData); // @todo: check whether used only for products or is it used for any other module?
 						}else if(SM.activeModule == 'Products' && this.value != field_val){
 							actionStore.loadData(actions[SM['productsCols'][this.value].actionType]);
@@ -3188,7 +3209,8 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
 						comboActionCmp.reset();
 						comboWeightUnitCmp.reset();
 						comboRegionCmp.hide();
-                                                textState.hide();
+                        textState.hide();
+                        textArea.hide();
 						
 						// @todo apply regex accordign to the req
 						setTextfield.regex = objRegExp;
@@ -3515,7 +3537,27 @@ var batchUpdateToolbarInstance = Ext.extend(Ext.Toolbar, {
                                         
                                         file_frame.open();
                                 }
-                        }, '->',
+                        }, '',{
+				xtype: 'textarea',
+				width: 170,
+				allowBlank: true,
+				style: {
+					fontSize: '12px',
+					paddingLeft: '2px'
+				},
+				enableKeyEvents: true,
+				autoScroll: true,
+				displayField: 'fullname',
+				emptyText: getText('Enter the value') + '...',
+				cls: 'searchPanel',
+				hidden: true,
+				selectOnFocus: true,
+				listeners: {
+					beforerender: function( cmp ) {
+						cmp.emptyText = getText('Enter the value') + '...'; 
+					}
+				}
+			}, '->',
 			{
 				// icon: imgURL + 'del_row.png',
 				tooltip: getText('Delete Row'),
@@ -3552,7 +3594,7 @@ var batchUpdateToolbar = new Ext.Toolbar({
 		}
 	}]
 });
-batchUpdateToolbar.get(0).get(15).hide(); //hide delete row icon from first toolbar.
+batchUpdateToolbar.get(0).get(17).hide(); //hide delete row icon from first toolbar.
 
 var batchUpdatePanel = new Ext.Panel({
 	animCollapse: true,

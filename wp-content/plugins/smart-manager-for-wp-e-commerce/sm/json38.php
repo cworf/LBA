@@ -182,7 +182,7 @@ function variation_query_params(){
 			$show_variation = true;
 		} else { // query params for non-variation products
 			$show_variation = false;
-			$post_status = "('publish', 'pending', 'draft')";
+			$post_status = "('publish', 'pending', 'draft','private')";
 			$parent_sort_id = '';
 			$order_by = " ORDER BY {$wpdb->prefix}posts.id desc";
 		}
@@ -1771,7 +1771,7 @@ if (isset ( $_POST ['cmd'] ) && $_POST ['cmd'] == 'dupData') {
 
         //Code for getting the number of parent products for the dulplication of entire store
         if ( $_POST ['menu'] == 'store') {
-            $query="SELECT id from {$wpdb->prefix}posts WHERE post_type='wpsc-product' AND post_status IN ('publish', 'pending', 'draft')";
+            $query="SELECT id from {$wpdb->prefix}posts WHERE post_type='wpsc-product' AND post_status IN ('publish', 'pending', 'draft','private')";
             $data_dup = $wpdb->get_col ( $query );
         }
         else{

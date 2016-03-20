@@ -3,7 +3,7 @@
 Plugin Name: Smart Manager
 Plugin URI: http://www.storeapps.org/product/smart-manager/
 Description: <strong>Lite Version Installed</strong> The most popular store admin plugin for WooCommerce. 10x faster, inline updates. Price, inventory, variations management. 200+ features.
-Version: 3.9.13
+Version: 3.9.14
 Author: Store Apps
 Author URI: http://www.storeapps.org/
 Copyright (c) 2010, 2011, 2012, 2013, 2014, 2015, 2016 Store Apps All rights reserved.
@@ -270,10 +270,21 @@ function smart_manager_get_data() {
 //			add_action ( 'after_plugin_row_' . plugin_basename ( __FILE__ ), 'show_registration_upgrade');
 //			add_action ( 'in_plugin_update_message-' . plugin_basename ( __FILE__ ), 'smart_update_notice' );
 //			add_action ( 'all_admin_notices', 'smart_update_overwrite' );
+		} else {
+			// Code to hide SM Promo
+			if ( is_admin() ) {
+				if(isset($_GET['sm_dismiss_admin_notice']) && $_GET['sm_dismiss_admin_notice'] == '1'){
+		            update_option('sm_dismiss_admin_notice', true);
+		            wp_safe_redirect($_SERVER['HTTP_REFERER']);
+		        } else if ( !get_option('sm_dismiss_admin_notice') ) { // Code to handle SM IN App Promo
+					add_action( 'admin_notices', 'sm_add_promo_notices');
+				}
+			}
 		}
 		//wp-ajax action
 		if (is_admin() ) {
             add_action ( 'wp_ajax_sm_include_file', 'sm_include_file' ); 
+            add_action ( 'wp_ajax_sm_klawoo_subscribe', 'sm_klawoo_subscribe' );
 
        //      if ( false !== get_option( '_sm_activation_redirect' ) ) {
        //      	// Delete the redirect transient
@@ -290,7 +301,157 @@ function smart_manager_get_data() {
 
 	}
 
+	// Function for klawoo subscribe
+	function sm_klawoo_subscribe() {
+        $url = 'http://app.klawoo.com/subscribe';
+
+        if( !empty( $_POST ) ) {
+            $params = $_POST;
+        } else {
+            exit();
+        }
+
+        if( empty($params['name']) ) {
+        	$params['name'] = '';
+        }
+
+        $method = 'POST';
+        $qs = http_build_query( $params );
+
+        $options = array(
+            'timeout' => 15,
+            'method' => $method
+        );
+
+        if ( $method == 'POST' ) {
+            $options['body'] = $qs;
+        } else {
+            if ( strpos( $url, '?' ) !== false ) {
+                $url .= '&'.$qs;
+            } else {
+                $url .= '?'.$qs;
+            }
+        }
+
+        $response = wp_remote_request( $url, $options );
+        if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
+            $data = $response['body'];
+            if ( $data != 'error' ) {
+                $message_start = substr( $data, strpos( $data,'<body>' ) + 6 );
+                $remove = substr( $message_start, strpos( $message_start,'</body>' ) );
+                $message = trim( str_replace( $remove, '', $message_start ) );
+
+                update_option('sm_dismiss_admin_notice', true); // for hiding the promo message
+
+                echo ( $message );
+                exit();                
+            }
+        }
+        exit();
+    }
+
+	// Function to handle SM IN App Promo
+	function sm_add_promo_notices() {
+
+		if ( empty($_GET['page']) || (!empty($_GET['page']) && $_GET['page'] != 'smart-manager-woo' && $_GET['page'] != 'smart-manager-wpsc') ) {
+			return;
+		}
+
+		$sm_promo_msg = '';
+
+		$timezone_format = _x('Y-m-d H:i:s', 'timezone date format');
+		$current_wp_date = date_i18n($timezone_format);
+
+		$sm_lite_activation_date = get_option('sm_lite_activation_date');
+
+		if ( $sm_lite_activation_date === false ) {
+			
+			$sm_lite_activation_date = $current_wp_date;
+			add_option('sm_lite_activation_date',$sm_lite_activation_date);
+		}
+
+		$date_diff = date_diff( date_create($sm_lite_activation_date),date_create($current_wp_date) );
+
+		$sm_resp_msg = '<b>'. __('Congratulations!!!', 'smart-manager') .'</b> ' . __('Kindly check your mail to avail the discount', 'smart-manager') ;
+		$sm_promo_cond = __('*Only For Today*', 'smart-manager');
+		$sm_promo_hide_msg = __('No, I don\'t like offers...', 'smart-manager');
+
+		if ( $date_diff->days == 0 ) {
+			$sm_promo_msg = '<b>'. __('Big Savings!!!', 'smart-manager') .' </b> <span style="color:#E34F4C;font-weight:bold;">' . __('20% OFF ', 'smart-manager') . ' </span>' . __('on Smart Manager Pro!', 'smart-manager');
+			$sm_klawoo_list_id = 'OFvZfJBDn4FLsDOz3Ulpww';
+		} else if ( $date_diff->days == 1 ) {
+			$sm_promo_msg = '<b>'. __('Missed yesterday?', 'smart-manager') .' </b> <span style="color:#E34F4C;font-weight:bold;">' .  __('15% OFF ', 'smart-manager') . ' </span>' . __('on Smart Manager Pro', 'smart-manager');
+			$sm_klawoo_list_id = '0mHi7635Zb4L2vN7hmngdYDQ';
+		} else if ( $date_diff->days == 2 ) {
+			$sm_promo_msg = '<b>'. __('Last chance!!!', 'smart-manager') .' </b> <span style="color:#E34F4C;font-weight:bold;">' . __('10% OFF ', 'smart-manager') . ' </span>' . __('on Smart Manager Pro!', 'smart-manager');
+			$sm_klawoo_list_id = 'gSlZ3HGl3OMOjE5ZEnAJUQ';
+		} else if ( $date_diff->days > 2 ) {
+			$sm_promo_msg = '<b>'. __('Sign up to get updates, insights & tips...', 'smart-manager');
+			$sm_klawoo_list_id = 'eGXNNhOHHcRHSDOv3hmSsA';
+			$sm_resp_msg = '<b>'. __('Thank you for Subscribing!!!') .'</b>';
+			$sm_promo_cond = '';
+			$sm_promo_hide_msg = __('No, I don\'t need help...', 'smart-manager');
+		}
+
+		if ( !empty($sm_promo_msg) ) {
+
+		    $current_url = (strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '?' . $_SERVER['QUERY_STRING'];
+
+			echo '<div id="sm_promo_msg" class="updated fade" style="display:block !important;"> 
+					<table style="width:100%;"> 
+						<tbody> 
+							<tr>
+								<td> 
+									<span class="dashicons dashicons-awards" style="font-size:3em;color:#b32727;margin-left: -0.2em;margin-right: 0.4em;margin-bottom: 0.45em;"></span> 
+								</td> 
+								<td id="sm_promo_msg_content" style="padding:0.5em;">
+									<div style="padding-top: 0.3em;float: left;font-size:1.1em;">'. $sm_promo_msg .'</div>
+									<form name="sm_klawoo_subscribe" action="#" method="POST" accept-charset="utf-8" style="float:left;padding-left:0.5em;">
+			                            <input class="regular-text ltr" type="text" name="email" id="email" placeholder="Email" style="width:18em;height:1.75em;"/>
+			                            <input type="hidden" name="list" value="'. $sm_klawoo_list_id .'"/>
+			                            <span id="resp_message" style="display:none;">'. $sm_resp_msg .'</span>
+			                            <input type="submit" name="submit" id="submit" class="button button-primary" value="Subscribe" style="height:1.75em;line-height:1.6em;margin-top:0;">
+			                        </form>
+			                        <div id="sm_promo_valid_msg">'. $sm_promo_cond .'</div>
+			                        <div style="padding-top: 0.5em;font-size:0.8em;width:100%;float:left;">
+			                        	<div style="float:left;"><a href="http://www.storeapps.org/product/smart-manager" target=_storeapps> '. __( 'Learn more about Pro version', 'smart-manager' ) . '</a> ' . __( 'or take a', 'smart-manager' ) . ' <a href="http://demo.storeapps.org/?demo=sm-woo" target=_livedemo> ' . __( 'Live Demo', 'smart-manager' ) . ' </a>	</div>
+										<div style="float:right;"><a href="'.$current_url.'&sm_dismiss_admin_notice=1">'. $sm_promo_hide_msg .'</a></div>
+									</div>
+								</td> 
+							</tr>
+						</tbody> 
+					</table> 
+				</div>
+				<script type="text/javascript">
+		            jQuery(function () {
+		                jQuery("form[name=sm_klawoo_subscribe]").submit(function (e) {
+		                    e.preventDefault();
+		                    
+		                    params = jQuery("form[name=sm_klawoo_subscribe]").serializeArray();
+		                    params.push( {name: "action", value: "sm_klawoo_subscribe" });
+		                    
+		                    jQuery.ajax({
+		                        method: "POST",
+		                        type: "text",
+		                        url: "'.admin_url( 'admin-ajax.php' ).'",
+		                        data: params,
+		                        success: function(response) {
+		                        	var resp = jQuery(response);
+		                            if (resp.find("h2").text() == "You\'re subscribed!") {
+		                                jQuery("td[id=sm_promo_msg_content]").html(jQuery("form[name=sm_klawoo_subscribe]").find("#resp_message").html());
+		                                jQuery(".dashicons-awards").css("margin-right","0em");
+		                            }
+		                        }
+		                    });
+		                });
+		            });
+		        </script>';
+		}
+	}
+
 	function sm_include_file() {
+
+		check_ajax_referer('smart-manager-security','security');
 
 		$json_filename = $_REQUEST['file'];
 		$base_path = WP_PLUGIN_DIR . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) ) . 'sm/' . $json_filename . '.php';
@@ -602,6 +763,8 @@ function smart_manager_get_data() {
 					$sm_beta = '<a href="'. admin_url('edit.php?post_type='.$_GET['post_type'].'&page='.$_GET['page'].'&sm_beta=1') .'" title="'. __( 'Try out Smart Manager Beta', SM_TEXT_DOMAIN ) .'"> ' . __( 'Try out Smart Manager Beta', SM_TEXT_DOMAIN ) .'</a> <sup style="vertical-align: super;color:red;">New</sup> | ';
 				}
 
+                $before_plug_page = '<a href="'. esc_url( add_query_arg( array( 'landing-page' => 'sm-faqs' ) ) ) .'" title="Support" id="support_link">Need Help?</a> | ';
+
                 if ( SMPRO === true ) {
                     if ( !wp_script_is( 'thickbox' ) ) {
                         if ( !function_exists( 'add_thickbox' ) ) {
@@ -609,13 +772,14 @@ function smart_manager_get_data() {
                         }
                         add_thickbox();
                     }
-                    $before_plug_page = '<a href="'. esc_url( add_query_arg( array( 'landing-page' => 'sm-faqs' ) ) ) .'" title="Support" id="support_link">Need Help?</a> | ';
                     $before_plug_page = apply_filters( 'sm_before_plug_page', $before_plug_page );
                     if (is_super_admin()) {
                         $before_plug_page .= '<a href="options-general.php?page=smart-manager-settings">Settings</a> | ';
                     }
                     
                 }
+
+
 	//			printf ( __ ( '%1s%2s%3s<a href="%4s" target=_storeapps>Docs</a>' , SM_TEXT_DOMAIN), $before_plug_page, $plug_page, $after_plug_page, "http://www.storeapps.org/support/documentation/" );
 				printf ( __ ( '%1s%2s<a href="%3s" target="_blank">Docs</a>' , SM_TEXT_DOMAIN) ,$sm_beta, $before_plug_page, "http://www.storeapps.org/support/documentation/smart-manager" );
 				?>
@@ -652,24 +816,15 @@ function smart_manager_get_data() {
 	</div>
 
 	<?php
-			if ( SMPRO === false ) {
-				?>
-	<div id="message" class="updated fade" style="display:block !important;">
-	<!-- <span style="float:right; margin-top: -1px; margin-right: -15px">
-			<a href="http://www.storeapps.org/?buy-now=742&coupon=sm-festive-40-2013&utm_source=SM&utm_medium=Lite&utm_campaign=Festive2013" target="_blank"> <img src="<?php echo IMG_URL . '40perc-off-sm-thanks2013.png'?>" alt="40peroff"> </a>
-	</span> -->
-	<p><?php
-			// printf( ('<b>' . __( 'Important:', SM_TEXT_DOMAIN ) . '</b> ' . __( 'Upgrading to Pro gives you powerful features like \'<i>Batch Update</i>\' , \'<i>Export CSV</i>\' , \'<i>Duplicate Products</i>\' &amp; many more...', SM_TEXT_DOMAIN ) . " " . '<br /><a href="%1s" target=_storeapps>' . " " .__( 'Learn more about Pro version here', SM_TEXT_DOMAIN ) . '</a> ' . __( 'or take a', SM_TEXT_DOMAIN ) . " " . '<a href="%2s" target=_livedemo>' . " " . __( 'Live Demo here', SM_TEXT_DOMAIN ) . '</a>'), 'http://www.storeapps.org/product/smart-manager', 'http://demo.storeapps.org/?p=1' );
-			printf( ('<b>' . __( 'Important:', SM_TEXT_DOMAIN ) . '</b> ' . __( 'Upgrade to Pro to get features like \'<i>Batch Update</i>\' , \'<i>Export CSV</i>\' , \'<i>Duplicate Products</i>\' &amp; many more...', SM_TEXT_DOMAIN ) . " " . '<br /><a href="%1s" target=_storeapps>' . " " .__( 'Learn more about Pro version', SM_TEXT_DOMAIN ) . '</a> ' . __( 'or take a', SM_TEXT_DOMAIN ) . " " . '<a href="%2s" target=_livedemo>' . " " . __( 'Live Demo', SM_TEXT_DOMAIN ) . '</a>'), 'http://www.storeapps.org/product/smart-manager', 'http://demo.storeapps.org/?demo=sm-woo' );
-			?>
-	</p>
-		
-	</div>
-	<?php
-			}
-			?>
-			
+		if ( SMPRO === false && get_option('sm_dismiss_admin_notice') == '1') { ?>
+				<div id="message" class="updated fade" style="display:block !important;">
+					<p> <?php
+						printf( ('<b>' . __( 'Important:', SM_TEXT_DOMAIN ) . '</b> ' . __( 'Upgrade to Pro to get features like \'<i>Batch Update</i>\' , \'<i>Export CSV</i>\' , \'<i>Duplicate Products</i>\' &amp; many more...', SM_TEXT_DOMAIN ) . " " . '<br /><a href="%1s" target=_storeapps>' . " " .__( 'Learn more about Pro version', SM_TEXT_DOMAIN ) . '</a> ' . __( 'or take a', SM_TEXT_DOMAIN ) . " " . '<a href="%2s" target=_livedemo>' . " " . __( 'Live Demo', SM_TEXT_DOMAIN ) . '</a>'), 'http://www.storeapps.org/product/smart-manager', 'http://demo.storeapps.org/?demo=sm-woo' );
+						?>
+					</p>
+				</div>
 			<?php
+		} 
 			$error_message = '';
 			if ((file_exists( WP_PLUGIN_DIR . '/wp-e-commerce/wp-shopping-cart.php' )) && (file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ))) {
 				if (is_plugin_active( 'wp-e-commerce/wp-shopping-cart.php' )) {

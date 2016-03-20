@@ -995,6 +995,7 @@ if (WPSC_RUNNING === true && IS_WPSC38) {
 				$products_search_cols [$index]['values'][0] = array('key' => 'publish', 'value' => __('Publish',$sm_text_domain));
 				$products_search_cols [$index]['values'][1] = array('key' => 'pending', 'value' => __('Pending Review',$sm_text_domain));
 				$products_search_cols [$index]['values'][2] = array('key' => 'draft', 'value' => __('Draft',$sm_text_domain));
+				$products_search_cols [$index]['values'][3] = array('key' => 'private', 'value' => __('Private',$sm_text_domain));
 			}
 
 			$products_search_cols [$index]['category'] = "";
@@ -1206,7 +1207,7 @@ function sm_product_columns_filter($attr) {
 			if (is_numeric($meta_value)) {
 
 				$attr [$meta_key_index]['actionType']='modIntPercentActions';
-				$attr [$meta_key_index]['dataType']='int';
+				$attr [$meta_key_index]['dataType']='float';
 				$attr [$meta_key_index]['decimal_precision'] = sm_get_numberofdecimals($meta_value);
 
 			} else {
@@ -1584,6 +1585,7 @@ if (WPSC_RUNNING === true) {
 		lang.publish			    = '" . __('Publish',$sm_text_domain) . "';
 		lang.pending_review			    = '" . __('Pending Review',$sm_text_domain) . "';
 		lang.draft			    = '" . __('Draft',$sm_text_domain) . "';
+		lang.private			    = '" . __('Private',$sm_text_domain) . "';
                     
         lang.product_visibility			= '" . __('Product Visibility',$sm_text_domain) . "';
         lang.visibility     			= '" . __('Visibility',$sm_text_domain) . "';
@@ -1754,6 +1756,8 @@ if (WPSC_RUNNING === true) {
 if (! function_exists('sm_add_social_links')) {
     function sm_add_social_links() {
 
+    	$ssl = (is_ssl()) ? "https" : "http";
+
         $social_link = '<style type="text/css">
                             div.sm_social_links > iframe {
                                 max-height: 1.5em;
@@ -1772,7 +1776,7 @@ if (! function_exists('sm_add_social_links')) {
                         </style>';
         $social_link .= '<a href="https://twitter.com/storeapps" class="twitter-follow-button" data-show-count="true" data-dnt="true" data-show-screen-name="false">Follow</a>';
         $social_link .= "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
-        $social_link .= '<iframe id="fb_like_sm" src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FStore-Apps%2F614674921896173&width=100&layout=button_count&action=like&show_faces=false&share=false&height=21"></iframe>';
+        $social_link .= '<iframe id="fb_like_sm" src="'. $ssl .'://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FStore-Apps%2F614674921896173&width=100&layout=button_count&action=like&show_faces=false&share=false&height=21"></iframe>';
         $social_link .= '<script src="//platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script><script type="IN/FollowCompany" data-id="3758881" data-counter="right"></script>';
 
         return $social_link;
@@ -1782,7 +1786,7 @@ if (! function_exists('sm_add_social_links')) {
 
 
 // Code for handling SSL error for FB Link
-// $ssl = (is_ssl()) ? "https" : "http";
+
 // $fb_link = $ssl . "://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.storeapps.org%2F&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80";
                 
 ?>
