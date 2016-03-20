@@ -3,8 +3,8 @@ Contributors: codepress, tschutter, davidmosterd, engelen, dungengronovius
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZDZRSYLQ4Z76J
 Tags: plugins, wordpress, admin, column, columns, custom columns, custom fields, image, dashboard, sortable, filters, posts, media, users, pages, posttypes, manage columns, wp-admin
 Requires at least: 3.5
-Tested up to: 4.4.1
-Stable tag: 2.4.9
+Tested up to: 4.4.2
+Stable tag: 2.5.3
 
 Customise columns on the administration screens for post(types), pages, media, comments, links and users with an easy to use drag-and-drop interface.
 
@@ -67,25 +67,29 @@ Admin Columns can change your post (posts, pages and custom post types), user, c
 * Comment Count
 * Comment Status
 * Comments
+* Content
 * Custom Field
-* Date
+* Date Published
+* Page Depth
+* Estimated Reading Time
 * Excerpt
 * Featured Image
+* Formats
 * ID
 * Modified
 * Order
 * Page Template
 * Parent
+* Path
 * Permalink
 * Ping Status
 * Post Format
 * Roles
+* Shortcodes
 * Slug
 * Status
 * Sticky
-* Tags
 * Taxonomy
-* Title
 * Word Count
 
 = User columns =
@@ -101,7 +105,6 @@ Admin Columns can change your post (posts, pages and custom post types), user, c
 * Name
 * Nickname
 * Post Count
-* Posts
 * Registered Date
 * Role
 * URL
@@ -111,11 +114,10 @@ Admin Columns can change your post (posts, pages and custom post types), user, c
 
 * Actions
 * Alternate Text
-* Author
+* Attached To
+* Available Sizes
 * Caption
-* Comments
 * Custom Field
-* Date
 * Description
 * Dimensions
 * EXIF Data
@@ -124,36 +126,32 @@ Admin Columns can change your post (posts, pages and custom post types), user, c
 * File Size
 * Full Path
 * Height
-* Icon
 * ID
 * Mime Type
 * Taxonomy
-* Uploaded To
 * Width
 
 = Comment columns =
 
 * Actions
-* Alternate Text
+* Agent
+* Approved
 * Author
-* Caption
-* Comments
+* Avatar
 * Custom Field
+* Email
+* IP
+* Name
+* URL
 * Date
-* Description
-* Dimensions
-* EXIF Data
-* File
-* File Name
-* File Size
-* Full Path
-* Height
-* Icon
+* Date GMT
+* Excerpt
 * ID
-* Mime Type
-* Taxonomy
-* Uploaded To
-* Width
+* Post
+* Reply To
+* Type
+* User
+* Word Count
 
 = Docs & Support =
 Is this the first time you're using Admin Columns? Check out our Getting Started guide.
@@ -211,6 +209,67 @@ You can find a list of the available actions and filters (and examples on how to
 8. Posts Screen with custom fields.
 
 == Changelog ==
+
+= 2.5.3 =
+* [Fixed] Fixes an issue with some 3rd party column not being visible
+
+= 2.5.2 =
+* [Fixed] Fixes an issue where some of the WordPress default columns did not display correctly
+
+= 2.5.1 =
+* [Fixed] Column settings are displayed correctly now
+
+= 2.5 =
+* [Updated] The main menu has been replaced with a single dropdown menu
+* [Updated] Support for 3rd party columns from other themes or plugins has been greatly improved
+* [Added] Added a new column: Comment status
+* [Added] The width of default columns are now displayed
+* [Improved] Improved JS loading
+* [Improved] Replaced FamFam icons with dashicons
+* [Improved] Column groups now uses full text strings
+* [Fixed] Media actions columns no longer throws an error when the list table is not found
+* [Fixed] Height and width columns for media will be appended with 'px'
+* [Fixed] Most zero values will now be displayed as a dash
+* [Fixed] Estimate time reading column will no longer display leading zero's on seconds
+* [Fixed] Shortcodes column now display each shortcode name used once, with a counter
+* [Fixed] Columns with an imagesize selection setting will have the a default option selected
+* [Removed] Removed loading columns through 'load-edit.php' filter
+* [Added] Column settings are now stored without the need to refresh the page (through ajax)
+* [Added] You can disable the columns delete confirmation through this filter 'ac/delete_confirmation'
+* [Improved] The width of default columns (e.g. date and author) are now displayed
+* [Improved] bbPress columns are loaded correctly
+* [Updated] All languages files have been updated from Transifex (https://www.transifex.com/codepress/admin-columns)
+*
+* [Developer notes]
+* [Refactor] CPAC now is a singleton class
+* [Refactor] Storage model has been refactored but should stay backwards compatible when extending
+* [Refactor] CPAC_Column $storage_model variable has become private. Use CAPC_Column::get_storage_model() method.
+* [Refactor] Storagemodel can now be extended to have column layouts/sets
+* [Refactor:added] CPAC_Column::is_default() method added
+* [Refactor:added] CPAC_Column::is_registered() method added
+* [Refactor:added] CPAC_Column::get_empty_char() method added
+* [Refactor:added] CPAC_Column_Storagemodel::get_column_types() method added
+* [Refactor:added] CPAC_Column_Storagemodel::get_default_colummn_types() method added
+* [Refactor:added] CPAC_Column_Storagemodel::get_column_type() method added
+* [Refactor:added] CPAC_Column_Storagemodel::create_column() method added
+* [Refactor:added] CPAC_Column_Storagemodel::flush_columns() method added
+* [Refactor:added] CPAC_Column_Storagemodel::get_restore_link() method added
+* [Refactor:changed] CPAC_Column_Storagemodel::get_columns()
+* [Refactor:removed] CPAC_Column_Storagemodel::get_default_registered_columns() method removed
+* [Refactor:removed] CPAC_Column_Storagemodel::get_custom_registered_columns() method removed
+* [Refactor:removed] CPAC_Column_Storagemodel::set_stored_columns() method removed
+* [Refactor:removed] CPAC_Column_Storagemodel::get_grouped_column_types() method removed
+* [Refactor:removed] CPAC_Column_Storagemodel::set_columns() method removed
+* [Refactor:removed] CPAC_Column_Storagemodel::set_stored_columns() method removed
+
+= 2.4.10 =
+* [Fixed] Data:image sources for images are supported in labels
+* [Fixed] Cloned columns no longer has the wrong options when stored
+* [Added] Added an extra update button to the bottom of the settings page
+* [Fixed] Created deprecated function for is_columns_screen()
+* [Fixed] The method get_current_storage_model returns the first occurrence instead of running the entire array of storage modals
+* [Fixed] The storage_model object should have the init_manage_columns method to properly load the columns heading and values
+* [Fixed] The storage_model object can now be used within sub pages
 
 = 2.4.9 =
 * [Added] Display format Url added to Custom Fields

@@ -7,13 +7,12 @@ class CPAC_Storage_Model_Comment extends CPAC_Storage_Model {
 
 	public function __construct() {
 
-		$this->key            = 'wp-comments';
-		$this->label          = __( 'Comments' );
+		$this->key = 'wp-comments';
+		$this->label = __( 'Comments' );
 		$this->singular_label = __( 'Comment' );
-		$this->type           = 'comment';
-		$this->meta_type      = 'comment';
-		$this->page           = 'edit-comments';
-		$this->menu_type      = 'other';
+		$this->type = 'comment';
+		$this->meta_type = 'comment';
+		$this->page = 'edit-comments';
 
 		parent::__construct();
 	}
@@ -27,19 +26,16 @@ class CPAC_Storage_Model_Comment extends CPAC_Storage_Model {
 		add_action( 'manage_comments_custom_column', array( $this, 'manage_value' ), 100, 2 );
 	}
 
-	public function is_current_screen() {
-		$is_current_screen = parent::is_current_screen();
-		if ( ! $is_current_screen ) {
-			if ( ! empty( $_REQUEST['_ajax_nonce-replyto-comment'] ) && wp_verify_nonce( $_REQUEST['_ajax_nonce-replyto-comment'], 'replyto-comment' ) ) {
-				$is_current_screen = true;
-			}
-		}
-
-		return $is_current_screen;
+	public function get_default_column_names() {
+		return array( 'cb', 'author', 'comment', 'response', 'date' );
 	}
 
-	public function get_default_column_names() {
-		return array( 'cb', 'author', 'comment', 'response' );
+	protected function get_default_column_widths() {
+		return array(
+			'author'   => array( 'width' => 20 ),
+			'response' => array( 'width' => 15 ),
+			'date'     => array( 'width' => 14 ),
+		);
 	}
 
 	public function get_default_columns() {

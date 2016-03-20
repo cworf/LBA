@@ -23,7 +23,7 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 		$this->properties['type'] = 'column-meta';
 		$this->properties['label'] = __( 'Custom Field', 'codepress-admin-columns' );
 		$this->properties['classes'] = 'cpac-box-metafield';
-		$this->properties['group'] = 'custom-field';
+		$this->properties['group'] = __( 'Custom Field', 'codepress-admin-columns' );
 		$this->properties['use_before_after'] = true;
 
 		// Options
@@ -41,7 +41,6 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 		$this->options['link_label'] = '';
 
 		$this->options['date_format'] = '';
-		$this->options['date_save_format'] = '';
 	}
 
 	/**
@@ -146,7 +145,8 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 		// check for multiple id's
 		if ( strpos( $meta, ',' ) !== false ) {
 			$ids = explode( ',', $meta );
-		} elseif ( is_numeric( $meta ) ) {
+		}
+		elseif ( is_numeric( $meta ) ) {
 			$ids[] = $meta;
 		}
 
@@ -198,7 +198,6 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 
 		return $meta;
 	}
-
 
 	/**
 	 * Get Users by ID - Value method
@@ -300,7 +299,7 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 				break;
 
 			case "checkmark" :
-				$checkmark = $this->get_asset_image( 'checkmark.png' );
+				$checkmark = '<span class="dashicons dashicons-yes cpac_status_yes"></span>';
 
 				if ( empty( $meta ) || 'false' === $meta || '0' === $meta ) {
 					$checkmark = '';
@@ -372,7 +371,7 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 		$raw_value = '';
 
 		if ( $field_key = $this->get_field_key() ) {
-			$raw_value = get_metadata( $this->storage_model->meta_type, $id, $field_key, $single );
+			$raw_value = get_metadata( $this->get_meta_type(), $id, $field_key, $single );
 		}
 
 		return apply_filters( 'cac/column/meta/raw_value', $raw_value, $id, $field_key, $this );
@@ -383,7 +382,6 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 	 * @since 1.0
 	 */
 	public function get_value( $id ) {
-
 		$value = '';
 
 		if ( $meta = $this->get_meta_by_id( $id ) ) {
@@ -406,7 +404,7 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 	 * @since 2.4.7
 	 */
 	public function get_meta_keys() {
-		return $this->storage_model->get_meta_keys();
+		return $this->get_storage_model()->get_meta_keys();
 	}
 
 	public function get_meta_keys_list() {
@@ -417,7 +415,8 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 			foreach ( $keys as $field ) {
 				if ( substr( $field, 0, 10 ) == "cpachidden" ) {
 					$lists['hidden'][] = $field;
-				} else {
+				}
+				else {
 					$lists['public'][] = $field;
 				}
 			}
@@ -454,8 +453,9 @@ class CPAC_Column_Custom_Field extends CPAC_Column {
 					<?php
 					if ( $list = $this->get_meta_keys_list() ) {
 						echo $list;
-					} else {
-						_e( 'No custom fields available.', 'codepress-admin-columns' ); ?><?php printf( __( 'Please create a %s item first.', 'codepress-admin-columns' ), '<strong>' . $this->storage_model->singular_label . '</strong>' );
+					}
+					else {
+						_e( 'No custom fields available.', 'codepress-admin-columns' ); ?><?php printf( __( 'Please create a %s item first.', 'codepress-admin-columns' ), '<strong>' . $this->get_storage_model()->singular_label . '</strong>' );
 					}
 					?>
 				</td>

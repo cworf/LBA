@@ -7,13 +7,12 @@ class CPAC_Storage_Model_User extends CPAC_Storage_Model {
 	 */
 	public function __construct() {
 
-		$this->key            = 'wp-users';
-		$this->label          = __( 'Users' );
+		$this->key = 'wp-users';
+		$this->label = __( 'Users' );
 		$this->singular_label = __( 'User' );
-		$this->type           = 'user';
-		$this->meta_type      = 'user';
-		$this->page           = 'users';
-		$this->menu_type      = 'other';
+		$this->type = 'user';
+		$this->meta_type = 'user';
+		$this->page = 'users';
 
 		parent::__construct();
 	}
@@ -22,9 +21,15 @@ class CPAC_Storage_Model_User extends CPAC_Storage_Model {
 	 * @since 2.4.9
 	 */
 	public function init_manage_columns() {
-
 		add_filter( "manage_{$this->page}_columns", array( $this, 'add_headings' ), 100 );
 		add_filter( 'manage_users_custom_column', array( $this, 'manage_value_callback' ), 100, 3 );
+	}
+
+	/**
+	 * @since 2.4.10
+	 */
+	public function is_current_screen() {
+		return ! is_network_admin() && parent::is_current_screen();
 	}
 
 	/**
@@ -55,7 +60,7 @@ class CPAC_Storage_Model_User extends CPAC_Storage_Model {
 		do_action( "cac/columns/default/storage_key={$this->key}" );
 
 		// get columns
-		$table   = _get_list_table( 'WP_Users_List_Table', array( 'screen' => 'users' ) );
+		$table = _get_list_table( 'WP_Users_List_Table', array( 'screen' => 'users' ) );
 		$columns = (array) $table->get_columns();
 
 		if ( cac_is_setting_screen() ) {
@@ -70,6 +75,16 @@ class CPAC_Storage_Model_User extends CPAC_Storage_Model {
 	 */
 	public function get_default_column_names() {
 		return array( 'cb', 'username', 'name', 'email', 'role', 'posts' );
+	}
+
+	/**
+	 * @since 2.5
+	 */
+	protected function get_default_column_widths() {
+		return array(
+			'role'  => array( 'width' => 15 ),
+			'posts' => array( 'width' => 74, 'unit' => 'px' ),
+		);
 	}
 
 	/**
