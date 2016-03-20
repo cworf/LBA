@@ -4,10 +4,23 @@ Plugin Name: amr shortcode any widget
 Plugin URI: http://webdesign.anmari.com/shortcode-any-widget/
 Description: Include any widget in a page for any theme.  [do_widget widgetname ] or  [do_widget "widget name" ] [do_widget id=widgetnamedashed-n ]or include a whole widget area [do_widget_area]. Please read: <a href="https://wordpress.org/plugins/amr-shortcode-any-widget/installation/">Installation</a> and <a href="https://wordpress.org/plugins/amr-shortcode-any-widget/faq/">FAQ</a>.
 Author: anmari
-Version: 2.10
+Version: 3.1
 Author URI: http://webdesign.anmari.com
 
 */
+
+
+add_action('in_widget_form', 'amr_spice_get_widget_id');
+function amr_spice_get_widget_id($widget_instance) {
+	echo "<p><strong>To use as shortcode with id:</strong> ";
+    if ($widget_instance->number=="__i__"){
+		echo "Save the widget first!</p>"   ;
+	}  else {
+       echo "[do_widget id=".$widget_instance->id. "]</p>";
+    }
+}
+
+
 function amr_remove_widget_class($params) {  // remove the widget classes
 	if (!empty($params[0]['before_widget'])) {
 		$params[0]['before_widget'] = 
@@ -45,7 +58,7 @@ global $wp_registered_widgets, $_wp_sidebars_widgets, $wp_registered_sidebars;
 		echo '<br/>Widget area "'.$widget_area.'" not found. Registered widget areas (sidebars) are: <br/>';
 		foreach ($wp_registered_sidebars as $area=> $sidebar) echo $area.'<br />';
 	}
-	if (isset($_REQUEST['do_widget_debug']) and current_user_can('administrator')) var_dump( $wp_registered_sidebars); /**/
+	//if (isset($_REQUEST['do_widget_debug']) and current_user_can('administrator')) var_dump( $wp_registered_sidebars); /**/
 	
 	if ($widget_area_class=='none')
 		$class = '';
@@ -81,10 +94,8 @@ if it is in, then get the instance  data and use that */
 
 	if (is_admin()) {return '';}  // eg in case someone decides to apply content filters when apost is saved, and not all widget stuff is there.
 
-
-
 	extract(shortcode_atts(array(
-		'sidebar' => 'Widgets for Shortcodes',
+		'sidebar' => 'Widgets for Shortcodes', //default
 		'id' => '',
 		'name' => '', /* MKM added explicit 'name' attribute.  For existing users we still need to allow prev method, else too many support queries will happen */
 		'title' => '',   /* do the default title unless they ask us not to - use string here not boolean */
@@ -97,8 +108,8 @@ if it is in, then get the instance  data and use that */
 		amr_show_widget_debug('which one', $name, $id, $sidebar);  //check for debug prompt and show widgets in shortcode sidebar if requested and logged in etc
 	}
 	else { 
-		echo '<br />No widgets defined at all in any sidebar!'; 
-		return (false);
+		$output = '<br />No widgets defined at all in any sidebar!'; 
+		return ($output);
 	}
 	
 	/* compatibility check - if the name is not entered, then the first parameter is the name */
@@ -110,35 +121,49 @@ if it is in, then get the instance  data and use that */
 		$widget = $name;
 		
 		foreach ($wp_registered_widgets as $i => $w) { /* get the official internal name or id that the widget was registered with  */
-			if (strtolower($w['name']) === strtolower($widget)) $widget_ids[] = $i;
+			if (strtolower($w['name']) === strtolower($widget)) 
+				$widget_ids[] = $i;
 			//if ($debug) {echo '<br /> Check: '.$w['name'];}
 		}	
+		
+		if (!($sidebarid = amr_get_sidebar_id ($sidebar))) {
+			$sidebarid=$sidebar;   /* get the official sidebar id for this widget area - will take the first one */		
+		}	
+		
+		
 	}	
 	else { /* check for id if we do not have a name */
-			if (!empty($id))  { 	/* if a specific id has been specified */
-				
+	
+			if (!empty($id))  { 	/* if a specific id has been specified */			
 				foreach ($wp_registered_widgets as $i => $w) { /* get the official internal name or id that the widget was registered with  */
-					if ($w['id'] === $id) $widget_ids[] = $id;
+					if ($w['id'] === $id) {
+						$widget_ids[] = $id;
+					}	
 				}
-				//if ($debug) { echo '<h2>We have an id: '.$id.'</h2>'; 	if (!empty($widget_ids)) var_dump($widget_ids);	}
+				//echo '<h2>We have an id: '.$id.'</h2>'; 	if (!empty($widget_ids)) var_dump($widget_ids);	
 			}
 			else {
-				echo '<br />No valid widget name or id given in shortcode parameters';		
-				return (false);		
+				$output = '<br />No valid widget name or id given in shortcode parameters';	
+			
+				return $output;		
 			}
+			// if we have id, get the sidebar for it
+			$sidebarid = amr_get_widgets_sidebar($id);
+			if (!$sidebarid) {
+				$output =  '<br />Widget not in any sidebars<br />';
+				return $output;
+			}	
 	}
 	
-	if (empty($widget)) $widget = '';
-	if (empty($id)) $id = '';
+	if (empty($widget)) 	$widget = '';
+	if (empty($id)) 		$id = '';
 	
 	if (empty ($widget_ids)) { 
-		echo '<br /><a href="" title="Error: Your Requested widget <'.$widget.' '.$id.'> is not in the widget list. Typo maybe?">!</a><br />';
-		amr_show_widget_debug('empty', $name, $id, $sidebar);
-		return (false) ;
+		$output =  '<br />Error: Your Requested widget "'.$widget.' '.$id.'" is not in the widget list.<br />';
+		$output .= amr_show_widget_debug('empty', $name, $id, $sidebar);
+		return ($output) ;
 	}		
-	
-	if (!($sidebarid = amr_get_sidebar_id ($sidebar))) 
-		$sidebarid=$sidebar;   /* get the official sidebar id for this widget area - will take the first one */
+
 		
 	if (empty($widget)) 
 		$widget = '';
@@ -149,44 +174,29 @@ if it is in, then get the instance  data and use that */
 	if ((!isset ($_wp_sidebars_widgets[$sidebarid])) or (empty ($_wp_sidebars_widgets[$sidebarid]))) { // try upgrade
 		amr_upgrade_sidebar();
 	}
-
 	
+	//if we have a specific sidebar selected, use that
 	if ((isset ($_wp_sidebars_widgets[$sidebarid])) and (!empty ($_wp_sidebars_widgets[$sidebarid]))) {
-/*		if ($debug) { 
-			echo '<br />Widget ids in sidebar: "'.$sidebar.'" with id: '.$sidebarid .'<br />';
-			sort ($_wp_sidebars_widgets[$sidebarid]);
-			foreach ($_wp_sidebars_widgets[$sidebarid] as $i=> $w) {
-				echo $i.' '.$w.'<br />';
-			};	
-		}
-		*/
 			/* get the intersect of the 2 widget setups so we just get the widget we want  */
 
 		$wid = array_intersect ($_wp_sidebars_widgets[$sidebarid], $widget_ids );
-/*			if ($debug) { echo '<br />Will use widget ids'.'<br />';
-				foreach ($widget_ids as $i=> $w) {
-					echo '&nbsp;&nbsp;&nbsp;'.$w.'<br />';
-				};
-			}
-*/			
+	
 	}
-		else { /* the sidebar is not defined */
-			
+	else { /* the sidebar is not defined or selected - should not happen */
 			if (isset($debug)) {  // only do this in debug mode
 				if (!isset($_wp_sidebars_widgets[$sidebarid]))
-					echo '<br /><a href="" title="Error: Sidebar '.$sidebar.' with sidebarid '.$sidebarid.' is not defined.">!</a><br />'; 
+					$output =  '<br /><a href="" title="Error: Sidebar '.$sidebar.' with sidebarid '.$sidebarid.' is not defined.">!</a><br />'; 
 				 // shouldnt happen - maybe someone running content filters on save
 				else 
-					echo '<br /><a href="" title="Error: Sidebar '.$sidebar.' with sidebarid '.$sidebarid.' is empty (no widgets)">!</a><br />'; 
-			}
-			
+					$output =  '<br /><a href="" title="Error: Sidebar '.$sidebar.' with sidebarid '.$sidebarid.' is empty (no widgets)">!</a><br />'; 
+			}		
 		}
 	
 	$output = '';
 	if (empty ($wid) or (!is_array($wid)) or (count($wid) < 1)) { 
 
-		echo '<br /><a href="" title="Error: Your requested Widget '.$widget.' is not in the '.$sidebar.' sidebar ">!</a><br />';
-		amr_show_widget_debug('empty', $name, $id, $sidebar);
+		$output = '<p><a href="" title="Error: Your requested Widget '.$widget.' is not in the '.$sidebar.' sidebar ">!</a></p>';
+		$output .= amr_show_widget_debug('empty', $name, $id, $sidebar);
 
 		unset($sidebar); 
 		unset($sidebarid);
@@ -205,7 +215,12 @@ if it is in, then get the instance  data and use that */
 	return ($output);
 }
 /* -------------------------------------------------------------------------*/
-function amr_shortcode_sidebar( $widget_id, $name="widgets_for_shortcode", $title=true, $class='', $wrap='', $widget_classes='') { /* This is basically the wordpress code, slightly modified  */
+function amr_shortcode_sidebar( $widget_id, 
+	$name="widgets_for_shortcode", 
+	$title=true, 
+	$class='', 
+	$wrap='', 
+	$widget_classes='') { /* This is basically the wordpress code, slightly modified  */
 	global $wp_registered_sidebars, $wp_registered_widgets;
 	
 	$debug = amr_check_if_widget_debug();
