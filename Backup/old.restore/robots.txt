@@ -1,4 +1,0 @@
-Sitemap: http://montanascreenprinting.com/sitemap.xml
-
-User-agent: *
-Disallow: 
