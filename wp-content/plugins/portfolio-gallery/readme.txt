@@ -1,10 +1,10 @@
 ﻿=== Portfolio Gallery ===
 Contributors: Huge-IT
 Donate link: http://huge-it.com/portfolio-gallery/
-Tags: Portfolio Gallery, portfolio, portfolio plugin, portfolios, album, custom fields, images gallery, gallery, labels, thumbnails, image gallery, grid, slider, sliders, wordpress slider, wordpress slideshow, wp slider, slide, slide show, slider, slider plugin, slides, slideshow, slideshow manager, slideshow plugin, gallery slider, galeri, galerie, responsive slider, responsive slideshow, Photo Slider, Image Rotator, carousel, wordpress gallery, wordpress gallery plugin, banner rotator, best gallery, best gallery plugin, image album, images gallery, photo album, photo albums, photo gallery, photoset, Simple gallery, website gallery, widget gallery, wp gallery, photoalbum, view images, lightbox, image lightbox, gallery lightbox, content slider, wordpress portfolio, galleries, galleria, project, photography, filterable gallery, filterable portfolio, sortable portfolio, picture gallery, picture portfolio, thumbnail, iphone gallery, free photo gallery, free gallery, free gallery, fullscreen slider, free slider, showcase, filterable, Responsive Portfolio, image-portfolio, fullscreen gallery, simple portfolio, faq, video gallery, vimeo gallery, Gallery Plugin, grid gallery, photogallery, plugin gallery, responsive gallery, sortable gallery, gallery wp, watermarking, add gallery, add image, add images, add photo, add picture, add pictures, add album, fotoalbum, image album,
+Tags: Portfolio Gallery, portfolio, portfolio plugin, portfolios, album, custom fields, images gallery, gallery, labels, thumbnails, image gallery, grid, slider, sliders, wordpress slider, wordpress slideshow, wp slider, slide, slide show, slider, slider plugin, slides, slideshow, easy media gallery, slideshow manager, slideshow plugin, gallery slider, galeri, galerie, responsive slider, responsive slideshow, Photo Slider, Image Rotator, carousel, wordpress gallery, wordpress gallery plugin, best plugin gallery, banner rotator, best gallery, best gallery plugin, image album, images gallery, photo album, photo albums, photo gallery, photoset, Simple gallery, website gallery, widget gallery, wp gallery, photoalbum, view images, lightbox, image lightbox, gallery lightbox, content slider, wordpress portfolio, galleries, galleria, project, photography, filterable gallery, filterable portfolio, sortable portfolio, picture gallery, picture portfolio, thumbnail, iphone gallery, free photo gallery, free gallery, free gallery, fullscreen slider, free slider, showcase, filterable, Responsive Portfolio, image-portfolio, fullscreen gallery, simple portfolio, faq, video gallery, vimeo gallery, Gallery Plugin, grid gallery, photogallery, plugin gallery, responsive gallery, sortable gallery, gallery wp, watermarking, add gallery, add image, add images, add photo, add picture, add pictures, add album, fotoalbum, image album, gallery shortcode, gallery wordpress,
 Requires at least: 3.0.1
 Tested up to: 4.4.2
-Stable tag: 1.9.7
+Stable tag: 1.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,22 +43,22 @@ You can use portfolio gallery on different pages so if you need to create single
 
 Plus to the most of these view we give free lightbox tool. 
 
-Portfolio gallery - So totally you get Slider, Video gallery, Image Gallery, Lightbox plugins in ONE Portfolio Gallery plugin.
-Over 449,915 our users who tried Portfolio Gallery, can prove it's great functionality and utility. 
+**Portfolio gallery** - So totally you get Slider, Video gallery, Image Gallery, Lightbox plugins in ONE Portfolio Gallery plugin.
+Over 454,307 our users who tried Portfolio Gallery, can prove it's great functionality and utility. 
 
 Portfolio Gallery plugin has prepared one more present. Saying “Portfolio Gallery” you may imagine only photos, but now you see how many things you get with it. 
 
-Portfolio gallery - Taking care of you, we have also created a feature to organize your projects within portfolio gallery, Sorting & Category. To help you quickly find the right projects in your completely clogged portfolio gallery and redistribute by groups.
+**Portfolio gallery** - Taking care of you, we have also created a feature to organize your projects within portfolio gallery, Sorting & Category. To help you quickly find the right projects in your completely clogged portfolio gallery and redistribute by groups.
 
-Portfolio gallery - Categories are made for the redistribution of the projects in portfolio gallery into separate groups / categories on related topics. This feature is for portfolio gallery pro version users only.
+**Portfolio gallery** - Categories are made for the redistribution of the projects in portfolio gallery into separate groups / categories on related topics. This feature is for portfolio gallery pro version users only.
 
-Portfolio gallery - Sorting in portfolio gallery is available even in free version of Portfolio gallery. It in portfolio gallery is made to quickly view certain files within category by: date, name, ascending, descending, and so on.
+**Portfolio gallery** - Sorting in portfolio gallery is available even in free version of Portfolio gallery. It in portfolio gallery is made to quickly view certain files within category by: date, name, ascending, descending, and so on.
 
-Portfolio gallery - You can change the names and styles of Category & Sorting buttons or make them visible/invisible from the portfolio gallery view options which you can find in General Options section.
+**Portfolio gallery** - You can change the names and styles of Category & Sorting buttons or make them visible/invisible from the portfolio gallery view options which you can find in General Options section.
 
-Portfolio gallery - To make those buttons work or just be seen on your front end, simply turn them on from the right side of portfolio gallery admin page.
+**Portfolio gallery** - To make those buttons work or just be seen on your front end, simply turn them on from the right side of portfolio gallery admin page.
 
-Portfolio gallery - What about responsiveness. Portfolio Gallery is fully responsive plugin, which adapts to your screen size and make it convenient to use, Besides portfolio gallery, Lightbox tool is also responsive, as well as Popup, in Content Popup view of portfolio gallery. 
+**Portfolio gallery** - What about responsiveness. Portfolio Gallery is fully responsive plugin, which adapts to your screen size and make it convenient to use, Besides portfolio gallery, Lightbox tool is also responsive, as well as Popup, in Content Popup view of portfolio gallery. 
 Portfolio gallery plugin is easy to insert  into any part of your template and use portfolio gallery as widget.
 
 Portfolio Gallery uses 7 view options and can be customized using the General Options(pro options) - Portfolio Gallery
@@ -67,7 +67,7 @@ Almost all kind of texts are customizable in terms of text and color. So don’t
 
 ###  The features of the Portfolio Gallery:
 
-**WordPress Portfolio** / Gallery ready
+**WordPress Portfolio / Gallery ready**
 
 7 Views of Portfolio Gallery :
 
@@ -96,31 +96,31 @@ Almost all kind of texts are customizable in terms of text and color. So don’t
 
 *   Blocks Toggle Up/Down
 
-Portfolio Gallery - Quite an interesting view for portfolio gallery. All images/videos with its title and “down-arrow” are at the bottom. When you click on the arrow, smoothly opens the text to the image/video, as well as other images/videos which you add as additional to your portfolio gallery. The all images/videos of portfolio gallery project become large and open with popup. There is a button labeled «view more» at the bottom of the text, which will move to more information. Arrow-down has already become a cross which close the text back. If the pictures are under each other, the opened text moves other images/video thumbnail of the portfolio gallery project toward. Simple and compact.
+**Portfolio Gallery** - Quite an interesting view for portfolio gallery. All images/videos with its title and “down-arrow” are at the bottom. When you click on the arrow, smoothly opens the text to the image/video, as well as other images/videos which you add as additional to your portfolio gallery. The all images/videos of portfolio gallery project become large and open with popup. There is a button labeled «view more» at the bottom of the text, which will move to more information. Arrow-down has already become a cross which close the text back. If the pictures are under each other, the opened text moves other images/video thumbnail of the portfolio gallery project toward. Simple and compact.
 
 *   Full-Height Blocks
 
-Portfolio Gallery - Full-Height Blocks of Portfolio Gallery is a type of view demonstrating a tape of images/videos, which allows to see the text and other images/videos under the main image/video with its title. All additional images/videos become large when clicking on them, and open with popup. It has “View more” button at the bottom of the text for each portfolio gallery project.
+**Portfolio Gallery** - Full-Height Blocks of Portfolio Gallery is a type of view demonstrating a tape of images/videos, which allows to see the text and other images/videos under the main image/video with its title. All additional images/videos become large when clicking on them, and open with popup. It has “View more” button at the bottom of the text for each portfolio gallery project.
 
 *   Gallery / Content-Popup
 
-Portfolio Gallery - Gallery / Content-Popup of Portfolio Gallery is a type of view, which has the following characteristics: It opens each project of portfolio gallery from your tape increasing them as popup, with the text and other images/videos inside, next to the main image/video. Inside popup you can find the thumbnail/additional images, which you have added to each project of the gallery. There is also a button “View more” inside, which allows opening more information about the portfolio gallery project content. using right left arrows inside the popup you can slide within all gallery projects. The “cross” button in the upper right corner closes the popup going back to the gallery items.
+**Portfolio Gallery** - Gallery / Content-Popup of Portfolio Gallery is a type of view, which has the following characteristics: It opens each project of portfolio gallery from your tape increasing them as popup, with the text and other images/videos inside, next to the main image/video. Inside popup you can find the thumbnail/additional images, which you have added to each project of the gallery. There is also a button “View more” inside, which allows opening more information about the portfolio gallery project content. using right left arrows inside the popup you can slide within all gallery projects. The “cross” button in the upper right corner closes the popup going back to the gallery items.
 
 *   Full-Width Blocks
 
-Portfolio Gallery - Full-Width Blocks of Portfolio Gallery is a type of view, which looks like portfolio gallery project which demonstrates images or videos on the left side, and title + description text on the right side. It allows to see your main image with its additional images under it and the text disposed next to the image. The title is above the text and “View more” button is at the bottom of the text. All images can be opened and enlarged with lightbox tool of portfolio gallery.
+**Portfolio Gallery** - Full-Width Blocks of Portfolio Gallery is a type of view, which looks like portfolio gallery project which demonstrates images or videos on the left side, and title + description text on the right side. It allows to see your main image with its additional images under it and the text disposed next to the image. The title is above the text and “View more” button is at the bottom of the text. All images can be opened and enlarged with lightbox tool of portfolio gallery.
 
 *   FAQ Toggle Up/Down
 
-Portfolio Gallery - FAQ Toggle Up/Down of Portfolio Gallery - FAQ Toggle view is very simple. You can see only the titles of the portfolio gallery project and down-arrow button. Clicking on down-arrow button smoothly opens the text downwards and “view more” button under it. So there are no images/videos only the text. Pressing on the cross you can close the text and go back to titles.
+**Portfolio Gallery** - FAQ Toggle Up/Down of Portfolio Gallery - FAQ Toggle view is very simple. You can see only the titles of the portfolio gallery project and down-arrow button. Clicking on down-arrow button smoothly opens the text downwards and “view more” button under it. So there are no images/videos only the text. Pressing on the cross you can close the text and go back to titles.
 
 *   Content Slider
 
-Portfolio Gallery - Content Slider of Portfolio Gallery is a type of view, which gives you an ability to see photos/videos with slider, the text is next to the image/video with the title above. Every slide is represented as one project of the portfolio gallery. Just simply press the arrows on the upper right corner and slide the content of portfolio gallery projects.
+**Portfolio Gallery** - Content Slider of Portfolio Gallery is a type of view, which gives you an ability to see photos/videos with slider, the text is next to the image/video with the title above. Every slide is represented as one project of the portfolio gallery. Just simply press the arrows on the upper right corner and slide the content of portfolio gallery projects.
 
 *   Lightbox Gallery
 
-Portfolio Gallery - Lightbox Gallery of Portfolio Gallery is a type of gallery view involves only preview of images without description text. The title comes up from the bottom of the image as you hover the mouse on it. Images and Videos become larger with the lightbox and you can slide to watch them. Pay attention, this portfolio gallery demonstrates only main image/videos of the whole project.
+**Portfolio Gallery** - Lightbox Gallery of Portfolio Gallery is a type of gallery view involves only preview of images without description text. The title comes up from the bottom of the image as you hover the mouse on it. Images and Videos become larger with the lightbox and you can slide to watch them. Pay attention, this portfolio gallery demonstrates only main image/videos of the whole project.
 
 
 ### Unlimited Amount Of Portfolios And Projects
@@ -339,6 +339,12 @@ If you think, that you found a bug in our [WordPress Portfolio Gallery](http://h
 ### Wordpress Portfolio Gallery
 
 == Changelog ==
+
+= 1.9.9 =
+*  Bug fixed in Portfolio Gallery.
+
+= 1.9.8 =
+*  Front end bug fixed in Portfolio Gallery.
 
 = 1.9.7 =
 *  Bug fixed in Portfolio Gallery.
@@ -619,7 +625,7 @@ Usage. Here you will see the shortcode for the created portfolio gallery. You ca
 
 Template Usage. If you want to use the portfolio gallery for a custom location with the theme, you can copy and paste the provided code.
 
-### Upgrade to [WordPress Portfolio Gallery Pro](http://huge-it.com/portfolio-gallery/) to add some features:
+**Upgrade to [WordPress Portfolio Gallery Pro](http://huge-it.com/portfolio-gallery/) to add some features:**
 
 ### General Options of Portfolio gallery.
 
@@ -627,379 +633,272 @@ This section will allow making changes for the specific view option of the Portf
 
 ### Blocks Toggle Up/Down
 
-Element Styles
+**Element Styles**
 
-Element Background Color.Determine the background color for the portfolio gallery element.
+* Element Background Color.Determine the background color for the portfolio gallery element.
+* Element Border Width. Set the border width for the portfolio gallery element.
+* Element Border Color. Select the portfolio gallery element border color.
+* Toggle Button Style. Choose the style for the portfolio gallery toggle button.
+* Show Separator Lines. Choose whether to display portfolio gallery divider lines or not.
 
-Element Border Width. Set the border width for the portfolio gallery element.
+**Main Image**
 
-Element Border Color. Select the portfolio gallery element border color.
+* Main Image Width. Set the portfolio gallery main image width in pixels.
+* Main Image Height. Set the portfolio gallery main image height in pixels.
 
-Toggle Button Style. Choose the style for the portfolio gallery toggle button.
+**Title**
 
-Show Separator Lines. Choose whether to display portfolio gallery divider lines or not.
+* Title Font Size. Specify the font size for the portfolio gallery title.
+* Title Font Color. Choose the color for the portfolio gallery title font.
 
-Main Image
+**Thumbs**
 
-Main Image Width. Set the portfolio gallery main image width in pixels.
+* Show thumbs. Choose whether to display the portfolio gallery image thumbs or not.
+* Thumbs Position. Set the portfolio gallery positioning of the thumbs.
+* Thumbs Width. Set the width for the portfolio gallery image thumbs.
 
-Main Image Height. Set the portfolio gallery main image height in pixels.
+**Description**
 
-Title
+* Show Description. Choose whether to display the description of the portfolio gallery or not.
+* Description Font Size. Set the portfolio gallery description font size in pixels.
+* Description Font Color. Select the portfolio gallery description font color.
 
-Title Font Size. Specify the font size for the portfolio gallery title.
+**Link Button**
 
-Title Font Color. Choose the color for the portfolio gallery title font.
-
-Thumbs
-
-Show thumbs. Choose whether to display the portfolio gallery image thumbs or not.
-
-thumbs Position. Set the portfolio gallery positioning of the thumbs.
-
-thumbs Width. Set the width for the portfolio gallery image thumbs.
-
-Description
-
-Show Description. Choose whether to display the description of the portfolio gallery or not.
-
-Description Font Size. Set the portfolio gallery description font size in pixels.
-
-Description Font Color. Select the portfolio gallery description font color.
-
-Link Button
-
-Show Link Button. Choose whether to display portfolio gallery Show More button.
-
-Link Button Text. Define the text of the portfolio gallery Show More button.
-
-Link Button Font Size. Set the font size for the portfolio gallery Show More button.
-
-Link Button Font Color. Select the font color for the portfolio gallery Show More button.
-
-Link Button Font Hover Color. Select the font color for the portfolio gallery Show More button when hovered.
-
-Link Button Background Color. Select the background color for the portfolio gallery Show More button.
-
-Link Button Background Hover Color. Select the background color for the portfolio gallery Show More button when hovered.
+* Show Link Button. Choose whether to display portfolio gallery Show More button.
+* Link Button Text. Define the text of the portfolio gallery Show More button.
+* Link Button Font Size. Set the font size for the portfolio gallery Show More button.
+* Link Button Font Color. Select the font color for the portfolio gallery Show More button.
+* Link Button Font Hover Color. Select the font color for the portfolio gallery Show More button when hovered.
+* Link Button Background Color. Select the background color for the portfolio gallery Show More button.
+* Link Button Background Hover Color. Select the background color for the portfolio gallery Show More button when hovered.
 
 ### Full-Height Blocks - portfolio gallery
 
-Element Styles - portfolio gallery
+**Element Styles - portfolio gallery**
 
-Block Width. Set the width of the blocks in pixels - portfolio gallery
+* Block Width. Set the width of the blocks in pixels - portfolio gallery
+* Element Background Color. Determine the background color for the portfolio gallery element - portfolio gallery
+* Element Border Width. Set the border width for the portfolio gallery element - portfolio gallery
+* Element Border Color. Select the portfolio gallery element border color - portfolio gallery
+* Show Separator Lines. Choose whether to display divider lines or not - portfolio gallery
 
-Element Background Color. Determine the background color for the portfolio gallery element - portfolio gallery
+**Title - portfolio gallery**
 
-Element Border Width. Set the border width for the portfolio gallery element - portfolio gallery
+* Title Font Size. Specify the font size for the portfolio gallery title - portfolio gallery
+* Title Font Color. Choose the color for the portfolio gallery title font - portfolio gallery
 
-Element Border Color. Select the portfolio gallery element border color - portfolio gallery
+**Thumbs - portfolio gallery**
 
-Show Separator Lines. Choose whether to display divider lines or not - portfolio gallery
+* Show Thumbs. Choose whether to display the portfolio gallery image thumbs or not - Portfolio gallery
+* Thumbs Position. Set the portfolio gallery thumbnail position - Portfolio gallery
+* Thumbs Width. Set the portfolio gallery thumbnail width in pixels - Portfolio gallery
 
-Title - portfolio gallery
+**Description - portfolio gallery**
 
-Title Font Size. Specify the font size for the portfolio gallery title - portfolio gallery
+* Show Description. Choose whether to display the portfolio gallery image descriptions or not - Portfolio gallery
+* Description Font Size. Determine the font size for the portfolio gallery image descriptions - Portfolio gallery
+* Description Font Color. Choose the portfolio gallery font color for the image description - Portfolio gallery
 
-Title Font Color. Choose the color for the portfolio gallery title font - portfolio gallery
+**Link Button - portfolio gallery**
 
-Thumbs - portfolio gallery
-
-Show Thumbs. Choose whether to display the portfolio gallery image thumbs or not - Portfolio gallery
-
-Thumbs Position. Set the portfolio gallery thumbnail position - Portfolio gallery
-
-Thumbs Width. Set the portfolio gallery thumbnail width in pixels - Portfolio gallery
-
-Description - portfolio gallery
-
-Show Description. Choose whether to display the portfolio gallery image descriptions or not - Portfolio gallery
-
-Description Font Size. Determine the font size for the portfolio gallery image descriptions - Portfolio gallery
-
-Description Font Color. Choose the portfolio gallery font color for the image description - Portfolio gallery
-
-Link Button - portfolio gallery
-
-Show Link Button. Choose whether to display Show More button - Portfolio gallery
-
-Link Button Text. Define the portfolio gallery text of the Show More button - Portfolio gallery
-
-Link Button Font Size. Set the portfolio gallery font size for the Show More button - Portfolio gallery
-
-Link Button Font Color. Select the portfolio gallery font color for the Show More button - Portfolio gallery
-
-Link Button Font Hover Color. Select the portfolio gallery font color for the Show More button when hovered - Portfolio gallery
-
-Link Button Background Color. Select the portfolio gallery background color for the Show More button - Portfolio gallery
-
-Link Button Background Hover Color. Select the portfolio gallery background color for the Show More button when hovered - Portfolio gallery
+* Show Link Button. Choose whether to display Show More button - Portfolio gallery
+* Link Button Text. Define the portfolio gallery text of the Show More button - Portfolio gallery
+* Link Button Font Size. Set the portfolio gallery font size for the Show More button - Portfolio gallery
+* Link Button Font Color. Select the portfolio gallery font color for the Show More button - Portfolio gallery
+* Link Button Font Hover Color. Select the portfolio gallery font color for the Show More button when hovered - Portfolio gallery
+* Link Button Background Color. Select the portfolio gallery background color for the Show More button - Portfolio gallery
+* Link Button Background Hover Color. Select the portfolio gallery background color for the Show More button when hovered - Portfolio gallery
 
 ### Gallery / Content Pop-Up - Portfolio Gallery
 
-Element Styles - portfolio gallery
+**Element Styles - portfolio gallery**
 
-Element Width. Set portfolio gallery element width in pixels - Portfolio gallery
+* Element Width. Set portfolio gallery element width in pixels - Portfolio gallery
+* Element Height. Set portfolio gallery element height in pixels - Portfolio gallery
+* Element Background Color. Determine the background color for portfolio gallery element - Portfolio gallery
+* Element Border Width. Set portfolio gallery border width for the element - Portfolio gallery
+* Element Border Color. Select portfolio gallery element border color - Portfolio gallery
+* Element's Image Overlay Color. Set portfolio gallery overlay color for the element image - Portfolio gallery
+* Element's Image Overlay Transparency. Determine portfolio gallery transparency level of the overlay - Portfolio gallery
+* Zoom Image Style. Choose portfolio gallery light or dark options of the image zoom - Portfolio gallery
 
-Element Height. Set portfolio gallery element height in pixels - Portfolio gallery
+**Element Title - Portfolio gallery**
 
-Element Background Color. Determine the background color for portfolio gallery element - Portfolio gallery
+* Element Title Font Size. Specify portfolio gallery font size for the element title - Portfolio gallery
+* Element Title Font Color. Choose portfolio gallery color for the element title font - Portfolio gallery
 
-Element Border Width. Set portfolio gallery border width for the element - Portfolio gallery
+**Element Link Button - Portfolio gallery**
 
-Element Border Color. Select portfolio gallery element border color - Portfolio gallery
+* Show Link Button On Element. Choose whether to display Show More button on portfolio gallery element or not - Portfolio gallery
+* Link Button Text. Set portfolio gallery text for the Show More button - Portfolio gallery
+* Link Button Font Size. Defin portfolio gallery font size for the text over the button - Portfolio gallery
+* Link Button Font Color. Select portfolio gallery font color for the text over the buton - Portfolio gallery
+* Link Button Background Color. Select portfolio gallery background color for the text over the button - Portfolio gallery
 
-Element's Image Overlay Color. Set portfolio gallery overlay color for the element image - Portfolio gallery
+**Popup Styles - Portfolio gallery**
 
-Element's Image Overlay Transparency. Determine portfolio gallery transparency level of the overlay - Portfolio gallery
+* Popup Background Color. Select portfolio gallery popup background color - Portfolio gallery
+* Popup Overlay Color. Set portfolio gallery overlay color for the background - Portfolio gallery
+* Popup Overlay Transparency. Set portfolio gallery level of transprancy of the popup overlay - Portfolio gallery
+* Popup Close Button Style. Select portfolio gallery style of the Close button for the background - Portfolio gallery
+* Show Separator Lines. Choose whether to display divider lines or not - Portfolio gallery
 
-Zoom Image Style. Choose portfolio gallery light or dark options of the image zoom - Portfolio gallery
+**Popup Title - Portfolio gallery**
 
-Element Title - Portfolio gallery
+* Popup Title Font Size. Specify portfolio gallery font size for the popup title - Portfolio gallery
+* Popup Title Font Color. Choose the color for the popup title font - Portfolio gallery
 
-Element Title Font Size. Specify portfolio gallery font size for the element title - Portfolio gallery
+**Popup Thumbs - Portfolio gallery**
 
-Element Title Font Color. Choose portfolio gallery color for the element title font - Portfolio gallery
+* Show Thumbs. Choose whether to display portfolio gallery image thumbs or not - Portfolio gallery
+* Thumbs Position. Set portfolio gallery positioning of the thumbs - Portfolio gallery
+* Thumbs Width. Set portfolio gallery width for the image thumbs - Portfolio gallery
 
-Element Link Button - Portfolio gallery
+**Popup Description - Portfolio gallery**
 
-Show Link Button On Element. Choose whether to display Show More button on portfolio gallery element or not - Portfolio gallery
+* Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - Portfolio gallery
+* Description Font Size. Set portfolio gallery portfolio gallery description font size in pixels - Portfolio gallery
+* Description Font Color. Select portfolio gallery portfolio gallery description font color - Portfolio gallery
 
-Link Button Text. Set portfolio gallery text for the Show More button - Portfolio gallery
+**Popup Link Button - Portfolio gallery**
 
-Link Button Font Size. Defin portfolio gallery font size for the text over the button - Portfolio gallery
-
-Link Button Font Color. Select portfolio gallery font color for the text over the buton - Portfolio gallery
-
-Link Button Background Color. Select portfolio gallery background color for the text over the button - Portfolio gallery
-
-Popup Styles - Portfolio gallery
-
-Popup Background Color. Select portfolio gallery popup background color - Portfolio gallery
-
-Popup Overlay Color. Set portfolio gallery overlay color for the background - Portfolio gallery
-
-Popup Overlay Transparency. Set portfolio gallery level of transprancy of the popup overlay - Portfolio gallery
-
-Popup Close Button Style. Select portfolio gallery style of the Close button for the background - Portfolio gallery
-
-Show Separator Lines. Choose whether to display divider lines or not - Portfolio gallery
-
-Popup Title - Portfolio gallery
-
-Popup Title Font Size. Specify portfolio gallery font size for the popup title - Portfolio gallery
-
-Popup Title Font Color. Choose the color for the popup title font - Portfolio gallery
-
-Popup Thumbs - Portfolio gallery
-
-Show Thumbs. Choose whether to display portfolio gallery image thumbs or not - Portfolio gallery
-
-Thumbs Position. Set portfolio gallery positioning of the thumbs - Portfolio gallery
-
-Thumbs Width. Set portfolio gallery width for the image thumbs - Portfolio gallery
-
-Popup Description - Portfolio gallery
-
-Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - Portfolio gallery
-
-Description Font Size. Set portfolio gallery portfolio gallery description font size in pixels - Portfolio gallery
-
-Description Font Color. Select portfolio gallery portfolio gallery description font color - Portfolio gallery
-
-Popup Link Button - Portfolio gallery
-
-Show Link Button. Choose whether to display Show More button - Portfolio gallery
-
-Link Button Text. Define portfolio gallery text of the Show More button - Portfolio gallery
-
-Link Button Font Size. Set portfolio gallery font size for the Show More button - Portfolio gallery
-
-Link Button Font Color. Select portfolio gallery font color for the Show More button - Portfolio gallery
-
-Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - Portfolio gallery
-
-Link Button Background Color. Select portfolio gallery background color for the Show More button - Portfolio gallery
-
-Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - Portfolio gallery
+* Show Link Button. Choose whether to display Show More button - Portfolio gallery
+* Link Button Text. Define portfolio gallery text of the Show More button - Portfolio gallery
+* Link Button Font Size. Set portfolio gallery font size for the Show More button - Portfolio gallery
+* Link Button Font Color. Select portfolio gallery font color for the Show More button - Portfolio gallery
+* Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - Portfolio gallery
+* Link Button Background Color. Select portfolio gallery background color for the Show More button - Portfolio gallery
+* Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - Portfolio gallery
 
 ### Full-Width Blocks - Portfolio Gallery
 
-Elements Styles - Portfolio gallery
+**Elements Styles - Portfolio gallery**
 
-Main Image Width. Set portfolio gallery width of the main image - Portfolio gallery
+* Main Image Width. Set portfolio gallery width of the main image - Portfolio gallery
+* Element Background Color. Determine portfolio gallery background color for the element - Portfolio gallery
+* Element Border Width. Set portfolio gallery border width of the element - Portfolio gallery
+* Element Border Color. Select portfolio gallery element border color - Portfolio gallery
+* Show Separator Lines. Choose whether to display divider lines or not - Portfolio gallery
 
-Element Background Color. Determine portfolio gallery background color for the element - Portfolio gallery
+**Title - Portfolio gallery**
 
-Element Border Width. Set portfolio gallery border width of the element - Portfolio gallery
+* Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - Portfolio gallery
+* Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - Portfolio gallery
 
-Element Border Color. Select portfolio gallery element border color - Portfolio gallery
+**Thumbs - Portfolio gallery**
 
-Show Separator Lines. Choose whether to display divider lines or not - Portfolio gallery
+* Show Thumbs. Choose whether to display the image thumbs or not - Portfolio gallery
+* Thumbs Position. Set portfolio gallery positioning of the thumbs - Portfolio gallery
+* Thumbs Width. Set portfolio gallery width for the image thumbs - Portfolio gallery
 
-Title - Portfolio gallery
+**Description - Portfolio gallery**
 
-Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - Portfolio gallery
+* Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - Portfolio gallery
+* Description Font Size. Determine portfolio gallery description font size in pixels - Portfolio gallery
+* Description Font Color. Select portfolio gallery font color for the description - Portfolio gallery
 
-Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - Portfolio gallery
+**Link Button - Portfolio gallery**
 
-Thumbs - Portfolio gallery
-
-Show Thumbs. Choose whether to display the image thumbs or not - Portfolio gallery
-
-Thumbs Position. Set portfolio gallery positioning of the thumbs - Portfolio gallery
-
-Thumbs Width. Set portfolio gallery width for the image thumbs - Portfolio gallery
-
-Description - Portfolio gallery
-
-Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - Portfolio gallery
-
-Description Font Size. Determine portfolio gallery description font size in pixels - Portfolio gallery
-
-Description Font Color. Select portfolio gallery font color for the description - Portfolio gallery
-
-Link Button - Portfolio gallery
-
-Show Link Button. Choose whether to display Show More button - Portfolio gallery
-
-Link Button Text. Define portfolio gallery text of the Show More button - Portfolio gallery
-
-Link Button Font Size. Set portfolio gallery font size for the Show More button - Portfolio gallery
-
-Link Button Font Color. Select portfolio gallery font color for the Show More button - Portfolio gallery
-
-Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - Portfolio gallery
-
-Link Button Background Color. Select portfolio gallery background color for the Show More button - Portfolio gallery
-
-Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - Portfolio gallery
+* Show Link Button. Choose whether to display Show More button - Portfolio gallery
+* Link Button Text. Define portfolio gallery text of the Show More button - Portfolio gallery
+* Link Button Font Size. Set portfolio gallery font size for the Show More button - Portfolio gallery
+* Link Button Font Color. Select portfolio gallery font color for the Show More button - Portfolio gallery
+* Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - Portfolio gallery
+* Link Button Background Color. Select portfolio gallery background color for the Show More button - Portfolio gallery
+* Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - Portfolio gallery
 
 ### FAQ - Portfolio Gallery - Portfolio gallery
 
-First Shown Block - Portfolio gallery
+**First Shown Block - Portfolio gallery**
 
-Block Width. Set portfolio gallery width for the block in pixels - Portfolio gallery
+* Block Width. Set portfolio gallery width for the block in pixels - Portfolio gallery
+* Block Background Color. Select portfolio gallery background - Portfolio gallery
+* Block Border Width. Se portfolio gallery border width in pixels - Portfolio gallery
+* Block Border Color. Choose portfolio gallery boder color - Portfolio gallery
 
-Block Background Color. Select portfolio gallery background - Portfolio gallery
+**Title - Portfolio gallery**
 
-Block Border Width. Se portfolio gallery border width in pixels - Portfolio gallery
+* Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - Portfolio gallery
+* Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - Portfolio gallery
+* Toggle Button Style. Select portfolio gallery toggle button style from the provided options - Portfolio gallery
 
-Block Border Color. Choose portfolio gallery boder color - Portfolio gallery
+**Description - Portfolio gallery**
 
-Title - Portfolio gallery
+* Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - Portfolio gallery
+* Description Font Size. Set portfolio gallery portfolio gallery description font size in pixels - Portfolio gallery
+* Description Font Color. Select portfolio gallery portfolio gallery description font color - Portfolio gallery
 
-Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - Portfolio gallery
+**Link Button - Portfolio gallery**
 
-Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - Portfolio gallery
-
-Toggle Button Style. Select portfolio gallery toggle button style from the provided options - Portfolio gallery
-
-Description - Portfolio gallery
-
-Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - Portfolio gallery
-
-Description Font Size. Set portfolio gallery portfolio gallery description font size in pixels - Portfolio gallery
-
-Description Font Color. Select portfolio gallery portfolio gallery description font color - Portfolio gallery
-
-Link Button - Portfolio gallery
-
-Show Link Button. Choose whether to display Show More button - Portfolio gallery
-
-Link Button Text. Define portfolio gallery text of the Show More button - Portfolio gallery
-
-Link Button Font Size. Set portfolio gallery font size for the Show More button - Portfolio gallery
-
-Link Button Font Color. Select portfolio gallery font color for the Show More button - Portfolio gallery
-
-Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - Portfolio gallery
-
-Link Button Background Color. Select portfolio gallery background color for the Show More button - Portfolio gallery
-
-Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - Portfolio gallery
+* Show Link Button. Choose whether to display Show More button - Portfolio gallery
+* Link Button Text. Define portfolio gallery text of the Show More button - Portfolio gallery
+* Link Button Font Size. Set portfolio gallery font size for the Show More button - Portfolio gallery
+* Link Button Font Color. Select portfolio gallery font color for the Show More button - Portfolio gallery
+* Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - Portfolio gallery
+* Link Button Background Color. Select portfolio gallery background color for the Show More button - Portfolio gallery
+* Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - Portfolio gallery
 
 ### Content Slider - Portfolio Gallery
 
-Portfolio Gallery Content Slider - Portfolio gallery
+**Portfolio Gallery Content Slider - Portfolio gallery**
 
-Slider Background Color. Choose portfolio gallery background color for the slider - Portfolio gallery
+* Slider Background Color. Choose portfolio gallery background color for the slider - Portfolio gallery
+* Slider Tabs Font Color. Set portfolio gallery font color for the slider tabs - Portfolio gallery
+* Slider Tabs Background Color. Set portfolio gallery background color for the slider tabs - Portfolio gallery
+* Icons Style. Choose portfolio gallery icon style - Portfolio gallery
 
-Slider Tabs Font Color. Set portfolio gallery font color for the slider tabs - Portfolio gallery
+**Images**
 
-Slider Tabs Background Color. Set portfolio gallery background color for the slider tabs - Portfolio gallery
+* Main Image Width. Set portfolio gallery main image width in pixels.
+* Main Image Height. Set portfolio gallery main image height in pixels.
 
-Icons Style. Choose portfolio gallery icon style - Portfolio gallery
+**Show Thumbs - portfolio gallery**
 
-Images
+* Thumbs Width. Set portfolio gallery width for the thumbs.
+* Thumbs Height. Set portfolio gallery height for the imag thumbs.
 
-Main Image Width. Set portfolio gallery main image width in pixels.
+**Title - portfolio gallery**
 
-Main Image Height. Set portfolio gallery main image height in pixels.
+* Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - portfolio gallery
+* Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - portfolio gallery
 
-Show Thumbs - portfolio gallery
+**Description - portfolio gallery**
 
-Thumbs Width. Set portfolio gallery width for the thumbs.
+* Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - portfolio gallery
+* Description Font Size. Set portfolio gallery portfolio gallery description font size in pixels - portfolio gallery
+* Description Font Color. Select portfolio gallery portfolio gallery description font color - portfolio gallery
 
-Thumbs Height. Set portfolio gallery height for the imag thumbs.
+**Link Button - portfolio gallery**
 
-Title - portfolio gallery
-
-Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - portfolio gallery
-
-Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - portfolio gallery
-
-Description - portfolio gallery
-
-Show Description. Choose whether to display portfolio gallery description of the portfolio gallery or not - portfolio gallery
-
-Description Font Size. Set portfolio gallery portfolio gallery description font size in pixels - portfolio gallery
-
-Description Font Color. Select portfolio gallery portfolio gallery description font color - portfolio gallery
-
-Link Button - portfolio gallery
-
-Show Link Button. Choose whether to display Show More button - portfolio gallery
-
-Link Button Text. Define portfolio gallery text of the Show More button - portfolio gallery
-
-Link Button Font Size. Set portfolio gallery font size for the Show More button - portfolio gallery
-
-Link Button Font Color. Select portfolio gallery font color for the Show More button - portfolio gallery
-
-Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - portfolio gallery
-
-Link Button Background Color. Select portfolio gallery background color for the Show More button - portfolio gallery
-
-Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - portfolio gallery
+* Show Link Button. Choose whether to display Show More button - portfolio gallery
+* Link Button Text. Define portfolio gallery text of the Show More button - portfolio gallery
+* Link Button Font Size. Set portfolio gallery font size for the Show More button - portfolio gallery
+* Link Button Font Color. Select portfolio gallery font color for the Show More button - portfolio gallery
+* Link Button Font Hover Color. Select portfolio gallery font color for the Show More button when hovered - portfolio gallery
+* Link Button Background Color. Select portfolio gallery background color for the Show More button - portfolio gallery
+* Link Button Background Hover Color. Select portfolio gallery background color for the Show More button when hovered - portfolio gallery
 
 ### Lightbox Gallery - portfolio gallery
 
-Image - portfolio gallery
+**Image - portfolio gallery**
 
-Image Width. Set portfolio gallery image width in pixels - portfolio gallery
+* Image Width. Set portfolio gallery image width in pixels - portfolio gallery
+* Image Border Width. Set portfolio gallery image border width in pixels - portfolio gallery
+* Image Border Color. Select portfolio gallery image border color - portfolio gallery
+* Border Radius. Set portfolio gallery border radius in pixels - portfolio gallery
 
-Image Border Width. Set portfolio gallery image border width in pixels - portfolio gallery
+**Title - portfolio gallery**
 
-Image Border Color. Select portfolio gallery image border color - portfolio gallery
-
-Border Radius. Set portfolio gallery border radius in pixels - portfolio gallery
-
-Title - portfolio gallery
-
-Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - portfolio gallery
-
-Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - portfolio gallery
-
-Title Font Hover Color. Choose portfolio gallery color for the portfolio gallery title font when hovered - portfolio gallery
-
-Title Background Color. Set a background color fot the title - portfolio gallery
-
-Title Background Transparency. Determine portfolio gallery title background transparency level - portfolio gallery
+* Title Font Size. Specify portfolio gallery font size for the portfolio gallery title - portfolio gallery
+* Title Font Color. Choose portfolio gallery color for the portfolio gallery title font - portfolio gallery
+* Title Font Hover Color. Choose portfolio gallery color for the portfolio gallery title font when hovered - portfolio gallery
+* Title Background Color. Set a background color fot the title - portfolio gallery
+* Title Background Transparency. Determine portfolio gallery title background transparency level - portfolio gallery
 
 ### Inserting the Portfolio gallery
 
-Inserting the Portfolio gallery into the Post or Page. 
+**Inserting the Portfolio gallery into the Post or Page.**
 
 You should use the automatically generated code into the the Post or Page. The shortcodes takes the following form:
 [huge_it_portfolio id=N] , where N is the number ID of the created [WordPress Portfolio gallery](http://huge-it.com/portfolio-gallery).
@@ -1012,3 +911,5 @@ To do so you should insert the following shorcode:
     <?php echo do_shortcode([huge_it_portfolio id=N]); ?>
 
 Where N is the number ID of the created Portfolio gallery.
+
+If you think, that you found a bug in our [WordPress Portfolio Gallery](http://huge-it.com/portfolio-gallery) plugin or have any question contact us at [info@huge-it.com](mailto:info@huge-it.com)

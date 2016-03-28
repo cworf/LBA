@@ -3910,6 +3910,9 @@ jQuery(function(){
 
 <style type="text/css"> 
 /***<add>***/
+.thumbs-block a {
+	box-shadow: none !important;
+}
 .portelement_<?php echo $portfolioID; ?> .play-icon.youtube-icon  {
 	background: url(<?php echo  plugins_url( '../images/play.youtube.png' , __FILE__ );?>) center center no-repeat;
 	background-size: 30% 30%;
